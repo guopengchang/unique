@@ -1,8 +1,25 @@
 <template>
-  <div class="my">my</div>
+  <view class="navbar"  :style="{ paddingTop:` ${top}+ px` }">
+    <!-- logo文字 -->
+    <view class="logo">
+      <image class="logo-image" src="@/static/logo.png"></image>
+      <text class="logo-text">新鲜 · 亲民 · 快捷</text>
+    </view>
+    <!-- 搜索条 -->
+    <view class="search">
+      <text class="icon-search">搜索商品</text>
+      <text class="icon-scan"></text>
+    </view>
+  </view>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { ref } from 'vue'
+// 获取屏幕边界到安全区域距离
+const { safeAreaInsets  } = uni.getSystemInfoSync() ;
+//ts-ignore
+const top = safeAreaInsets?.top ||0;
+let ref1 = ref();
 
 </script>
 

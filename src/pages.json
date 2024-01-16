@@ -23,6 +23,12 @@
 			"style": {
 				"navigationBarTitleText": "signIn"
 			}
+		},
+		{
+			"path": "pages/getCustomer/publicCustomer",
+			"style": {
+				"navigationBarTitleText": "publicCustomer"
+			}
 		}
 	],
 	"globalStyle": {

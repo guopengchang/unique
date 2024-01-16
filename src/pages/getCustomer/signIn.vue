@@ -7,6 +7,7 @@
 <script lang="ts" setup>
 import { onReady } from '@dcloudio/uni-app';
  import { ref ,onMounted} from 'vue'
+ //ts-ignore
  import UQRCode from 'uqrcodejs';
 
  onReady(()=>{
