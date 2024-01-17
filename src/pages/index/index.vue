@@ -25,24 +25,24 @@ const getCustomerList = ref<any[]>([
     name:'签到'
   },
   {
-    path:'/pages/getCustomer/clue',
+    path:'/pages/getCustomer/clue/list',
     icon:'',
     name:'线索'
+  },
+  {
+    path:'/pages/getCustomer/user/list',
+    icon:'',
+    name:'公海客户'
+  },
+  {
+    path:'/pages/getCustomer/hopper/list',
+    icon:'',
+    name:'漏斗'
   },
   {
     path:'/pages/getCustomer/client',
     icon:'',
     name:'客户'
-  },
-  {
-    path:'/pages/getCustomer/clue',
-    icon:'',
-    name:'公海客户'
-  },
-  {
-    path:'/pages/getCustomer/clue',
-    icon:'',
-    name:'跟进'
   },
 ])
 </script>

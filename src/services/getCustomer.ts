@@ -49,3 +49,37 @@ export const getClient = (id: number) => {
     url: "highseas/" + id,
   });
 };
+
+//获取单个学员信息
+export const getQrCodeOne = (id: any) => {
+  return http({
+    method: "GET",
+    url: "/highseas/" + id,
+  });
+};
+//修改单个学员信息
+export const gets = (id: any, data: any) => {
+  return http({
+    method: "PUT",
+    data: data,
+    url: "/highseas",
+  });
+};
+
+//获取负责人信息
+// /system/highseas/getxs
+export const getlist = () => {
+  return http({
+    method: "POST",
+    // url: "http://192.170.0.198:8987/system/highseas/getxs",
+    url: "/highseas/getxs",
+  });
+};
+//跟进内容
+// /system/follow/list
+export const followlist = () => {
+  return http({
+    method: "GET",
+    url: "/follow/list",
+  });
+};
