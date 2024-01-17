@@ -35,14 +35,9 @@
     "build:quickapp-webview-huawei": "uni build -p quickapp-webview-huawei",
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
     "tsc": "vue-tsc --noEmit --skipLibCheck",
-    "prepare": "husky install",
-    "lint-staged": "lint-staged"
+    "prepare": "husky install"
   },
-  "lint-staged": {
-    "*.{js,ts,vue}": [
-      "eslint --fix"
-    ]
-  },
+
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-alpha-3081220230802001",
     "@dcloudio/uni-app-plus": "3.0.0-alpha-3081220230802001",
