@@ -1,5 +1,5 @@
-import type { AddressParams } from '@/types/address'
-import { http } from '@/utils/http'
+import type { AddressParams } from "@/types/address";
+import { http } from "@/utils/http";
 
 /**
  * 添加收货地址
@@ -7,17 +7,45 @@ import { http } from '@/utils/http'
  */
 export const postMemberAddressAPI = (data: AddressParams) => {
   return http({
-    method: 'POST',
-    url: '/member/address',
+    method: "POST",
+    url: "/member/address",
     data,
-  })
-}
+  });
+};
 
 //签到
 // /highseas/list
-export const getQrCode = ()=>{
+export const getQrCode = () => {
   return http({
-    method:'GET',
-    url:'/highseas/list',
-  })
-}
+    method: "GET",
+    url: "/highseas/list",
+  });
+};
+
+export const getSource = () => {
+  return http({
+    method: "GET",
+    url: "dict/data/type/sys_data_sour",
+  });
+};
+
+export const getProd = () => {
+  return http({
+    method: "GET",
+    url: "dict/data/type/sys_purp_prod",
+  });
+};
+
+export const getClientList = () => {
+  return http({
+    method: "GET",
+    url: "highseas/list?cuflag=2",
+  });
+};
+
+export const getClient = (id: number) => {
+  return http({
+    method: "GET",
+    url: "highseas/" + id,
+  });
+};

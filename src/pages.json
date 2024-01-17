@@ -19,6 +19,18 @@
 			}
 		},
 		{
+			"path": "pages/getCustomer/editClient",
+			"style": {
+				"navigationBarTitleText": "编辑客户"
+			}
+		},
+		{
+			"path": "pages/getCustomer/client",
+			"style": {
+				"navigationBarTitleText": "client"
+			}
+		},
+		{
 			"path": "pages/getCustomer/signIn",
 			"style": {
 				"navigationBarTitleText": "signIn"

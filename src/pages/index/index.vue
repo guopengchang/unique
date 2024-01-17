@@ -30,6 +30,11 @@ const getCustomerList = ref<any[]>([
     name:'线索'
   },
   {
+    path:'/pages/getCustomer/client',
+    icon:'',
+    name:'客户'
+  },
+  {
     path:'/pages/getCustomer/clue',
     icon:'',
     name:'公海客户'
