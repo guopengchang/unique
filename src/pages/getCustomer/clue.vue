@@ -1,9 +1,28 @@
-<template>
-  <div class="cule">cule</div>
-</template>
+<style lang="scss">
+.example {
+  padding: 15px;
+  background-color: #fff;
+}
 
-<script lang="ts">
+.segmented-control {
+  margin-bottom: 15px;
+}
 
-</script>
+.button-group {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}
 
-<style scoped></style>
+.form-item {
+  display: flex;
+  align-items: center;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  height: 35px;
+  margin-left: 10px;
+}
+</style>

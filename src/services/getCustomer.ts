@@ -8,7 +8,7 @@ import { http } from "@/utils/http";
 export const postMemberAddressAPI = (data: AddressParams) => {
   return http({
     method: "POST",
-    url: "/member/address",
+    url: "system/member/address",
     data,
   });
 };
@@ -18,35 +18,35 @@ export const postMemberAddressAPI = (data: AddressParams) => {
 export const getQrCode = () => {
   return http({
     method: "GET",
-    url: "/highseas/list",
+    url: "system/highseas/list",
   });
 };
 
 export const getSource = () => {
   return http({
     method: "GET",
-    url: "dict/data/type/sys_data_sour",
+    url: "system/dict/data/type/sys_data_sour",
   });
 };
 
 export const getProd = () => {
   return http({
     method: "GET",
-    url: "dict/data/type/sys_purp_prod",
+    url: "system/dict/data/type/sys_purp_prod",
   });
 };
 
 export const getClientList = () => {
   return http({
     method: "GET",
-    url: "highseas/list?cuflag=2",
+    url: "system/highseas/list?cuflag=2",
   });
 };
 
 export const getClient = (id: number) => {
   return http({
     method: "GET",
-    url: "highseas/" + id,
+    url: "system/highseas/" + id,
   });
 };
 
@@ -54,7 +54,7 @@ export const getClient = (id: number) => {
 export const getQrCodeOne = (id: any) => {
   return http({
     method: "GET",
-    url: "/highseas/" + id,
+    url: "system/highseas/" + id,
   });
 };
 //修改单个学员信息
@@ -62,7 +62,7 @@ export const gets = (id: any, data: any) => {
   return http({
     method: "PUT",
     data: data,
-    url: "/highseas",
+    url: "system/highseas",
   });
 };
 
@@ -72,7 +72,7 @@ export const getlist = () => {
   return http({
     method: "POST",
     // url: "http://192.170.0.198:8987/system/highseas/getxs",
-    url: "/highseas/getxs",
+    url: "system/highseas/getxs",
   });
 };
 //跟进内容
@@ -80,6 +80,6 @@ export const getlist = () => {
 export const followlist = () => {
   return http({
     method: "GET",
-    url: "/follow/list",
+    url: "system/follow/list",
   });
 };
