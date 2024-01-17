@@ -3,15 +3,15 @@
 /** 小程序登录 登录用户信息 */
 export type LoginResult = {
   /** 用户ID */
-  id: number
+  id?: number
   /** 头像  */
-  avatar: string
+  avatar?: string
   /** 账户名  */
-  account: string
+  account?: string
   /** 昵称 */
   nickname?: string
   /** 手机号 */
-  mobile: string
+  mobile?: string
   /** 登录凭证 */
   token: string
 }
