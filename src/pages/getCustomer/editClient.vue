@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
-import { getSource, getProd, getClient } from "../../services/getCustomer";
+import {
+  getSource,
+  getProd,
+  getClient,
+  updateClient,
+} from "@/services/getCustomer";
 interface client {
   cuname?: string; //姓名
   cusex?: number; //性别
@@ -20,6 +25,7 @@ interface client {
 }
 const formData = ref<client>({});
 const clientForm = ref(null);
+const clientId = ref({});
 
 const range = [
   { value: "男", text: "男" },
@@ -54,31 +60,31 @@ const rules = {
     rules: [
       {
         required: true,
-        errorMessage: "请填写电话号码",
+        errorMessage: "请填写手机号码",
       },
       {
         validateFunction: (_e: any, data: any) => {
-          if (
-            /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/.test(
-              data
-            )
-          ) {
-            return true;
-          } else {
-            return uni.showToast({
-              title: "手机号码不正确",
-              icon: "none",
-            });
-          }
+          return /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/.test(
+            data
+          );
+          // if (
+          //   /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/.test(
+          //     data
+          //   )
+          // ) {
+          //   return true;
+          // } else {
+          //   return uni.showToast({
+          //     title: "手机号码不正确",
+          //     icon: "none",
+          //   });
+          // }
         },
+        errorMessage: "手机号码格式不正确",
       },
     ],
   },
 };
-
-function change(e: any) {
-  console.log("e:", e);
-}
 
 function openPop(popup: any) {
   popup.open();
@@ -87,9 +93,22 @@ function closePop(popup: any) {
   popup.close();
 }
 
-function submit(ref) {
-  ref.validate((err, value) => {
-    console.log(err, value);
+function submit(ref: any) {
+  ref.validate((err: any, value: any) => {
+    if ((value = formData.value)) {
+      return uni.showToast({
+        title: "数据未更改",
+        icon: "none",
+      });
+    }
+    if (err === null) {
+      updateClient({ ...clientId.value, ...value }).then(() => {
+        uni.showToast({
+          title: "修改成功",
+          icon: "success",
+        });
+      });
+    }
   });
 }
 
@@ -105,8 +124,24 @@ function confirm(popup: any) {
 
 onLoad((e) => {
   getClient(e.id).then((res: any) => {
-    console.log(res);
-    formData.value = res.data;
+    clientId.value = { id: e.id };
+    const result = {
+      cuname: res.data.cuname,
+      cusex: res.data.cusex,
+      cuidcard: res.data.cuidcard,
+      cutel: res.data.cutel,
+      wechatid: res.data.wechatid,
+      cuemail: res.data.cuemail,
+      cuaddr: res.data.cuaddr,
+      curecord: res.data.curecord,
+      cusource: res.data.cusource,
+      cuprod: res.data.cuprod,
+      cuschool: res.data.cuschool,
+      cugrade: res.data.cugrade,
+      cumajor: res.data.cumajor,
+      highscont: res.data.highscont,
+    };
+    formData.value = result;
     sourceValue.value = res.data.cusource;
     prodValue.value = res.data.cuprod;
   });
@@ -152,8 +187,7 @@ onLoad((e) => {
           <uni-data-checkbox
             style="justify-content: end"
             v-model="formData.cusex"
-            :localdata="range"
-            @change="change"></uni-data-checkbox>
+            :localdata="range"></uni-data-checkbox>
         </uni-forms-item>
         <uni-forms-item label="身份证号" name="cuidcard">
           <uni-easyinput

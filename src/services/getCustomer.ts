@@ -22,6 +22,7 @@ export const getQrCode = () => {
   });
 };
 
+//获取数据来源列表
 export const getSource = () => {
   return http({
     method: "GET",
@@ -29,6 +30,7 @@ export const getSource = () => {
   });
 };
 
+//获取意向产品列表
 export const getProd = () => {
   return http({
     method: "GET",
@@ -36,6 +38,23 @@ export const getProd = () => {
   });
 };
 
+//获取回款方式列表
+export const getMoneyWay= () => {
+  return http({
+    method: "GET",
+    url: "system/dict/data/type/sys_pay_way",
+  });
+};
+//增加回款计划
+export const addPayplan=(data:any)=>{
+  return http({
+    method: "POST",
+    url: "/system/payplan",
+    data
+  });
+}
+
+//获取客户列表
 export const getClientList = () => {
   return http({
     method: "GET",
@@ -43,10 +62,29 @@ export const getClientList = () => {
   });
 };
 
+//获取单个客户详情
 export const getClient = (id: number) => {
   return http({
     method: "GET",
     url: "system/highseas/" + id,
+  });
+};
+
+//更改单个客户详情
+export const updateClient = (data: any) => {
+  return http({
+    method: "PUT",
+    url: "system/highseas",
+    data,
+  });
+};
+
+//移入公海
+export const updateClientSea = (data: any) => {
+  return http({
+    method: "PUT",
+    url: "system/highseas",
+    data,
   });
 };
 
@@ -83,3 +121,5 @@ export const followlist = () => {
     url: "system/follow/list",
   });
 };
+
+

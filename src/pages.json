@@ -34,6 +34,12 @@
       }
     },
     {
+      "path": "pages/getCustomer/payment",
+      "style": {
+        "navigationBarTitleText": "新建回款"
+      }
+    },
+    {
       "path": "pages/getCustomer/user/list",
       "style": {
         "navigationBarTitleText": "公海客户"
@@ -52,7 +58,7 @@
       }
     },
     {
-      "path": "pages/getCustomer/client",
+      "path": "pages/getCustomer/client/client",
       "style": {
         "navigationBarTitleText": "client"
       }

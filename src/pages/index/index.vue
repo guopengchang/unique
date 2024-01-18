@@ -40,7 +40,7 @@ const getCustomerList = ref<any[]>([
     name:'漏斗'
   },
   {
-    path:'/pages/getCustomer/client',
+    path:'/pages/getCustomer/client/client',
     icon:'',
     name:'客户'
   },
