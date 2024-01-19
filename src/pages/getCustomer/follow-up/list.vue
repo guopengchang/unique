@@ -39,7 +39,7 @@ function handleNew() {
   });
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .a {
   color: blue;
   border-top: 1px solid #e3d8d8;

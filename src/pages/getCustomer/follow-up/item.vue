@@ -123,7 +123,7 @@ followlist().then((res) => {
   console.log(res);
 });
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .list {
   border-bottom: 1px solid #e3d8d8;
 }

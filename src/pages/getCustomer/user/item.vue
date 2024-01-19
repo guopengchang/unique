@@ -69,7 +69,7 @@ function handleDefine() {
 }
 
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .round {
   margin-left: 10px;
   margin-bottom: 20px;

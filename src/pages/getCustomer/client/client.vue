@@ -85,7 +85,7 @@ const setGraphRef = (el: any, item: string) => {
     </view>
   </div>
 </template>
-<style scoped>
+<style lang="scss" scoped>
 .statistics {
   width: 15px;
   height: 15px;

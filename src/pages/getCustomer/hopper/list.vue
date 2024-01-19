@@ -13,25 +13,20 @@
       <view class="btn">
         <button class="btn-item" size="mini" @click="() => handleEdit(users.id)">编辑</button>
         <button class="btn-item" size="mini" @click="handleFollow(users.id)">跟进</button>
-        <button class="btn-item" size="mini" @click="handleClient">转客户</button>
+        <button class="btn-item" size="mini" @click="handleClient(users.id)">转客户</button>
       </view>
     </uni-card>
   </view>
 </template>
 <script setup>
-import { uni } from "@dcloudio/uni-h5";
 import { getQrCode, getChange } from "../../../../src/services/getCustomer";
 import { ref } from "vue";
 //存放数据
 const userInfo = ref({});
-//获取id
-const id = ref();
+
 //获取数据
 getQrCode().then((res) => {
-  console.log(res)
   userInfo.value = res.rows;
-  id.value = res.rows[0].id;
-  console.log(res);
 });
 //点击编辑按钮
 function handleEdit(id) {
@@ -46,15 +41,15 @@ function handleFollow(id) {
   });
 }
 // 点击转客户按钮
-function handleClient() {
-  getChange({ cuflag: 2, id: id.value });
+function handleClient(id) {
+  getChange({ cuflag: 2, id: id });
   console.log("成功转入");
   uni.navigateTo({
     url:"/pages/getCustomer/hopper/list"
   })
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .btn {
   display: flex;
   margin-top: 20px;

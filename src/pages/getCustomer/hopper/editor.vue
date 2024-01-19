@@ -47,7 +47,7 @@ function submit(e) {
   });
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .box {
   font-size: 28rpx;
   background: #fff;

@@ -37,7 +37,7 @@ function handleDeal(id) {
   });
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .btn {
   display: flex;
   margin-top: 20px;
