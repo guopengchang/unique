@@ -371,7 +371,7 @@ onLoad((e) => {
     <div style="height: 20rpx"></div>
   </view>
 </template>
-<style scoped>
+<style lang="scss" scoped>
 :deep(.checklist-group) {
   justify-content: end;
 }

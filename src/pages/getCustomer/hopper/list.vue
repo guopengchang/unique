@@ -127,7 +127,7 @@ function search(e) {
   }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 page {
   height: 100%;
 }

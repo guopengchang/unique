@@ -92,7 +92,7 @@ const submit = () => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #qrcode {
   margin: 0 auto;
 }

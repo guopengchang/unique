@@ -149,13 +149,15 @@ function handleFilter(e: any) {
     </scroll-view>
   </view>
 </template>
-<style scoped>
+
+<style lang="scss" scoped>
 .screen {
   height: calc(100vh - 44px);
 }
 .client {
   height: calc(100vh - 90rpx - 44px);
 }
+
 .statistics {
   width: 15rpx;
   height: 15rpx;

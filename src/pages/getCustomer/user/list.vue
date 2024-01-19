@@ -87,7 +87,7 @@ function handleDeal(id) {
   });
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 
 .screen {
   height: calc(100vh - 44px);
