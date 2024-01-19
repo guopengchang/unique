@@ -1,96 +1,129 @@
 <template>
   <form @submit="submit">
-    <view class="list">
-      <view class="name" style="margin-left: 10px">关联类型</view>
-      <view style="margin-bottom: 30rpx; margin-left: 10px"><uni-data-checkbox  :localdata="sex" /></view>
+    <view class="line" style="display: flex; justify-content: space-between">
+      <view class="labeluser">跟进客户</view>
+      <input
+        style="text-align: end; margin-top: 40rpx; margin-right: 30rpx"
+        :disabled="true"
+        v-model="tableForm.cuname" />
     </view>
-    <view class="border" style="display: flex">
-      <view class="label">跟进客户</view>
-      <view class="name" style="margin-left: 190rpx">
-        <uni-data-picker style="width: 380rpx" placeholder="请选择客户" :localdata="items"> </uni-data-picker>
-      </view>
-    </view>
+
     <view class="border" style="display: flex">
       <view class="label">跟进方式</view>
       <view class="name" style="margin-left: 190rpx">
-        <uni-data-picker style="width: 380rpx" placeholder="请选择跟进方式" :localdata="items"> </uni-data-picker>
+        <uni-data-picker
+          @change="fashion"
+          style="width: 380rpx"
+          placeholder="请选择跟进方式"
+          :localdata="items">
+        </uni-data-picker>
       </view>
     </view>
+
     <view>
       <view class="label"> 跟进内容</view>
-      <uni-easyinput type="textarea" autoHeight placeholder="请输入跟进内容"></uni-easyinput>
+      <uni-easyinput
+        name="followcont"
+        type="textarea"
+        autoHeight
+        placeholder="请输入跟进内容"></uni-easyinput>
     </view>
 
-    <view class="border" style="display: flex; justify-content: space-around">
+    <view class="border" style="display: flex; justify-content: space-between">
       <view class="label">下次跟进时间</view>
-      <view style="width: 180px"> <uni-datetime-picker class="label" type="date" :clear-icon="false" /></view>
+      <view style="width: 180px; margin-right: 50rpx">
+        <uni-datetime-picker
+          @change="time"
+          class="label"
+          type="date"
+          :clear-icon="false"
+      /></view>
     </view>
 
-    <view class="border">
-      <view class="label">提醒谁看</view>
-      <view class="round"></view>
-    </view>
     <view class="op">
       <button class="confirm" form-type="submit">确认</button>
     </view>
   </form>
-<navigator
-  :url="`/pages/getCustomer/follow-up/${a}`"
-  open-type="navigate"
-  hover-class="navigator-hover"
->
-  111
-</navigator>
 </template>
 <script setup>
 import { ref } from "vue";
-const a=ref("list")
-// 关联类型数据
-const sex = ref([
-  {
-    text: "客户",
-    value: 0,
-  },
-  {
-    text: "商机",
-    value: 1,
-  },
-  {
-    text: "合同",
-    value: 2,
-  },
-  {
-    text: "线索",
-    value: 3,
-  },
-]);
-// 跟进方式数据
+import {
+  getQrCodeOne,
+  addfollowlist,
+  followlist,
+} from "../../../../src/services/getCustomer";
+import { onLoad } from "@dcloudio/uni-app";
+const tableForm = ref({});
+// 跟进方式
 const items = ref([
   {
-    text: "电话",
+    text: "打电话",
     value: "1-0",
   },
   {
-    text: "线下见面",
+    text: "发邮件",
     value: "2-0",
-  },
-  {
-    text: "视频",
-    value: "3-0",
   },
   {
     text: "微信",
     value: "3-0",
   },
+  {
+    text: "发短信",
+    value: "4-0",
+  },
+  {
+    text: "见面拜访",
+    value: "5-0",
+  },
+  {
+    text: "活动",
+    value: "6-0",
+  },
 ]);
-//获取表单数据
-function submit(e){
-  console.log(e)
-  // uni.navigateBack()
+//id
+const id = ref();
+//提交数据
+const listForm = ref({
+  id: "",
+  highsid: "",
+  followtype: "",
+  followcont: "",
+  nextdate: "",
+});
+//获取跟进方式
+function fashion(e) {
+  listForm.value.followtype = e.detail.value[0].text;
 }
+//获取跟进内容
+function submit(e) {
+  listForm.value.followcont = e.detail.value.followcont;
+  console.log(listForm);
+  addfollowlist(listForm.value);
+  uni.navigateTo({ url: "/pages/getCustomer/hopper/list" })();
+}
+//获取跟进时间
+function time(e) {
+  listForm.value.nextdate = e;
+}
+//获取客户id和名字
+onLoad((e) => {
+  //获取id
+  id.value = e.id;
+  listForm.value.highsid = e.id;
+  listForm.value.id = e.id;
+  //获取数据
+  getQrCodeOne(e.id).then((res) => {
+    console.log(res);
+    tableForm.value = res.data;
+  });
+});
 
+followlist().then((res) => {
+  console.log(res);
+});
 </script>
-<style>
+<style scoped>
 .list {
   border-bottom: 1px solid #e3d8d8;
 }
@@ -124,7 +157,6 @@ function submit(e){
   padding-top: 20rpx;
   padding-bottom: 20rpx;
   background: #fff;
-  
 
   .confirm {
     background-image: linear-gradient(135deg, #0c70f2, #0c60f2 70%, #0c32f2);
@@ -138,5 +170,30 @@ function submit(e){
     box-shadow: 0 6rpx 12rpx 0 rgb(0 0 0 / 5%);
     color: #333;
   }
+}
+.line {
+  background: #fff;
+  border-bottom: 1px solid #e3d8d8;
+  position: relative;
+
+  line-height: 36rpx;
+
+  .label {
+    position: absolute;
+    top: 30rpx;
+    left: 0;
+    padding: 0 20rpx;
+    width: 130rpx;
+  }
+  input {
+    color: #999;
+    line-height: 36rpx;
+  }
+}
+.labeluser {
+  padding: 0;
+  margin-top: 40rpx;
+  margin-bottom: 30rpx;
+  margin-left: 20rpx;
 }
 </style>

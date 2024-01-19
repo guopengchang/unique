@@ -12,7 +12,7 @@
       >
       <view class="btn">
         <button class="btn-item" size="mini" @click="() => handleEdit(users.id)">编辑</button>
-        <button class="btn-item" size="mini" @click="handleFollow">跟进</button>
+        <button class="btn-item" size="mini" @click="handleFollow(users.id)">跟进</button>
         <button class="btn-item" size="mini" @click="handleClient">转客户</button>
       </view>
     </uni-card>
@@ -20,31 +20,41 @@
 </template>
 <script setup>
 import { uni } from "@dcloudio/uni-h5";
-import { getQrCode } from "../../../../src/services/getCustomer";
+import { getQrCode, getChange } from "../../../../src/services/getCustomer";
 import { ref } from "vue";
 //存放数据
 const userInfo = ref({});
+//获取id
+const id = ref();
 //获取数据
 getQrCode().then((res) => {
+  console.log(res)
   userInfo.value = res.rows;
+  id.value = res.rows[0].id;
   console.log(res);
 });
 //点击编辑按钮
 function handleEdit(id) {
   uni.navigateTo({
-    url: `/pages/getCustomer/hopper/item?id=${id}`,
+    url: `/pages/getCustomer/hopper/editor?id=${id}`,
   });
 }
 // 点击跟进按钮
-function handleFollow() {
-  uni.navigateTo({ url: "/pages/getCustomer/follow-up/item" });
+function handleFollow(id) {
+  uni.navigateTo({
+    url: `/pages/getCustomer/follow-up/item?id=${id}`,
+  });
 }
 // 点击转客户按钮
 function handleClient() {
+  getChange({ cuflag: 2, id: id.value });
   console.log("成功转入");
+  uni.navigateTo({
+    url:"/pages/getCustomer/hopper/list"
+  })
 }
 </script>
-<style>
+<style scoped>
 .btn {
   display: flex;
   margin-top: 20px;

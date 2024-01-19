@@ -3,7 +3,14 @@
     <view>
       <view class="label">负责人</view>
       <view style="margin-left: 190rpx">
-        <uni-data-picker @change="onchange" style="width: 400rpx" :clear-icon="false" placeholder="点击选择" :localdata="items"> </uni-data-picker>
+        <uni-data-picker
+          @change="onchange"
+          style="width: 400rpx"
+          :clear-icon="false"
+          placeholder="点击选择"
+          :localdata="items"
+        >
+        </uni-data-picker>
       </view>
     </view>
   </view>
@@ -16,37 +23,53 @@
   </view>
 </template>
 <script setup>
-import { getlist } from "../../../../src/services/getCustomer";
+import { getlist, getUser } from "../../../../src/services/getCustomer";
 import { ref } from "vue";
-
+import { onLoad } from "@dcloudio/uni-app";
 //存放网络层返回的数据
-const userName=ref({})
+const userName = ref({});
 
 //存放全部负责人姓名
-const items=ref([])
+const items = ref([]);
 
 //获取选择后的负责人姓名
-const newUserName=ref({})
+const newUserName = ref({});
 
-getlist().then((res) => {
-  userName.value=res.data
-  userName.value.map(item=>{
-    items.value.push({
-      text:item.userName,
-      value:item.userId
-    })
-  })
+//存放id
+const id=ref()
+
+onLoad((e) => {
+  //获取id
+  console.log(e);
+  id.value = e.id;
+  //获取数据
+  getlist().then((res) => {
+    console.log(res);
+    userName.value = res.data;
+    userName.value.map((item) => {
+      items.value.push({
+        text: item.userName,
+        value: item.userId,
+      });
+    });
+  });
 });
+
+function onchange(e) {
+  //获取负责人的姓名
+  newUserName.value = e.detail.value[0].text;
+  console.log(newUserName.value)
+}
 //点击跳转
 function handleDefine() {
-  uni.navigateBack();
+  getUser(id.value,{cuowner:newUserName.value,id:id.value,cuflag:1})
+  uni.navigateTo({
+    url: "/pages/getCustomer/user/list",
+  });
 }
-function onchange(e){
-  //获取负责人的姓名
-  newUserName.value=e.detail.value[0].text
-}
+
 </script>
-<style>
+<style scoped>
 .round {
   margin-left: 10px;
   margin-bottom: 20px;

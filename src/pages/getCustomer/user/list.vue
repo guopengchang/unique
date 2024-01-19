@@ -10,32 +10,34 @@
       <view>
         <text>招入老师:{{ users.djpeop }}</text></view
       >
+      <view>
+        <text>负责人:{{ users.cuowner }}</text></view
+      >
       <view class="btn">
-        <button class="btn-item" size="mini">领取用户</button>
-        <button class="btn-item" size="mini" @click="handleDeal">分配用户</button>
+        <button class="btn-item" size="mini" @click="() => handleDeal(users.id)">分配用户</button>
       </view>
     </uni-card>
   </view>
 </template>
 <script setup>
-import { getQrCode } from "../../../../src/services/getCustomer";
+import { getQrCodeUser } from "../../../../src/services/getCustomer";
 import { ref } from "vue";
 
 //存放网络层返回的数据
 const userInfo = ref({});
 
-getQrCode().then((res) => {
+getQrCodeUser().then((res) => {
   userInfo.value = res.rows;
-  console.log(res);
+  console.log(res)
 });
 // 点击跳转
-function handleDeal() {
+function handleDeal(id) {
   uni.navigateTo({
-    url: "/pages/getCustomer/user/item",
+    url: `/pages/getCustomer/user/item?id=${id}`,
   });
 }
 </script>
-<style>
+<style scoped>
 .btn {
   display: flex;
   margin-top: 20px;
@@ -43,7 +45,7 @@ function handleDeal() {
 .btn-item {
   background-image: linear-gradient(135deg, #0c70f2, #0c60f2 70%, #0c32f2);
   color: #fff;
-  width: 40%;
+  width: 100%;
   height: 80rpx;
   line-height: 80rpx;
 }
