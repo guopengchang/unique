@@ -21,6 +21,7 @@ import clue from "@/static/management-pic/clue.png";
 import user from "@/static/management-pic/HighSeasCustomer.png";
 import client from "@/static/management-pic/customer.png";
 import hopper from "@/static/management-pic/hopper.png";
+import payPlan from "@/static/management-pic/payPlan.png"
 // 猜你喜欢的列表
 const getCustomerList = ref<any[]>([
   {
@@ -48,6 +49,11 @@ const getCustomerList = ref<any[]>([
     icon: client,
     name: "客户",
   },
+  {
+    path: "/pages/getCustomer/payPlan",
+    icon: payPlan,
+    name: "回款计划",
+  },
 ]);
 </script>
 
@@ -66,8 +72,8 @@ const getCustomerList = ref<any[]>([
     height: 200rpx;
     display: inline-block;
     .image {
-      width: 30px;
-      height: 30px;
+      width: 60rpx;
+      height: 60rpx;
     }
   }
 }

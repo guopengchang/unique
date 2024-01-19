@@ -99,95 +99,97 @@ onLoad((e) => {
 });
 </script>
 <template>
-  <uni-forms
-    err-show-type="toast"
-    :rules="rules"
-    ref="paymentForm"
-    :modelValue="formData"
-    label-width="85px"
-    :border="true">
-    <uni-forms-item label="客户ID" name="highsid">
-      <uni-easyinput
-        type="text"
-        :disabled="true"
-        style="text-align: end"
-        v-model="formData.highsid"
-        :inputBorder="false"
-        :clearable="false" />
-    </uni-forms-item>
-    <uni-forms-item label="回款金额" name="planmoney">
-      <uni-easyinput
-        type="text"
-        :inputBorder="false"
-        :clearable="false"
-        v-model="formData.planmoney"
-        style="text-align: end"
-        placeholder="请输入回款金额"
-        placeholderStyle="text-align: end" />
-    </uni-forms-item>
-    <uni-forms-item label="回款期数" name="termmoney">
-      <uni-easyinput
-        type="text"
-        :inputBorder="false"
-        :clearable="false"
-        style="text-align: end"
-        v-model="formData.termmoney"
-        placeholder="请输入汇款期数"
-        placeholderStyle="text-align: end" />
-    </uni-forms-item>
-    <uni-forms-item label="回款日期" name="moneydate">
-      <uni-datetime-picker
-        style="text-align: end"
-        :clearIcon="false"
-        :border="false"
-        type="date"
-        v-model="formData.moneydate">
-      </uni-datetime-picker>
-    </uni-forms-item>
-    <uni-forms-item label="回款方式" name="waymoney">
-      <uni-easyinput
-        type="text"
-        @iconClick="() => openPop(popupSource)"
-        :disabled="true"
-        style="text-align: end"
-        suffixIcon="right"
-        :inputBorder="false"
-        v-model="formData.waymoney"
-        placeholder="请选择回款方式"
-        placeholderStyle="text-align: end" />
-    </uni-forms-item>
-  </uni-forms>
-  <button
-    style="margin-top: 20px; width: 60vw; border-radius: 20px"
-    type="primary"
-    @click="submit(paymentForm)">
-    提交
-  </button>
-  <div style="height: 20px"></div>
-
   <view>
-    <uni-popup ref="popupSource" type="bottom" style="height: 700rpx">
-      <view class="detail">
-        <view
-          style="
-            display: flex;
-            justify-content: space-around;
-            border-bottom: 0.5px solid #f3f3f3;
-            font-size: 14px;
-            margin-bottom: 20px;
-          ">
-          <div style="margin: 10px 0" @click="() => closePop(popupSource)">
-            取消
-          </div>
-          <div
-            style="margin: 10px 0; color: #007aff"
-            @click="() => confirm(popupSource)">
-            确定
-          </div>
+    <uni-forms
+      err-show-type="toast"
+      :rules="rules"
+      ref="paymentForm"
+      :modelValue="formData"
+      label-width="85px"
+      :border="true">
+      <uni-forms-item label="客户ID" name="highsid">
+        <uni-easyinput
+          type="text"
+          :disabled="true"
+          style="text-align: end"
+          v-model="formData.highsid"
+          :inputBorder="false"
+          :clearable="false" />
+      </uni-forms-item>
+      <uni-forms-item label="回款金额" name="planmoney">
+        <uni-easyinput
+          type="text"
+          :inputBorder="false"
+          :clearable="false"
+          v-model="formData.planmoney"
+          style="text-align: end"
+          placeholder="请输入回款金额"
+          placeholderStyle="text-align: end" />
+      </uni-forms-item>
+      <uni-forms-item label="回款期数" name="termmoney">
+        <uni-easyinput
+          type="text"
+          :inputBorder="false"
+          :clearable="false"
+          style="text-align: end"
+          v-model="formData.termmoney"
+          placeholder="请输入汇款期数"
+          placeholderStyle="text-align: end" />
+      </uni-forms-item>
+      <uni-forms-item label="回款日期" name="moneydate">
+        <uni-datetime-picker
+          style="text-align: end"
+          :clearIcon="false"
+          :border="false"
+          type="date"
+          v-model="formData.moneydate">
+        </uni-datetime-picker>
+      </uni-forms-item>
+      <uni-forms-item label="回款方式" name="waymoney">
+        <uni-easyinput
+          type="text"
+          @iconClick="() => openPop(popupSource)"
+          :disabled="true"
+          style="text-align: end"
+          suffixIcon="right"
+          :inputBorder="false"
+          v-model="formData.waymoney"
+          placeholder="请选择回款方式"
+          placeholderStyle="text-align: end" />
+      </uni-forms-item>
+    </uni-forms>
+    <button
+      style="margin-top: 20rpx; width: 60vw; border-radius: 20rpx"
+      type="primary"
+      @click="submit(paymentForm)">
+      提交
+    </button>
+    <div style="height: 20rpx"></div>
+
+    <view>
+      <uni-popup ref="popupSource" type="bottom" style="height: 700rpx">
+        <view class="detail">
+          <view
+            style="
+              display: flex;
+              justify-content: space-around;
+              border-bottom: 0.5rpx solid #f3f3f3;
+              font-size: 14rpx;
+              margin-bottom: 20rpx;
+            ">
+            <div style="margin: 10rpx 0" @click="() => closePop(popupSource)">
+              取消
+            </div>
+            <div
+              style="margin: 10rpx 0; color: #007aff"
+              @click="() => confirm(popupSource)">
+              确定
+            </div>
+          </view>
+          <uni-data-checkbox v-model="sourceValue" :localdata="sourceRange" />
         </view>
-        <uni-data-checkbox v-model="sourceValue" :localdata="sourceRange" />
-      </view>
-    </uni-popup>
+      </uni-popup>
+    </view>
   </view>
 </template>
 
@@ -202,19 +204,19 @@ onLoad((e) => {
   color: #999 !important;
 }
 :deep(.uni-forms-item__label) {
-  padding-left: 10px;
+  padding-left: 10rpx;
 }
 :deep(.detail .checklist-group) {
   flex-direction: column;
 }
 :deep(.detail .uni-label-pointer) {
-  margin: 15px 20px !important;
+  margin: 15rpx 20rpx !important;
 }
 .detail {
   height: 60vh;
   width: 100%;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-top-left-radius: 5rpx;
+  border-top-right-radius: 5rpx;
   background-color: #fffefe;
 }
 :deep(.is-disabled .uni-input-input) {
@@ -227,6 +229,6 @@ onLoad((e) => {
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: auto;
-  margin-right: 10px;
+  margin-right: 10rpx;
 }
 </style>

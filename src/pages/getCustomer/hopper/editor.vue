@@ -54,7 +54,7 @@ function submit(e) {
 
   .line {
     background: #fff;
-    border-bottom: 1px solid #e3d8d8;
+    border-bottom: 1rpx solid #e3d8d8;
     position: relative;
     padding: 24rpx 20rpx 24rpx 150rpx;
 
@@ -97,7 +97,7 @@ function submit(e) {
       color: #fff;
     }
     .remove {
-      border: 1px solid #ccc;
+      border: 1rpx solid #ccc;
       box-shadow: 0 6rpx 12rpx 0 rgb(0 0 0 / 5%);
       color: #333;
     }

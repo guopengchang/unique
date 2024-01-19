@@ -171,7 +171,7 @@ onLoad((e) => {
         :rules="rules"
         ref="clientForm"
         :modelValue="formData"
-        label-width="85px"
+        label-width="85rpx"
         :border="true">
         <uni-forms-item label="姓名" name="cuname" required>
           <uni-easyinput
@@ -320,15 +320,15 @@ onLoad((e) => {
             style="
               display: flex;
               justify-content: space-around;
-              border-bottom: 0.5px solid #f3f3f3;
-              font-size: 14px;
-              margin-bottom: 20px;
+              border-bottom: 1rpx solid #f3f3f3;
+              font-size: 14rpx;
+              margin-bottom: 20rpx;
             ">
-            <div style="margin: 10px 0" @click="() => closePop(popupSource)">
+            <div style="margin: 10rpx 0" @click="() => closePop(popupSource)">
               取消
             </div>
             <div
-              style="margin: 10px 0; color: #007aff"
+              style="margin: 10rpx 0; color: #007aff"
               @click="() => confirm(popupSource)">
               确定
             </div>
@@ -344,15 +344,15 @@ onLoad((e) => {
             style="
               display: flex;
               justify-content: space-around;
-              border-bottom: 0.5px solid #f3f3f3;
-              font-size: 14px;
-              margin-bottom: 20px;
+              border-bottom: 0.5rpx solid #f3f3f3;
+              font-size: 14rpx;
+              margin-bottom: 20rpx;
             ">
-            <div style="margin: 10px 0" @click="() => closePop(popupProd)">
+            <div style="margin: 10rpx 0" @click="() => closePop(popupProd)">
               取消
             </div>
             <div
-              style="margin: 10px 0; color: #007aff"
+              style="margin: 10rpx 0; color: #007aff"
               @click="() => confirm(popupProd)">
               确定
             </div>
@@ -363,12 +363,12 @@ onLoad((e) => {
     </view>
 
     <button
-      style="margin-top: 20px; width: 60vw; border-radius: 20px"
+      style="margin-top: 20rpx; width: 60vw; border-radius: 20rpx"
       type="primary"
       @click="submit(clientForm)">
       提交
     </button>
-    <div style="height: 20px"></div>
+    <div style="height: 20rpx"></div>
   </view>
 </template>
 <style scoped>
@@ -382,19 +382,19 @@ onLoad((e) => {
   color: #999 !important;
 }
 :deep(.uni-forms-item__label) {
-  padding-left: 10px;
+  padding-left: 10rpx;
 }
 :deep(.detail .checklist-group) {
   flex-direction: column;
 }
 :deep(.detail .uni-label-pointer) {
-  margin: 15px 20px !important;
+  margin: 15rpx 20rpx !important;
 }
 .detail {
   height: 60vh;
   width: 100%;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-top-left-radius: 5rpx;
+  border-top-right-radius: 5rpx;
   background-color: #fffefe;
 }
 :deep(.is-disabled .uni-input-input) {

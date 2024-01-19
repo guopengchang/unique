@@ -55,10 +55,10 @@ export const addPayplan = (data: any) => {
 };
 
 //获取客户列表
-export const getClientList = () => {
+export const getClientList = (num?: number, filter?: string) => {
   return http({
     method: "GET",
-    url: "system/highseas/list?cuflag=2",
+    url: "system/highseas/list?cuflag=2&pageSize=20&pageNum=" + num + filter,
   });
 };
 
@@ -156,10 +156,10 @@ export const addfollowlist = (data: any) => {
   });
 };
 //获取公海客户数据
-export const getQrCodeUser = (id: any) => {
+export const getQrCodeUser = (num?:any, filter?:any) => {
   return http({
     method: "GET",
-    url: "system/highseas/list?cuflag=0",
+    url: "system/highseas/list?cuflag=0&pageSize=20&pageNum=" + num + filter,
   });
 };
 //获取线索数据
@@ -174,5 +174,22 @@ export const getHopper = (id: any) => {
   return http({
     method: "GET",
     url: "system/highseas/list?cuflag=1&receiveflag=1",
+  });
+};
+
+//获取回款计划列表
+export const getPayPlanList = (num?: number) => {
+  return http({
+    method: "GET",
+    url: "/system/payplan/list?pageSize=20&pageNum=" + num,
+  });
+};
+
+//上传电话记录
+export const addPhoneRecord = (data: any) => {
+  return http({
+    method: "POST",
+    data: data,
+    url: "system/telsale",
   });
 };

@@ -31,7 +31,7 @@
 
     <view class="border" style="display: flex; justify-content: space-between">
       <view class="label">下次跟进时间</view>
-      <view style="width: 180px; margin-right: 50rpx">
+      <view style="width: 180rpx; margin-right: 50rpx">
         <uni-datetime-picker
           @change="time"
           class="label"
@@ -132,7 +132,7 @@ followlist().then((res) => {
   margin-bottom: 30rpx;
 }
 .border {
-  border-bottom: 1px solid #e3d8d8;
+  border-bottom: 1rpx solid #e3d8d8;
 }
 .label {
   margin-top: 40rpx;
@@ -146,12 +146,12 @@ followlist().then((res) => {
   width: 160rpx !important;
 }
 .round {
-  margin-left: 10px;
-  margin-bottom: 20px;
-  width: 60px;
-  height: 60px;
+  margin-left: 10rpx;
+  margin-bottom: 20rpx;
+  width: 60rpx;
+  height: 60rpx;
   border-radius: 50%;
-  border: 1px solid red;
+  border: 1rpx solid red;
 }
 .op {
   padding-top: 20rpx;
@@ -173,7 +173,7 @@ followlist().then((res) => {
 }
 .line {
   background: #fff;
-  border-bottom: 1px solid #e3d8d8;
+  border-bottom: 1rpx solid #e3d8d8;
   position: relative;
 
   line-height: 36rpx;

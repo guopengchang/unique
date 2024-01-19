@@ -70,6 +70,12 @@
       }
     },
     {
+      "path": "pages/getCustomer/payPlan",
+      "style": {
+        "navigationBarTitleText": "回款计划"
+      }
+    },
+    {
       "path": "pages/getCustomer/follow-up/list",
       "style": {
         "navigationBarTitleText": "跟进"

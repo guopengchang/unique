@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 const showList = ref(false);
-const emit = defineEmits(['handleSea', 'handleFollow','handlePayment'])
+const emit = defineEmits(['handleSea', 'handleFollow','handlePayment','handleCall'])
 function showDropdown() {
   showList.value = !showList.value;
 }
@@ -17,8 +17,14 @@ defineExpose({
 
 <template>
   <view class="list" v-if="showList">
-    <view class="listItem" @click="emit('handleFollow')">写跟进</view>
-    <view class="listItem" @click="emit('handleSea')">移入公海</view>
-    <view class="listItem" @click="emit('handlePayment')">新建回款</view>
+    <view class="listItem" @click="emit('handleFollow')">写跟进</view>/
+    <view class="listItem" @click="emit('handleSea')">移入公海</view>/
+    <view class="listItem" @click="emit('handlePayment')">新建回款</view>/
+    <view class="listItem" @click="emit('handleCall')">拨打电话</view>
   </view>
 </template>
+<style scoped>
+.listItem:hover{
+  color: #004a99;
+}
+</style>

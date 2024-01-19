@@ -71,16 +71,16 @@ function handleDefine() {
 </script>
 <style scoped>
 .round {
-  margin-left: 10px;
-  margin-bottom: 20px;
-  width: 60px;
-  height: 60px;
+  margin-left: 10rpx;
+  margin-bottom: 20rpx;
+  width: 60rpx;
+  height: 60rpx;
   border-radius: 50%;
-  border: 1px solid red;
+  border: 1rpx solid red;
 }
 .line {
   background: #fff;
-  border-bottom: 1px solid #e3d8d8;
+  border-bottom: 1rpx solid #e3d8d8;
   position: relative;
   padding: 24rpx 20rpx 24rpx 150rpx;
 
@@ -101,7 +101,7 @@ function handleDefine() {
 }
 .line1 {
   background: #fff;
-  border-bottom: 1px solid #e3d8d8;
+  border-bottom: 1rpx solid #e3d8d8;
 }
 .label1 {
   line-height: 100rpx;

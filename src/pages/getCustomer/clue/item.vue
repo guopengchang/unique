@@ -75,7 +75,7 @@
   
     .line {
       background: #fff;
-      border-bottom: 1px solid #e3d8d8;
+      border-bottom: 1rpx solid #e3d8d8;
       position: relative;
       padding: 24rpx 20rpx 24rpx 150rpx;
   

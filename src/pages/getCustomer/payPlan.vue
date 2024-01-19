@@ -1,0 +1,55 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import { getPayPlanList } from "@/services/getCustomer";
+import { onReady, onReachBottom } from "@dcloudio/uni-app";
+const listData = ref([]);
+const page = ref(1);
+const total = ref(0);
+onReady(() => {
+  getPayPlanList(page.value).then((res: any) => {
+    if (res.code !== 200) {
+      uni.showToast({ icon: "none", title: res.msg });
+      return;
+    }
+    if (res.code === 200) {
+      listData.value = res.rows;
+      total.value = res.total;
+    }
+  });
+});
+
+onReachBottom(() => {
+  if (listData.value.length >= total.value) {
+    uni.showToast({
+      title: "没有更多数据",
+      icon: "none",
+    });
+  } else {
+    page.value = page.value + 1;
+    getPayPlanList(page.value).then((res: any) => {
+      listData.value = listData.value.concat(res.rows);
+      total.value = res.total;
+    });
+  }
+});
+</script>
+<template>
+  <view>
+    <view v-for="item in listData" :key="item">
+      <uni-card :title="`客户ID：${item.highsid}`">
+        <view
+          ><text>回款期数：{{ item.termmoney }}</text></view
+        >
+        <view
+          ><text>回款金额:{{ item.planmoney }}</text></view
+        >
+        <view>
+          <text>回款日期:{{ item.moneydate }}</text></view
+        >
+        <view>
+          <text>回款方式:{{ item.waymoney }}</text></view
+        >
+      </uni-card>
+    </view>
+  </view>
+</template>

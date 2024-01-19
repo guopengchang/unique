@@ -13,7 +13,7 @@
     <button @click="submit" type="primary">确认生成二维码</button>
   </uni-forms>
   <div class="signIn">
-    <canvas id="qrcode" canvas-id="qrcode" style="width: 350px; height: 350px"></canvas>
+    <canvas id="qrcode" canvas-id="qrcode" style="width: 350rpx; height: 350rpx"></canvas>
   </div>
 </template>
 

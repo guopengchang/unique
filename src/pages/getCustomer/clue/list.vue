@@ -57,7 +57,7 @@ function handleNew() {
 <style scoped>
 .a {
   color: blue;
-  border-top: 1px solid #e3d8d8;
+  border-top: 1rpx solid #e3d8d8;
   width: 100%;
   position: fixed;
   line-height: 120rpx;

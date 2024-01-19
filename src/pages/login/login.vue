@@ -158,7 +158,7 @@ page {
     width: 220rpx;
     height: 220rpx;
     margin-top: 5vh;
-    border: 1px solid red;
+    border: 1rpx solid red;
   }
 }
 

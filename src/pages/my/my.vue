@@ -1,5 +1,5 @@
 <template>
-  <view class="navbar"  :style="{ paddingTop:` ${top}+ px` }">
+  <view class="navbar"  :style="{ paddingTop:` ${top}+ rpx` }">
     <!-- logo文字 -->
     <view class="logo">
       <image class="logo-image" src="@/static/logo.png"></image>
