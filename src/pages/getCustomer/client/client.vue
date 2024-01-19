@@ -151,10 +151,10 @@ function handleFilter(e: any) {
 </template>
 <style scoped>
 .screen {
-  height: calc(100vh - 44rpx);
+  height: calc(100vh - 44px);
 }
 .client {
-  height: calc(100vh - 104rpx);
+  height: calc(100vh - 90rpx - 44px);
 }
 .statistics {
   width: 15rpx;

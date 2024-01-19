@@ -13,7 +13,7 @@ export const postMemberAddressAPI = (data: AddressParams) => {
   });
 };
 
-//签到
+//获取跟进数据
 // /highseas/list
 export const getQrCode = () => {
   return http({
@@ -163,17 +163,18 @@ export const getQrCodeUser = (num?:any, filter?:any) => {
   });
 };
 //获取线索数据
-export const getQrCodeReceive = (id: any) => {
+export const getQrCodeReceive = (num?:number) => {
+  console.log(num)
   return http({
     method: "GET",
-    url: "system/highseas/list?cuflag=1&receiveflag=0",
+    url: "system/highseas/list?cuflag=1&receiveflag=0&pageSize=4&pageNum=" + num,
   });
 };
 //获取漏斗数据
-export const getHopper = (id: any) => {
+export const getHopper = (num?:number) => {
   return http({
     method: "GET",
-    url: "system/highseas/list?cuflag=1&receiveflag=1",
+    url: "system/highseas/list?cuflag=1&receiveflag=1&pageSize=5&pageNum=" + num,
   });
 };
 
@@ -191,5 +192,21 @@ export const addPhoneRecord = (data: any) => {
     method: "POST",
     data: data,
     url: "system/telsale",
+  });
+};
+
+export const batchClue = (data: any) => {
+  return http({
+    method: "POST",
+    data: data,
+    url: "system/highseas/batchgain",
+  });
+};
+//获取搜索
+export const getHopperSearch = (phone:any) => {
+  return http({
+    method: "GET",
+    data:phone,
+    url: "system/highseas/list?cuflag=1&receiveflag=1&pageSize=100&pageNum=1",
   });
 };

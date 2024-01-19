@@ -90,10 +90,10 @@ function handleDeal(id) {
 <style scoped>
 
 .screen {
-  height: calc(100vh - 44rpx);
+  height: calc(100vh - 44px);
 }
 .client {
-  height: calc(100vh - 104rpx);
+  height: calc(100vh - 90rpx - 44px);
 }
 .btn {
   display: flex;

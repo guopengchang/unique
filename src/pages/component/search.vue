@@ -2,7 +2,7 @@
   <uni-easyinput
     prefixIcon="search"
     v-model="filters"
-    style="height: 40rpx; padding: 10rpx 10rpx; width: auto"
+    style="height: 60rpx; padding: 15rpx 10rpx; width: auto"
     focus
     :placeholder="placeholder"
     @input="handleInput">
