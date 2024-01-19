@@ -20,6 +20,7 @@
 <script lang="ts" setup>
 import { onReady } from '@dcloudio/uni-app'
 import { ref, onMounted, reactive } from 'vue'
+
 //ts-ignore
 import UQRCode from 'uqrcodejs'
 let formData = reactive({
@@ -80,6 +81,7 @@ const createQRCode = (data) => {
   qr.drawCanvas()
 }
 const form = ref<any>()
+
 const submit = () => {
   form.value
     .validate()

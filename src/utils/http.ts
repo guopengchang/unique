@@ -28,7 +28,7 @@ const httpInterceptor = {
   },
 }
 uni.addInterceptor('request', httpInterceptor)
-
+uni.addInterceptor('uploadFile', httpInterceptor)
 interface Data<T> {
   msg: string
 }
@@ -42,7 +42,7 @@ export const http = <T>(options: UniApp.RequestOptions): any => {
         } else if (res.statusCode === 401) {
           const memberStore = useMemberStore()
           memberStore.clearProfile()
-          uni.navigateTo({ url: '/pages/login/login' })
+          uni.redirectTo({ url: '/pages/login/login' })
           reject(res)
         } else {
           uni.showToast({

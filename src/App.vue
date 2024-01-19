@@ -6,8 +6,6 @@ onLaunch(() => {
 })
 onShow(() => {
   console.log('App Show')
-  // uni.addInterceptor
-  // uni.addInterceptor()
   permission()
 })
 onHide(() => {

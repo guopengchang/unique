@@ -5,6 +5,9 @@
       <image class="logo-image" src="@/static/logo.png"></image>
       <text class="logo-text">新鲜 · 亲民 · 快捷</text>
     </view>
+    <view>
+      <image src="/static/数据.png" class="image" />
+    </view>
     <!-- 搜索条 -->
     <view class="search">
       <text class="icon-search">搜索商品</text>
@@ -19,7 +22,9 @@ import { ref } from 'vue'
 const { safeAreaInsets  } = uni.getSystemInfoSync() ;
 //ts-ignore
 const top = safeAreaInsets?.top ||0;
-let ref1 = ref();
+let recordingFlag = ref();
+// 调用音频
+
 
 </script>
 
