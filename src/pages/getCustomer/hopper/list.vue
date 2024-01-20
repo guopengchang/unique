@@ -37,7 +37,6 @@
   </view>
 </template>
 <script setup lang="ts">
-import { uni } from "@dcloudio/uni-h5";
 import { getHopper, getChange, getHopperSearch } from "../../../../src/services/getCustomer";
 import { ref, onMounted } from "vue";
 let inputValueFlag = false;

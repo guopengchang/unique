@@ -5,7 +5,7 @@
       :scroll-y="true"
       @scrolltolower="touchGround">
       <checkbox-group @change="batch">
-        <view v-for="users in userInfo">
+        <view v-for="users in userInfo" :key="users.cuname">
           <label style="display: flex">
             <view style="margin: auto 0; margin-left: 20rpx">
               <checkbox :value="users.id" />

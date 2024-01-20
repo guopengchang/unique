@@ -3,6 +3,7 @@ import { ref, reactive } from 'vue'
 import { postLoginWxMinAPI, postLoginAPI } from '@/services/login'
 import { useMemberStore } from '@/stores'
 import { onLoad } from '@dcloudio/uni-app'
+import logo from '@/static/logo.png'
 
 const form = ref<any>()
 
@@ -102,7 +103,7 @@ const loginSuccess = (profile: any) => {
 <template>
   <view class="viewport">
     <view class="logo">
-      <image src="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png"></image>
+      <image :src="logo"></image>
     </view>
     <view class="login">
       <!-- 表单登录 -->
@@ -158,7 +159,6 @@ page {
     width: 220rpx;
     height: 220rpx;
     margin-top: 5vh;
-    border: 1rpx solid red;
   }
 }
 
