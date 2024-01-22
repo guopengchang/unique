@@ -1,14 +1,16 @@
 <template>
-  <view class="content">
-    <uni-card title="获客管理" class="card">
+  <view class="content"  :style="{ marginTop:` ${top}px` }">
+    <uni-card title="获客管理" class="card_box">
+    <view class="card"  v-for="(item, index) in getCustomerList"
+       :key="index + item.name">
       <navigator
+        hover-class="none"
         class="navigator-item"
-        v-for="(item, index) in getCustomerList"
-        :key="index + item.name"
         :url="`${item.path}`">
         <image class="image" mode="aspectFill" :src="item.icon"></image>
         <view class="name"> {{ item.name }} </view>
       </navigator>
+    </view>
     </uni-card>
   </view>
 </template>
@@ -22,6 +24,10 @@ import user from "@/static/management-pic/HighSeasCustomer.png";
 import client from "@/static/management-pic/customer.png";
 import hopper from "@/static/management-pic/hopper.png";
 import payPlan from "@/static/management-pic/payPlan.png"
+
+// 获取屏幕边界到安全区域距离
+const { safeAreaInsets  } = uni.getSystemInfoSync() ;
+const top = safeAreaInsets?.top ||0;
 // 猜你喜欢的列表
 const getCustomerList = ref<any[]>([
   {
@@ -59,21 +65,20 @@ const getCustomerList = ref<any[]>([
 
 <style lang="scss">
 .content {
-  .logo {
-    height: 200rpx;
-    width: 200rpx;
-    margin-top: 200rpx;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 50rpx;
-  }
-  .navigator-item {
+  .card{
     width: 25%;
     height: 200rpx;
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .navigator-item {
+    text-align: center;
     .image {
       width: 60rpx;
       height: 60rpx;
+      margin-bottom: 15rpx;
     }
   }
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import { postLoginWxMinAPI, postLoginAPI } from '@/services/login'
+import {  postLoginAPI } from '@/services/login'
 import { useMemberStore } from '@/stores'
 import { onLoad } from '@dcloudio/uni-app'
 import logo from '@/static/logo.png'
@@ -13,15 +13,16 @@ let formData = reactive({
 })
 
 let rules = {
-  cuschool: {
-    accouont: [
+  username: {
+    rules:[
       {
         required: true,
         errorMessage: '请输账号',
+        minLength: 2,
       },
     ],
   },
-  cugrade: {
+  password: {
     rules: [
       {
         required: true,
@@ -38,25 +39,25 @@ let rules = {
 // 用户登录态，不包含用户昵称、性别、手机号码等信息，作用是用于后端与微信服务器通讯。
 // 获取 code 登录凭证
 // 获取 code 登录凭证
-let code = ''
-onLoad(async () => {
-  const res = await wx.login()
-  code = res.code
-})
+// let code = ''
+// onLoad(async () => {
+//   const res = await wx.login()
+//   code = res.code
+// })
 
 // 获取用户手机号码
 
-const onGetphonenumber = async (ev) => {
-  //获取手机号功能针对非个人开发者，且完成认证的小程序开发
-  //使用企业小程序appid,且吧微信号添加到开发者列表中
-  // 获取参数
-  const encryptedData = ev.detail.encryptedData!
-  const iv = ev.detail.iv!
-  // 登录请求 登录凭证 + 手机号 实现授权登录。
-  await postLoginWxMinAPI({ code, encryptedData, iv })
-  // 成功提示
-  uni.showToast({ icon: 'none', title: '登录成功' })
-}
+// const onGetphonenumber = async (ev) => {
+//   //获取手机号功能针对非个人开发者，且完成认证的小程序开发
+//   //使用企业小程序appid,且吧微信号添加到开发者列表中
+//   // 获取参数
+//   const encryptedData = ev.detail.encryptedData!
+//   const iv = ev.detail.iv!
+//   // 登录请求 登录凭证 + 手机号 实现授权登录。
+//   await postLoginWxMinAPI({ code, encryptedData, iv })
+//   // 成功提示
+//   uni.showToast({ icon: 'none', title: '登录成功' })
+// }
 
 //submit校验
 const submitForm = () => {
@@ -66,27 +67,40 @@ const submitForm = () => {
       loginSubmit()
     })
     .catch((err) => {
-      // console.log('表单错误信息：', err);
       formData.username = ''
       formData.password = ''
     })
 }
+const isLoading=ref(false);
 // 账号密码登录
 const loginSubmit = async () => {
-  const res = await postLoginAPI(formData)
-  if (res.code !== 200) {
-    uni.showToast({ icon: 'none', title: res.msg })
-    return
+  isLoading.value=true;
+  uni.showLoading({
+    title: '加载中'
+  });
+
+  try {
+    const res = await postLoginAPI(formData)
+    uni.hideLoading();
+    isLoading.value=false;
+   if (res.code !== 200) {
+      uni.showToast({ icon: 'fail', title: res.msg,duration:2000 })
+      return
+    }
+    if (res.code === 200) {
+      loginSuccess({ token: res.token,nickname:res.nickname })
+      formData.username = ''
+      formData.password = ''
+    }
+  } catch (error) {
+    uni.hideLoading();
+    isLoading.value=false;
   }
-  if (res.code === 200) {
-    loginSuccess({ token: res.token })
-    formData.username = ''
-    formData.password = ''
-  }
+
 }
 
 const loginSuccess = (profile: any) => {
-  // 保存会员信息
+  // 保存用户信息
   const memberStore = useMemberStore()
   memberStore.setProfile(profile)
   // 成功提示
@@ -115,7 +129,7 @@ const loginSuccess = (profile: any) => {
         <uni-forms-item label="密码" name="password" required>
           <uni-easyinput type="text" v-model="formData.password" placeholder="请输入密码" />
         </uni-forms-item>
-        <button @click="submitForm" class="button" type="primary" :disabled="false">Submit</button>
+        <button @click="submitForm" class="button" type="primary" :disabled="isLoading">Submit</button>
       </uni-forms>
 
       <!-- 小程序端授权登录 -->
@@ -124,8 +138,7 @@ const loginSuccess = (profile: any) => {
         <view class="caption">
           <text>其他方式登录</text>
         </view>
-        <view class="options">
-          <!-- 通用模拟登录 -->
+        <!-- <view class="options">
           <button
             class="button phone"
             open-type="getPhoneNumber"
@@ -133,7 +146,7 @@ const loginSuccess = (profile: any) => {
           >
             <text class="icon icon-phone"> 手机号快捷登录</text>
           </button>
-        </view>
+        </view> -->
       </view>
       <view class="tips">登录/注册即视为你同意《服务条款》和《隐私协议》</view>
     </view>

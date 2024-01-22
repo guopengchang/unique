@@ -14,7 +14,7 @@ const httpInterceptor = {
       options.url = baseURL + options.url
     }
     //请求超时时间
-    options.timeout = 1000
+    options.timeout = 5000
     options.header = {
       ...options.header,
       'source-client': 'miniapp',
@@ -56,6 +56,7 @@ export const http = <T>(options: UniApp.RequestOptions): any => {
         uni.showToast({
           icon: 'fail',
           title: '网络错误',
+          duration:3000
         })
         reject(err)
       },
