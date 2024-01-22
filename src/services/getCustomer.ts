@@ -96,7 +96,7 @@ export const getQrCodeOne = (id: any) => {
   });
 };
 //修改单个学员信息
-export const gets = (id: any, data: any) => {
+export const gets = (data: any) => {
   return http({
     method: "PUT",
     data: data,

@@ -12,7 +12,7 @@
             </view>
 
             <view style="width: 1000rpx">
-              <uni-card :is-shadow="false">
+              <uni-card :is-shadow="true" shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)">
                 <view
                   ><text
                     >客户名称<text>:{{ users.cuname }}</text></text
@@ -105,16 +105,13 @@ function touchGround() {
   }
 }
 //批量领取
-function handleBatch() {
-  batchClue({ ids: batchsize.value });
-
-  uni.navigateTo({
-    url: "/pages/getCustomer/clue/list",
+async function handleBatch() {
+  await batchClue({ ids: batchsize.value });
+  // uni.navigateBack()
+  getQrCodeReceive(num.value).then((res) => {
+    userInfo.value = res.rows;
+    total.value = res.total;
   });
-  // getQrCodeReceive(num.value).then((res) => {
-  //   userInfo.value = res.rows;
-  //   total.value = res.total;
-  // });
 }
 //获取第一页4条数据
 getQrCodeReceive(num.value).then((res: any) => {

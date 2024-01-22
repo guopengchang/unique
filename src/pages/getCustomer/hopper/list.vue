@@ -9,9 +9,7 @@
         @confirm="search"
       />
     <scroll-view class="scroll_box" :scroll-y="true" @scrolltolower="scrolltolower">
-      <view v-for="users in userInfo">
-        <view style="width: 750rpx; ">
-          <uni-card :is-shadow="false" style="margin:auto 0 ">
+          <uni-card v-for="users in userInfo" :is-shadow="false" style="margin:auto 20rpx ">
             <view
               ><text
                 >客户名称<text>:{{ users.cuname }}</text></text
@@ -44,14 +42,13 @@
               <button class="btn-item" size="mini" @click="handleClient(users.id)">转客户</button>
             </view>
           </uni-card>
-        </view>
-      </view>
     </scroll-view>
   </view>
 </template>
 <script setup lang="ts">
 import { getHopper, getChange, getHopperSearch } from "../../../../src/services/getCustomer";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
+import { onShow } from "@dcloudio/uni-app";
 let inputValueFlag = false;
 //存放数据
 const userInfo = ref([]);
@@ -60,7 +57,7 @@ const total = ref();
 //
 const num = ref(1);
 
-onMounted(() => {
+onShow(() => {
   //页面初始化 第一次获取数据
   getHopper().then((res: any) => {
     console.log(res);
@@ -82,10 +79,12 @@ function handleFollow(id: any) {
   });
 }
 // 点击转客户按钮
-function handleClient(id: any) {
-  getChange({ cuflag: 2, id: id });
-  uni.navigateTo({
-    url: "/pages/getCustomer/hopper/list",
+ async function handleClient(id: any) {
+  await getChange({ cuflag: 2, id: id });
+  getHopper().then((res: any) => {
+    console.log(res);
+    userInfo.value = res.rows;
+    total.value = res.total;
   });
 }
 // 触底
@@ -162,5 +161,8 @@ page {
   color: #fff;
   width: 33%;
   line-height: 80rpx;
+}
+body, uni-page-body{
+  background-color:#ededed
 }
 </style>

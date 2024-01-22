@@ -6,7 +6,7 @@
       @input="handleFilter"></search>
     <scroll-view scroll-y class="client" @scrolltolower="ReachBottom">
       <view v-for="users in userInfo">
-        <uni-card :is-shadow="false" :title="users.id">
+        <uni-card :is-shadow="true" shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)" :title="users.id">
           <view
             ><text
               >客户名称<text>:{{ users.cuname }}</text></text
@@ -62,7 +62,7 @@
 <script setup lang="ts">
 import { getQrCodeUser } from "../../../../src/services/getCustomer";
 import { ref } from "vue";
-import { onLoad } from "@dcloudio/uni-app";
+import { onShow } from "@dcloudio/uni-app";
 import search from "../../component/search.vue";
 
 //存放网络层返回的数据
@@ -72,7 +72,7 @@ const page = ref(1);
 let filter = ref("");
 const filters = ref("");
 
-onLoad(() => {
+onShow(() => {
   getQrCodeUser(page.value).then((res: any) => {
     userInfo.value = res.rows;
     total.value = res.total;
@@ -151,5 +151,9 @@ function handleDeal(id) {
 
 :deep(.uni-easyinput__content) {
   height: 70rpx;
+}
+
+body, .uni-page-body{
+  background-color:#ededed
 }
 </style>

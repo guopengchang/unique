@@ -8,8 +8,7 @@
           style="width: 400rpx"
           :clear-icon="false"
           placeholder="点击选择"
-          :localdata="items"
-        >
+          :localdata="items">
         </uni-data-picker>
       </view>
     </view>
@@ -19,7 +18,9 @@
     <view class="round"></view>
   </view>
   <view class="op">
-    <button class="confirm" form-type="submit" @click="handleDefine">确认</button>
+    <button class="confirm" form-type="submit" @click="handleDefine">
+      确认
+    </button>
   </view>
 </template>
 <script setup>
@@ -36,7 +37,7 @@ const items = ref([]);
 const newUserName = ref({});
 
 //存放id
-const id=ref()
+const id = ref();
 
 onLoad((e) => {
   //获取id
@@ -58,16 +59,13 @@ onLoad((e) => {
 function onchange(e) {
   //获取负责人的姓名
   newUserName.value = e.detail.value[0].text;
-  console.log(newUserName.value)
+  console.log(newUserName.value);
 }
 //点击跳转
 function handleDefine() {
-  getUser(id.value,{cuowner:newUserName.value,id:id.value,cuflag:1})
-  uni.navigateTo({
-    url: "/pages/getCustomer/user/list",
-  });
+  getUser(id.value, { cuowner: newUserName.value, id: id.value, cuflag: 1 });
+  uni.navigateBack();
 }
-
 </script>
 <style lang="scss" scoped>
 .round {

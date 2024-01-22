@@ -81,6 +81,14 @@ const items = ref([
     text: "活动",
     value: "6-0",
   },
+  {
+    text: "试听课邀约",
+    value: "7-0",
+  },
+  {
+    text: "体验营邀约",
+    value: "6-0",
+  },
 ]);
 //id
 const id = ref();
