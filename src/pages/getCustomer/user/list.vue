@@ -95,11 +95,16 @@ function ReachBottom() {
 }
 
 function handleFilter(e: any) {
-  if (/^[\d]+$/.test(e)) {
-    filter.value = `&cutel=${e}`;
+  if (!e) {
+    filter.value = "";
   } else {
-    filter.value = `&cuname=${e}`;
+    if (/^[\d]+$/.test(e)) {
+      filter.value = `&cutel=${e}`;
+    } else {
+      filter.value = `&cuname=${e}`;
+    }
   }
+
   page.value = 1;
   getQrCodeUser(page.value, filter.value).then((res: any) => {
     userInfo.value = res.rows;

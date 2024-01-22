@@ -24,6 +24,7 @@ interface client {
   highscont?: string; //备注
 }
 const formData = ref<client>({});
+const oldValue = ref({});
 const clientForm = ref(null);
 const clientId = ref({});
 
@@ -95,7 +96,7 @@ function closePop(popup: any) {
 
 function submit(ref: any) {
   ref.validate((err: any, value: any) => {
-    if ((value = formData.value)) {
+    if (JSON.stringify(oldValue.value) == JSON.stringify(value)) {
       return uni.showToast({
         title: "数据未更改",
         icon: "none",
@@ -108,6 +109,7 @@ function submit(ref: any) {
           icon: "success",
         });
       });
+      oldValue.value = value;
     }
   });
 }
@@ -142,6 +144,7 @@ onLoad((e) => {
       highscont: res.data.highscont,
     };
     formData.value = result;
+    oldValue.value = Object.assign({}, result);
     sourceValue.value = res.data.cusource;
     prodValue.value = res.data.cuprod;
   });
@@ -304,16 +307,8 @@ onLoad((e) => {
       <uni-popup ref="popupSource" type="bottom" style="height: 700rpx">
         <view class="detail">
           <view class="log">
-            <div
-              style="margin: 30rpx 20rpx"
-              @click="() => closePop(popupSource)">
-              取消
-            </div>
-            <div
-              style="margin: 30rpx 20rpx; color: #007aff"
-              @click="() => confirm(popupSource)">
-              确定
-            </div>
+            <div class="concel" @click="() => closePop(popupSource)">取消</div>
+            <div class="confirm" @click="() => confirm(popupSource)">确定</div>
           </view>
           <uni-data-checkbox v-model="sourceValue" :localdata="sourceRange" />
         </view>
@@ -323,14 +318,8 @@ onLoad((e) => {
       <uni-popup ref="popupProd" type="bottom" style="height: 700rpx">
         <view class="detail">
           <view class="log">
-            <div style="margin: 30rpx 20rpx" @click="() => closePop(popupProd)">
-              取消
-            </div>
-            <div
-              style="margin: 30rpx 20rpx; color: #007aff"
-              @click="() => confirm(popupProd)">
-              确定
-            </div>
+            <div class="concel" @click="() => closePop(popupProd)">取消</div>
+            <div class="confirm" @click="() => confirm(popupProd)">确定</div>
           </view>
           <uni-data-checkbox v-model="prodValue" :localdata="prodRange" />
         </view>
@@ -370,9 +359,7 @@ onLoad((e) => {
 :deep(.detail .checklist-group) {
   flex-direction: column;
 }
-:deep(.detail .uni-label-pointer) {
-  margin: 35rpx 40rpx !important;
-}
+
 .detail {
   height: 60vh;
   width: 100%;
@@ -387,5 +374,17 @@ onLoad((e) => {
   border-bottom: 0.5rpx solid #f3f3f3;
   font-size: 28rpx;
   margin-bottom: 20rpx;
+}
+
+.concel {
+  margin: 30rpx 20rpx;
+}
+.confirm {
+  margin: 30rpx 20rpx;
+  color: #007aff;
+}
+
+:deep(.detail .checklist-box) {
+  margin: 35rpx 40rpx !important;
 }
 </style>

@@ -13,14 +13,18 @@ import { ref } from "vue";
 const props = defineProps({
   filters: String,
   tips: String,
-})
+});
 
 const emit = defineEmits(["input"]);
 const filters = ref(props.filters);
+let id: any;
 function handleInput() {
-  nextTick(() => {
-    emit("input", filters.value);
-  });
+  clearTimeout(id);
+  id = setTimeout(() => {
+    nextTick(() => {
+      emit("input", filters.value);
+    });
+  }, 500);
 }
 </script>
 
@@ -32,13 +36,11 @@ function handleInput() {
   padding-top: 20rpx;
   padding-bottom: 10rpx;
 }
-:deep(
-    .uni-easyinput__content-input
-  ) {
+:deep(.uni-easyinput__content-input) {
   height: 70rpx !important;
 }
 
-:deep(.uni-easyinput__content){
+:deep(.uni-easyinput__content) {
   height: 70rpx;
 }
 </style>

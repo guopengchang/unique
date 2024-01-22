@@ -165,16 +165,8 @@ onLoad((e) => {
       <uni-popup ref="popupSource" type="bottom" style="height: 700rpx">
         <view class="detail">
           <view class="log">
-            <div
-              style="margin: 30rpx 20rpx"
-              @click="() => closePop(popupSource)">
-              取消
-            </div>
-            <div
-              style="margin: 30rpx 20rpx; color: #007aff"
-              @click="() => confirm(popupSource)">
-              确定
-            </div>
+            <div class="concel" @click="() => closePop(popupSource)">取消</div>
+            <div class="confirm" @click="() => confirm(popupSource)">确定</div>
           </view>
           <uni-data-checkbox v-model="sourceValue" :localdata="sourceRange" />
         </view>
@@ -205,9 +197,6 @@ onLoad((e) => {
 :deep(.detail .checklist-group) {
   flex-direction: column;
 }
-:deep(.detail .uni-label-pointer) {
-  margin: 35rpx 40rpx !important;
-}
 .detail {
   height: 60vh;
   width: 100%;
@@ -233,5 +222,16 @@ onLoad((e) => {
   flex-shrink: 0;
   flex-basis: auto;
   margin-right: 10rpx;
+}
+.concel {
+  margin: 30rpx 20rpx;
+}
+.confirm {
+  margin: 30rpx 20rpx;
+  color: #007aff;
+}
+
+:deep(.detail .checklist-box) {
+  margin: 35rpx 40rpx !important;
 }
 </style>

@@ -27,8 +27,8 @@ function editClient(id: any) {
     url: `/pages/getCustomer/editClient?id=${id}`,
   });
 }
-function handleFollow() {
-  uni.navigateTo({ url: "/pages/getCustomer/follow-up/item" });
+function handleFollow(id: any) {
+  uni.navigateTo({ url: "/pages/getCustomer/follow-up/item?id=" + id });
 }
 
 function handlePayment(id: any) {
@@ -94,12 +94,18 @@ function ReachBottom() {
 }
 
 function handleFilter(e: any) {
-  if (/^[\d]+$/.test(e)) {
-    filter.value = `&cutel=${e}`;
+  if (!e) {
+    filter.value = "";
   } else {
-    filter.value = `&cuname=${e}`;
+    if (/^[\d]+$/.test(e)) {
+      filter.value = `&cutel=${e}`;
+    } else {
+      filter.value = `&cuname=${e}`;
+    }
   }
+
   page.value = 1;
+  console.log(filter);
   getClientList(page.value, filter.value).then((res: any) => {
     clientList.value = res.rows;
     total.value = res.total;
@@ -133,7 +139,7 @@ function handleFilter(e: any) {
             </view>
           </view>
           <dropMenu
-            v-on:handle-follow="handleFollow"
+            v-on:handle-follow="() => handleFollow(item.id)"
             v-on:handle-sea="() => handleSea(item.id)"
             v-on:handle-payment="() => handlePayment(item.id)"
             v-on:handle-call="() => handleCallPhone(item.cutel, item.cuowner)"
@@ -189,13 +195,11 @@ function handleFilter(e: any) {
   padding-top: 20rpx;
   padding-bottom: 10rpx;
 }
-:deep(
-    .uni-easyinput__content-input
-  ) {
+:deep(.uni-easyinput__content-input) {
   height: 70rpx !important;
 }
 
-:deep(.uni-easyinput__content){
+:deep(.uni-easyinput__content) {
   height: 70rpx;
 }
 </style>
