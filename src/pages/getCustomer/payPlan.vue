@@ -34,7 +34,8 @@ onReachBottom(() => {
 });
 </script>
 <template>
-  <view>
+  <view style="background-color: #f4f4f4;">
+    <view style="height: 1rpx;"></view>
     <view v-for="item in listData" :key="item">
       <uni-card :title="`客户ID：${item.highsid}`">
         <view

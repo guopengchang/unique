@@ -6,14 +6,12 @@ import {
   addPhoneRecord,
 } from "@/services/getCustomer";
 import { ref } from "vue";
-import dropMenu from "../../component/dropMenu.vue";
 import search from "../../component/search.vue";
 const clientList = ref([]);
 const page = ref(1);
 const total = ref(0);
 const filters = ref("");
 let filter = ref("");
-let graphRefs = ref({});
 
 onLoad(() => {
   getClientList(page.value).then((res: any) => {
@@ -45,20 +43,6 @@ function handleSea(id: any) {
   );
 }
 
-function showDropdown(e: any, item: any) {
-  e.stopPropagation();
-  closeDropdown(e, item);
-  graphRefs.value[item].showDropdown();
-}
-function closeDropdown(e: any, filters?: any) {
-  e.stopPropagation();
-  for (let item in graphRefs.value) {
-    if (item != filters) {
-      graphRefs.value[item].closeDropdown();
-    }
-  }
-}
-
 function handleCallPhone(tel: any, owner: any) {
   uni.makePhoneCall({
     phoneNumber: tel,
@@ -71,12 +55,6 @@ function handleCallPhone(tel: any, owner: any) {
     },
   });
 }
-
-const setGraphRef = (el: any, item: string) => {
-  if (el) {
-    graphRefs.value[item] = el;
-  }
-};
 
 function ReachBottom() {
   if (clientList.value.length >= total.value) {
@@ -111,9 +89,23 @@ function handleFilter(e: any) {
     total.value = res.total;
   });
 }
+
+const popupMore = ref(null);
+const client = ref<any>({});
+function setClientID(popup: any, item: any) {
+  client.value = item;
+  openPop(popup);
+}
+function openPop(popup: any) {
+  popup.open();
+}
+
+function closePop(popup: any) {
+  popup.close();
+}
 </script>
 <template>
-  <view class="screen" @tap.stop="closeDropdown">
+  <view class="screen">
     <search
       :filters="filters"
       tips="请输入客户名或手机号"
@@ -134,27 +126,77 @@ function handleFilter(e: any) {
             <view class="btn-item" @click="() => editClient(item.id)"
               >编辑
             </view>
-            <view class="btn-item" @tap.stop="(e) => showDropdown(e, item.id)">
+            <view class="btn-item" @click="() => setClientID(popupMore, item)">
               更多
             </view>
           </view>
-          <dropMenu
-            v-on:handle-follow="() => handleFollow(item.id)"
-            v-on:handle-sea="() => handleSea(item.id)"
-            v-on:handle-payment="() => handlePayment(item.id)"
-            v-on:handle-call="() => handleCallPhone(item.cutel, item.cuowner)"
-            :ref="(el) => setGraphRef(el, item.id)">
-          </dropMenu>
         </uni-card>
       </view>
+      <uni-popup ref="popupMore" type="bottom">
+        <view class="popm">
+          <view class="btnI" @click="() => handleFollow(client.id)">
+            <image
+              class="img"
+              src="../../../static/management-pic/clue.png"
+              mode="scaleToFill" />
+            <view>写跟进</view>
+          </view>
+          <view class="btnI" @click="() => handleSea(client.id)">
+            <image
+              class="img"
+              src="../../../static/management-pic/clue.png"
+              mode="scaleToFill" />
+            <view>移入公海</view></view
+          >
+          <view class="btnI" @click="() => handlePayment(client.id)"
+            ><image
+              class="img"
+              src="../../../static/management-pic/clue.png"
+              mode="scaleToFill" />
+            <view>新建回款</view></view
+          >
+          <view
+            class="btnI"
+            @click="() => handleCallPhone(client.cutel, client.cuowner)"
+            ><image
+              class="img"
+              src="../../../static/management-pic/clue.png"
+              mode="scaleToFill" />
+            <view>拨打电话</view></view
+          >
+        </view>
+      </uni-popup>
       <view style="height: 60rpx"></view>
     </scroll-view>
   </view>
 </template>
 
 <style lang="scss" scoped>
+.img {
+  width: 70rpx;
+  height: 70rpx;
+  margin-bottom: 20rpx;
+}
+.popm {
+  height: 20vh;
+  width: 100%;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+  background-color: #fffefe;
+  display: flex;
+}
+.btnI {
+  width: 25%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+}
 .screen {
   height: 100vh;
+  background-color: #f4f4f4;
 }
 .client {
   height: calc(100vh - 100rpx);

@@ -304,7 +304,7 @@ onLoad((e) => {
     </scroll-view>
 
     <view>
-      <uni-popup ref="popupSource" type="bottom" style="height: 700rpx">
+      <uni-popup ref="popupSource" type="bottom">
         <view class="detail">
           <view class="log">
             <div class="concel" @click="() => closePop(popupSource)">取消</div>
@@ -315,7 +315,7 @@ onLoad((e) => {
       </uni-popup>
     </view>
     <view>
-      <uni-popup ref="popupProd" type="bottom" style="height: 700rpx">
+      <uni-popup ref="popupProd" type="bottom">
         <view class="detail">
           <view class="log">
             <div class="concel" @click="() => closePop(popupProd)">取消</div>

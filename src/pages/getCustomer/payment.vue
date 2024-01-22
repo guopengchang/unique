@@ -162,7 +162,7 @@ onLoad((e) => {
     <div style="height: 20rpx"></div>
 
     <view>
-      <uni-popup ref="popupSource" type="bottom" style="height: 700rpx">
+      <uni-popup ref="popupSource" type="bottom">
         <view class="detail">
           <view class="log">
             <div class="concel" @click="() => closePop(popupSource)">取消</div>
