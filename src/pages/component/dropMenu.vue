@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
 const showList = ref(false);
-const emit = defineEmits(['handleSea', 'handleFollow','handlePayment','handleCall'])
+const emit = defineEmits([
+  "handleSea",
+  "handleFollow",
+  "handlePayment",
+  "handleCall",
+]);
 function showDropdown() {
   showList.value = !showList.value;
 }
@@ -24,7 +29,23 @@ defineExpose({
   </view>
 </template>
 <style scoped>
-.listItem:hover{
+.listItem:hover {
   color: #004a99;
+}
+
+.list {
+  position: absolute;
+  padding: 5rpx 10rpx;
+  border: 1rpx solid #007aff;
+  border-radius: 5rpx;
+  color: #007aff;
+  right: 40rpx;
+  margin-top: 5rpx;
+  display: flex;
+}
+
+.listItem {
+  text-align: center;
+  padding: 3rpx 0;
 }
 </style>

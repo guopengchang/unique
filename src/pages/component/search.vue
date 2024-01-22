@@ -2,9 +2,7 @@
   <uni-easyinput
     prefixIcon="search"
     v-model="filters"
-    style="height: 60rpx; padding: 15rpx 10rpx; width: auto"
-    focus
-    :placeholder="placeholder"
+    :placeholder="tips"
     @input="handleInput">
   </uni-easyinput>
 </template>
@@ -15,11 +13,10 @@ import { ref } from "vue";
 const props = defineProps({
   filters: String,
   tips: String,
-});
+})
 
 const emit = defineEmits(["input"]);
 const filters = ref(props.filters);
-const placeholder = ref(props.tips);
 function handleInput() {
   nextTick(() => {
     emit("input", filters.value);
@@ -27,4 +24,21 @@ function handleInput() {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+:deep(.uni-easyinput) {
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  width: auto !important;
+  padding-top: 20rpx;
+  padding-bottom: 10rpx;
+}
+:deep(
+    .uni-easyinput__content-input
+  ) {
+  height: 70rpx !important;
+}
+
+:deep(.uni-easyinput__content){
+  height: 70rpx;
+}
+</style>

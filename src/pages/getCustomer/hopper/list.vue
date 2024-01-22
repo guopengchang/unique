@@ -1,29 +1,42 @@
 <template>
   <view class="clue_list_page">
-    <view>
-      <uni-search-bar
+    <uni-search-bar
+        style="margin: auto 20rpx"
         radius="100"
         placeholder="按名字或手机号搜索"
         clearButton="none"
         cancelButton="none"
         @confirm="search"
       />
-    </view>
     <scroll-view class="scroll_box" :scroll-y="true" @scrolltolower="scrolltolower">
       <view v-for="users in userInfo">
-        <view style="width: 750rpx">
-          <uni-card :is-shadow="false">
+        <view style="width: 750rpx; ">
+          <uni-card :is-shadow="false" style="margin:auto 0 ">
             <view
-              ><text>客户名称:{{ users.cuname }}</text></view
+              ><text
+                >客户名称<text>:{{ users.cuname }}</text></text
+              ></view
             >
             <view
-              ><text>所学课程:{{ users.cuprod }}</text></view
+              ><text
+                >所选课程<text>:{{ users.cuprod }}</text></text
+              ></view
             >
             <view>
-              <text>招入老师:{{ users.djpeop }}</text></view
+              <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
+                >年级</text
+              ><text>:{{ users.cugrade }}</text></view
             >
             <view>
-              <text>客户手机号:{{ users.cutel }}</text></view
+              <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
+                >学校</text
+              ><text>:{{ users.cuschool }}</text></view
+            >
+
+            <view>
+              <text
+                >在校专业<text>:{{ users.cumajor }}</text></text
+              ></view
             >
             <view class="btn">
               <button class="btn-item" size="mini" @click="() => handleEdit(users.id)">编辑</button>
@@ -49,7 +62,7 @@ const num = ref(1);
 
 onMounted(() => {
   //页面初始化 第一次获取数据
-  getHopper().then((res) => {
+  getHopper().then((res: any) => {
     console.log(res);
     userInfo.value = res.rows;
     total.value = res.total;
@@ -57,19 +70,19 @@ onMounted(() => {
 });
 
 //点击编辑按钮
-function handleEdit(id) {
+function handleEdit(id: any) {
   uni.navigateTo({
     url: `/pages/getCustomer/hopper/editor?id=${id}`,
   });
 }
 // 点击跟进按钮
-function handleFollow(id) {
+function handleFollow(id: any) {
   uni.navigateTo({
     url: `/pages/getCustomer/follow-up/item?id=${id}`,
   });
 }
 // 点击转客户按钮
-function handleClient(id) {
+function handleClient(id: any) {
   getChange({ cuflag: 2, id: id });
   uni.navigateTo({
     url: "/pages/getCustomer/hopper/list",
@@ -90,37 +103,37 @@ function scrolltolower() {
   } else {
     num.value = num.value + 1;
     console.log(num.value);
-    getHopper(num.value).then((res) => {
+    getHopper(num.value).then((res: any) => {
       userInfo.value = userInfo.value.concat(res.rows);
       console.log(res.rows);
     });
   }
 }
 
-function search(e) {
+function search(e: any) {
   if (e.value) {
     inputValueFlag = true;
   } else {
-    getHopper().then((res) => {
+    getHopper().then((res: any) => {
       console.log(res);
       userInfo.value = res.rows;
       total.value = res.total;
     });
-    inputValueFlag = false;  
+    inputValueFlag = false;
     return;
   }
-  let isPhone = !Number.isNaN(Number(e.value)) ? true : false; 
+  let isPhone = !Number.isNaN(Number(e.value)) ? true : false;
   if (isPhone) {
     getHopperSearch({
       cutel: e.value,
-    }).then((res) => {
-      console.log(res,11111)
+    }).then((res: any) => {
+      console.log(res, 11111);
       userInfo.value = res.rows;
     });
   } else {
     getHopperSearch({
       cuname: e.value,
-    }).then((res) => {
+    }).then((res: any) => {
       userInfo.value = res.rows;
     });
   }

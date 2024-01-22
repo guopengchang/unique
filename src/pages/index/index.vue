@@ -28,6 +28,7 @@ import payPlan from "@/static/management-pic/payPlan.png"
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets  } = uni.getSystemInfoSync() ;
 const top = safeAreaInsets?.top ||0;
+import followUp from "@/static/management-pic/followUp.png"
 // 猜你喜欢的列表
 const getCustomerList = ref<any[]>([
   {
@@ -60,6 +61,11 @@ const getCustomerList = ref<any[]>([
     icon: payPlan,
     name: "回款计划",
   },
+  {
+    path: "/pages/getCustomer/follow-up/list",
+    icon: followUp,
+    name: "跟进列表",
+  },
 ]);
 </script>
 
@@ -81,5 +87,9 @@ const getCustomerList = ref<any[]>([
       margin-bottom: 15rpx;
     }
   }
+
 }
+
+
+
 </style>

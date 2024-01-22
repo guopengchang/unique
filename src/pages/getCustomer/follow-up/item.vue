@@ -12,6 +12,7 @@
       <view class="label">跟进方式</view>
       <view class="name" style="margin-left: 190rpx">
         <uni-data-picker
+          :clear-icon="false"
           @change="fashion"
           style="width: 380rpx"
           placeholder="请选择跟进方式"
@@ -31,7 +32,7 @@
 
     <view class="border" style="display: flex; justify-content: space-between">
       <view class="label">下次跟进时间</view>
-      <view style="width: 180rpx; margin-right: 50rpx">
+      <view style="width: 300rpx; margin-right: 50rpx">
         <uni-datetime-picker
           @change="time"
           class="label"

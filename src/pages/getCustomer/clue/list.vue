@@ -14,13 +14,42 @@
             <view style="width: 1000rpx">
               <uni-card :is-shadow="false">
                 <view
-                  ><text>客户名称:{{ users.cuname }}</text></view
+                  ><text
+                    >客户名称<text>:{{ users.cuname }}</text></text
+                  ></view
                 >
                 <view
-                  ><text>所学课程:{{ users.cuprod }}</text></view
+                  ><text
+                    >所选课程<text>:{{ users.cuprod }}</text></text
+                  ></view
                 >
                 <view>
-                  <text>招入老师:{{ users.djpeop }}</text></view
+                  <text
+                    style="
+                      width: 110rpx;
+                      display: inline-block;
+                      text-align: justify;
+                      text-align-last: justify;
+                    "
+                    >年级</text
+                  ><text>:{{ users.cugrade }}</text></view
+                >
+                <view>
+                  <text
+                    style="
+                      width: 110rpx;
+                      display: inline-block;
+                      text-align: justify;
+                      text-align-last: justify;
+                    "
+                    >学校</text
+                  ><text>:{{ users.cuschool }}</text></view
+                >
+
+                <view>
+                  <text
+                    >在校专业<text>:{{ users.cumajor }}</text></text
+                  ></view
                 >
                 <view class="btn">
                   <button
@@ -78,10 +107,10 @@ function touchGround() {
 //批量领取
 function handleBatch() {
   batchClue({ ids: batchsize.value });
-  
+
   uni.navigateTo({
-    url:'/pages/getCustomer/clue/list'
-  })
+    url: "/pages/getCustomer/clue/list",
+  });
   // getQrCodeReceive(num.value).then((res) => {
   //   userInfo.value = res.rows;
   //   total.value = res.total;
@@ -99,7 +128,7 @@ function handleReceive(e) {
   console.log(e, id.value);
   getReceive(id.value, { ...receiveflag, id: id.value, receiveflag: 1 });
   console.log("领取成功");
-  num.value = 1
+  num.value = 1;
   getQrCodeReceive(num.value).then((res: any) => {
     userInfo.value = res.rows;
     total.value = res.total;

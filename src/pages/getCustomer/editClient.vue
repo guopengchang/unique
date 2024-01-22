@@ -171,13 +171,12 @@ onLoad((e) => {
         :rules="rules"
         ref="clientForm"
         :modelValue="formData"
-        label-width="85rpx"
+        label-width="200rpx"
         :border="true">
         <uni-forms-item label="姓名" name="cuname" required>
           <uni-easyinput
             type="text"
             :clearable="false"
-            style="text-align: end"
             v-model="formData.cuname"
             :inputBorder="false"
             placeholder="请输入姓名"
@@ -185,14 +184,12 @@ onLoad((e) => {
         </uni-forms-item>
         <uni-forms-item label="性别" name="cusex">
           <uni-data-checkbox
-            style="justify-content: end"
             v-model="formData.cusex"
             :localdata="range"></uni-data-checkbox>
         </uni-forms-item>
         <uni-forms-item label="身份证号" name="cuidcard">
           <uni-easyinput
             type="text"
-            style="text-align: end"
             :clearable="false"
             :inputBorder="false"
             v-model="formData.cuidcard"
@@ -202,7 +199,6 @@ onLoad((e) => {
         <uni-forms-item label="手机号码" name="cutel" required>
           <uni-easyinput
             type="text"
-            style="text-align: end"
             :inputBorder="false"
             :clearable="false"
             v-model="formData.cutel"
@@ -213,7 +209,6 @@ onLoad((e) => {
           <uni-easyinput
             type="text"
             :inputBorder="false"
-            style="text-align: end"
             :clearable="false"
             v-model="formData.wechatid"
             placeholder="请输入微信号码"
@@ -222,7 +217,6 @@ onLoad((e) => {
         <uni-forms-item label="邮箱" name="cuemail">
           <uni-easyinput
             type="text"
-            style="text-align: end"
             :inputBorder="false"
             :clearable="false"
             v-model="formData.cuemail"
@@ -234,7 +228,6 @@ onLoad((e) => {
             type="text"
             :inputBorder="false"
             :clearable="false"
-            style="text-align: end"
             v-model="formData.cuaddr"
             placeholder="请输入地址"
             placeholderStyle="text-align: end" />
@@ -244,7 +237,6 @@ onLoad((e) => {
             type="text"
             :inputBorder="false"
             :clearable="false"
-            style="text-align: end"
             v-model="formData.curecord"
             placeholder="请输入学历"
             placeholderStyle="text-align: end" />
@@ -254,7 +246,6 @@ onLoad((e) => {
             type="text"
             @iconClick="() => openPop(popupSource)"
             :disabled="true"
-            style="text-align: end"
             suffixIcon="right"
             :inputBorder="false"
             v-model="formData.cusource"
@@ -266,7 +257,6 @@ onLoad((e) => {
             type="text"
             @iconClick="() => openPop(popupProd)"
             :disabled="true"
-            style="text-align: end"
             suffixIcon="right"
             :inputBorder="false"
             v-model="formData.cuprod"
@@ -278,7 +268,6 @@ onLoad((e) => {
             type="text"
             :inputBorder="false"
             :clearable="false"
-            style="text-align: end"
             v-model="formData.cuschool"
             placeholder="请输入学校"
             placeholderStyle="text-align: end" />
@@ -288,7 +277,6 @@ onLoad((e) => {
             type="text"
             :inputBorder="false"
             :clearable="false"
-            style="text-align: end"
             v-model="formData.cugrade"
             placeholder="请输入年级"
             placeholderStyle="text-align: end" />
@@ -298,7 +286,6 @@ onLoad((e) => {
             type="text"
             :inputBorder="false"
             :clearable="false"
-            style="text-align: end"
             v-model="formData.cumajor"
             placeholder="请输入专业"
             placeholderStyle="text-align: end" />
@@ -316,19 +303,14 @@ onLoad((e) => {
     <view>
       <uni-popup ref="popupSource" type="bottom" style="height: 700rpx">
         <view class="detail">
-          <view
-            style="
-              display: flex;
-              justify-content: space-around;
-              border-bottom: 1rpx solid #f3f3f3;
-              font-size: 14rpx;
-              margin-bottom: 20rpx;
-            ">
-            <div style="margin: 10rpx 0" @click="() => closePop(popupSource)">
+          <view class="log">
+            <div
+              style="margin: 30rpx 20rpx"
+              @click="() => closePop(popupSource)">
               取消
             </div>
             <div
-              style="margin: 10rpx 0; color: #007aff"
+              style="margin: 30rpx 20rpx; color: #007aff"
               @click="() => confirm(popupSource)">
               确定
             </div>
@@ -340,19 +322,12 @@ onLoad((e) => {
     <view>
       <uni-popup ref="popupProd" type="bottom" style="height: 700rpx">
         <view class="detail">
-          <view
-            style="
-              display: flex;
-              justify-content: space-around;
-              border-bottom: 0.5rpx solid #f3f3f3;
-              font-size: 14rpx;
-              margin-bottom: 20rpx;
-            ">
-            <div style="margin: 10rpx 0" @click="() => closePop(popupProd)">
+          <view class="log">
+            <div style="margin: 30rpx 20rpx" @click="() => closePop(popupProd)">
               取消
             </div>
             <div
-              style="margin: 10rpx 0; color: #007aff"
+              style="margin: 30rpx 20rpx; color: #007aff"
               @click="() => confirm(popupProd)">
               确定
             </div>
@@ -372,11 +347,19 @@ onLoad((e) => {
   </view>
 </template>
 <style lang="scss" scoped>
+:deep(.uni-forms-item) {
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+}
 :deep(.checklist-group) {
-  justify-content: end;
+  justify-content: flex-end;
 }
 :deep(.is-disabled) {
   background-color: #ffffff !important;
+  color: rgb(51, 51, 51);
+}
+:deep(.uni-easyinput) {
+  text-align: end;
 }
 :deep(.is-disabled .uni-easyinput__placeholder-class) {
   color: #999 !important;
@@ -388,16 +371,21 @@ onLoad((e) => {
   flex-direction: column;
 }
 :deep(.detail .uni-label-pointer) {
-  margin: 15rpx 20rpx !important;
+  margin: 35rpx 40rpx !important;
 }
 .detail {
   height: 60vh;
   width: 100%;
-  border-top-left-radius: 5rpx;
-  border-top-right-radius: 5rpx;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
   background-color: #fffefe;
 }
-:deep(.is-disabled .uni-input-input) {
-  color: rgb(51, 51, 51);
+
+.detail .log {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 0.5rpx solid #f3f3f3;
+  font-size: 28rpx;
+  margin-bottom: 20rpx;
 }
 </style>

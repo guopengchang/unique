@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { onLoad, onReachBottom } from "@dcloudio/uni-app";
+import { onLoad } from "@dcloudio/uni-app";
 import {
   getClientList,
   updateClientSea,
   addPhoneRecord,
 } from "@/services/getCustomer";
 import { ref } from "vue";
-import dropMenu from "./dropMenu.vue";
+import dropMenu from "../../component/dropMenu.vue";
 import search from "../../component/search.vue";
 const clientList = ref([]);
 const page = ref(1);
 const total = ref(0);
 const filters = ref("");
-let filter = ref('')
+let filter = ref("");
 let graphRefs = ref({});
 
 onLoad(() => {
@@ -107,16 +107,12 @@ function handleFilter(e: any) {
 }
 </script>
 <template>
-  <view class="screen">
+  <view class="screen" @tap.stop="closeDropdown">
     <search
       :filters="filters"
-      placeholder="请输入客户名或手机号"
+      tips="请输入客户名或手机号"
       @input="handleFilter"></search>
-    <scroll-view
-      :scroll-y="true"
-      class="client"
-      @click="closeDropdown"
-      @scrolltolower="ReachBottom">
+    <scroll-view :scroll-y="true" class="client" @scrolltolower="ReachBottom">
       <view v-for="item in clientList" :key="item">
         <uni-card class="card" :is-shadow="false" :title="item.id">
           <view
@@ -132,7 +128,7 @@ function handleFilter(e: any) {
             <view class="btn-item" @click="() => editClient(item.id)"
               >编辑
             </view>
-            <view class="btn-item" @click="(e) => showDropdown(e, item.id)">
+            <view class="btn-item" @tap.stop="(e) => showDropdown(e, item.id)">
               更多
             </view>
           </view>
@@ -140,7 +136,7 @@ function handleFilter(e: any) {
             v-on:handle-follow="handleFollow"
             v-on:handle-sea="() => handleSea(item.id)"
             v-on:handle-payment="() => handlePayment(item.id)"
-            v-on:handle-call="() => handleCallPhone(13546473975, item.cuowner)"
+            v-on:handle-call="() => handleCallPhone(item.cutel, item.cuowner)"
             :ref="(el) => setGraphRef(el, item.id)">
           </dropMenu>
         </uni-card>
@@ -152,10 +148,10 @@ function handleFilter(e: any) {
 
 <style lang="scss" scoped>
 .screen {
-  height: calc(100vh - 44px);
+  height: 100vh;
 }
 .client {
-  height: calc(100vh - 90rpx - 44px);
+  height: calc(100vh - 100rpx);
 }
 
 .statistics {
@@ -182,24 +178,24 @@ function handleFilter(e: any) {
   color: #007aff;
 }
 
-.list {
-  position: absolute;
-  padding: 5rpx 10rpx;
-  border: 1rpx solid #007aff;
-  border-radius: 5rpx;
-  color: #007aff;
-  right: 40rpx;
-  margin-top: 5rpx;
-  display: flex;
-}
-
-.listItem {
-  text-align: center;
-  padding: 3rpx 0;
-}
-
-
 :deep(.uni-card) {
   overflow: visible;
+}
+
+:deep(.uni-easyinput) {
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  width: auto !important;
+  padding-top: 20rpx;
+  padding-bottom: 10rpx;
+}
+:deep(
+    .uni-easyinput__content-input
+  ) {
+  height: 70rpx !important;
+}
+
+:deep(.uni-easyinput__content){
+  height: 70rpx;
 }
 </style>
