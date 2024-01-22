@@ -51,5 +51,6 @@ onReachBottom(() => {
         >
       </uni-card>
     </view>
+    <view style="height: 10rpx;"></view>
   </view>
 </template>

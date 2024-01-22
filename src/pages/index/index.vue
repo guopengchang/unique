@@ -22,6 +22,7 @@ import user from "@/static/management-pic/HighSeasCustomer.png";
 import client from "@/static/management-pic/customer.png";
 import hopper from "@/static/management-pic/hopper.png";
 import payPlan from "@/static/management-pic/payPlan.png"
+import followUp from "@/static/management-pic/followUp.png"
 // 猜你喜欢的列表
 const getCustomerList = ref<any[]>([
   {
@@ -54,6 +55,11 @@ const getCustomerList = ref<any[]>([
     icon: payPlan,
     name: "回款计划",
   },
+  {
+    path: "/pages/getCustomer/follow-up/list",
+    icon: followUp,
+    name: "跟进列表",
+  },
 ]);
 </script>
 
@@ -67,14 +73,21 @@ const getCustomerList = ref<any[]>([
     margin-right: auto;
     margin-bottom: 50rpx;
   }
-  .navigator-item {
+  .navigator-item{
     width: 25%;
     height: 200rpx;
+    text-align: center;
     display: inline-block;
-    .image {
-      width: 60rpx;
-      height: 60rpx;
+    .image{
+      width: 30px;
+      height: 30px;
+      display: block;
+      margin: 20rpx auto;
     }
   }
+
 }
+
+
+
 </style>

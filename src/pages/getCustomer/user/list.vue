@@ -2,22 +2,48 @@
   <view class="screen">
     <search
       :filters="filters"
-      placeholder="请输入客户名或手机号"
+      tips="请输入客户名或手机号"
       @input="handleFilter"></search>
     <scroll-view scroll-y class="client" @scrolltolower="ReachBottom">
       <view v-for="users in userInfo">
         <uni-card :is-shadow="false" :title="users.id">
           <view
-            ><text>客户名称:{{ users.cuname }}</text></view
+            ><text
+              >客户名称<text>:{{ users.cuname }}</text></text
+            ></view
           >
           <view
-            ><text>所学课程:{{ users.cuprod }}</text></view
+            ><text
+              >所选课程<text>:{{ users.cuprod }}</text></text
+            ></view
           >
           <view>
-            <text>招入老师:{{ users.djpeop }}</text></view
+            <text
+              style="
+                width: 110rpx;
+                display: inline-block;
+                text-align: justify;
+                text-align-last: justify;
+              "
+              >年级</text
+            ><text>:{{ users.cugrade }}</text></view
           >
           <view>
-            <text>负责人:{{ users.cuowner }}</text></view
+            <text
+              style="
+                width: 110rpx;
+                display: inline-block;
+                text-align: justify;
+                text-align-last: justify;
+              "
+              >学校</text
+            ><text>:{{ users.cuschool }}</text></view
+          >
+
+          <view>
+            <text
+              >在校专业<text>:{{ users.cumajor }}</text></text
+            ></view
           >
           <view class="btn">
             <button
@@ -29,6 +55,7 @@
           </view>
         </uni-card>
       </view>
+      <div style="height: 20rpx"></div>
     </scroll-view>
   </view>
 </template>
@@ -88,12 +115,11 @@ function handleDeal(id) {
 }
 </script>
 <style lang="scss" scoped>
-
 .screen {
-  height: calc(100vh - 44px);
+  height: 100vh;
 }
 .client {
-  height: calc(100vh - 90rpx - 44px);
+  height: calc(100vh - 100rpx);
 }
 .btn {
   display: flex;
@@ -105,5 +131,20 @@ function handleDeal(id) {
   width: 100%;
   height: 80rpx;
   line-height: 80rpx;
+}
+
+:deep(.uni-easyinput) {
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  width: auto !important;
+  padding-top: 20rpx;
+  padding-bottom: 10rpx;
+}
+:deep(.uni-easyinput__content-input) {
+  height: 70rpx !important;
+}
+
+:deep(.uni-easyinput__content) {
+  height: 70rpx;
 }
 </style>

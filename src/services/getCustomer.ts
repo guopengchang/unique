@@ -14,11 +14,10 @@ export const postMemberAddressAPI = (data: AddressParams) => {
 };
 
 //获取跟进数据
-// /highseas/list
 export const getQrCode = () => {
   return http({
     method: "GET",
-    url: "system/highseas/list?cuflag=1",
+    url: "/system/follow/selnewfollow",
   });
 };
 
@@ -56,9 +55,10 @@ export const addPayplan = (data: any) => {
 
 //获取客户列表
 export const getClientList = (num?: number, filter?: string) => {
+  const filters = filter ? filter : "";
   return http({
     method: "GET",
-    url: "system/highseas/list?cuflag=2&pageSize=20&pageNum=" + num + filter,
+    url: "system/highseas/list?cuflag=2&pageSize=20&pageNum=" + num + filters,
   });
 };
 
@@ -156,25 +156,28 @@ export const addfollowlist = (data: any) => {
   });
 };
 //获取公海客户数据
-export const getQrCodeUser = (num?:any, filter?:any) => {
+export const getQrCodeUser = (num?: any, filter?: any) => {
+  const filters = filter ? filter : "";
   return http({
     method: "GET",
-    url: "system/highseas/list?cuflag=0&pageSize=20&pageNum=" + num + filter,
+    url: "system/highseas/list?cuflag=0&pageSize=20&pageNum=" + num + filters,
   });
 };
 //获取线索数据
-export const getQrCodeReceive = (num?:number) => {
-  console.log(num)
+export const getQrCodeReceive = (num?: number) => {
+  console.log(num);
   return http({
     method: "GET",
-    url: "system/highseas/list?cuflag=1&receiveflag=0&pageSize=4&pageNum=" + num,
+    url:
+      "system/highseas/list?cuflag=1&receiveflag=0&pageSize=4&pageNum=" + num,
   });
 };
 //获取漏斗数据
-export const getHopper = (num?:number) => {
+export const getHopper = (num?: number) => {
   return http({
     method: "GET",
-    url: "system/highseas/list?cuflag=1&receiveflag=1&pageSize=5&pageNum=" + num,
+    url:
+      "system/highseas/list?cuflag=1&receiveflag=1&pageSize=5&pageNum=" + num,
   });
 };
 
@@ -203,10 +206,10 @@ export const batchClue = (data: any) => {
   });
 };
 //获取搜索
-export const getHopperSearch = (phone:any) => {
+export const getHopperSearch = (phone: any) => {
   return http({
     method: "GET",
-    data:phone,
+    data: phone,
     url: "system/highseas/list?cuflag=1&receiveflag=1&pageSize=100&pageNum=1",
   });
 };
