@@ -5,18 +5,21 @@
       tips="请输入客户名或手机号"
       @input="handleFilter"></search>
     <scroll-view scroll-y class="client" @scrolltolower="ReachBottom">
-      <view v-for="users in userInfo">
-        <uni-card :is-shadow="true" shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)" :title="users.id">
-          <view
-            ><text
-              >客户名称<text>:{{ users.cuname }}</text></text
-            ></view
-          >
-          <view
-            ><text
-              >所选课程<text>:{{ users.cuprod }}</text></text
-            ></view
-          >
+      <view v-for="users in userInfo" :key="users.id">
+        <uni-card
+          :is-shadow="true"
+          shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)"
+          :title="users.id">
+          <view>
+            <text
+              >客户名称<text>:{{ users.cuname }}</text>
+            </text>
+          </view>
+          <view>
+            <text
+              >所选课程<text>:{{ users.cuprod }}</text>
+            </text>
+          </view>
           <view>
             <text
               style="
@@ -25,9 +28,10 @@
                 text-align: justify;
                 text-align-last: justify;
               "
-              >年级</text
-            ><text>:{{ users.cugrade }}</text></view
-          >
+              >年级
+            </text>
+            <text>:{{ users.cugrade }}</text>
+          </view>
           <view>
             <text
               style="
@@ -36,15 +40,15 @@
                 text-align: justify;
                 text-align-last: justify;
               "
-              >学校</text
-            ><text>:{{ users.cuschool }}</text></view
-          >
-
+              >学校
+            </text>
+            <text>:{{ users.cuschool }}</text>
+          </view>
           <view>
             <text
-              >在校专业<text>:{{ users.cumajor }}</text></text
-            ></view
-          >
+              >在校专业<text>:{{ users.cumajor }}</text>
+            </text>
+          </view>
           <view class="btn">
             <button
               class="btn-item"
@@ -64,21 +68,33 @@ import { getQrCodeUser } from "../../../../src/services/getCustomer";
 import { ref } from "vue";
 import { onShow } from "@dcloudio/uni-app";
 import search from "../../component/search.vue";
-
 //存放网络层返回的数据
 const userInfo = ref<any>({});
 const total = ref(0);
 const page = ref(1);
 let filter = ref("");
 const filters = ref("");
-
 onShow(() => {
   getQrCodeUser(page.value).then((res: any) => {
-    userInfo.value = res.rows;
-    total.value = res.total;
+    console.log(res);
+    if (res.code !== 200) {
+      uni.showToast({ icon: "none", title: res.msg });
+    }
+    if (res.code === 200) {
+      if (res.total !== 0) {
+        userInfo.value = res.rows;
+        total.value = res.total;
+        uni.showToast({ icon: "success", title: res.msg });
+      } else {
+        uni.showToast({
+          icon: "error",
+          title: "数据列表为空或没有权限",
+          duration: 3000,
+        });
+      }
+    }
   });
 });
-
 function ReachBottom() {
   if (userInfo.value.length >= total.value) {
     uni.showToast({
@@ -93,7 +109,6 @@ function ReachBottom() {
     });
   }
 }
-
 function handleFilter(e: any) {
   if (!e) {
     filter.value = "";
@@ -104,14 +119,12 @@ function handleFilter(e: any) {
       filter.value = `&cuname=${e}`;
     }
   }
-
   page.value = 1;
   getQrCodeUser(page.value, filter.value).then((res: any) => {
     userInfo.value = res.rows;
     total.value = res.total;
   });
 }
-
 // 点击跳转
 function handleDeal(id) {
   uni.navigateTo({
@@ -137,7 +150,6 @@ function handleDeal(id) {
   height: 80rpx;
   line-height: 80rpx;
 }
-
 :deep(.uni-easyinput) {
   padding-left: 30rpx;
   padding-right: 30rpx;
@@ -148,12 +160,11 @@ function handleDeal(id) {
 :deep(.uni-easyinput__content-input) {
   height: 70rpx !important;
 }
-
 :deep(.uni-easyinput__content) {
   height: 70rpx;
 }
-
-body, .uni-page-body{
-  background-color:#ededed
+body,
+.uni-page-body {
+  background-color: #ededed;
 }
 </style>

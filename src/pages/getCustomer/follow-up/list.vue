@@ -1,42 +1,46 @@
 <template>
   <view class="clue_list_page">
-    <scroll-view class="scroll_box" :scroll-y="true" @scrolltolower="scrolltolower">
+    <scroll-view class="scroll_box" :scroll-y="true">
       <view v-for="users in userInfo">
         <view>
           <uni-card :is-shadow="false">
-            <view
-              ><text>客户名称:{{ users.cuowner }}</text></view
-            >
-            <view
-              ><text>跟进方式:{{ users.followtype }}</text></view
-            >
             <view>
-              <text>跟进内容:{{ users.followcont }}</text></view
-            >
+              <text>客户名称:{{ users.cuowner }}</text>
+            </view>
+            <view>
+              <text>跟进方式:{{ users.followtype }}</text>
+            </view>
+            <view>
+              <text>跟进内容:{{ users.followcont }}</text>
+            </view>
           </uni-card>
         </view>
       </view>
     </scroll-view>
   </view>
-
- 
 </template>
-<script setup>
-import { getQrCode, followlist } from "../../../../src/services/getCustomer";
+<script setup lang="ts">
+import { getQrCode } from "../../../../src/services/getCustomer";
 import { ref } from "vue";
-
-const userInfo = ref({});
-
-getQrCode().then((res) => {
-  userInfo.value = res.data;
+const userInfo: any = ref({});
+getQrCode().then((res: any) => {
   console.log(res);
+  if (res.code !== 200) {
+    uni.showToast({ icon: "none", title: res.msg });
+  }
+  if (res.code === 200) {
+    if (res.data.length !== 0) {
+      userInfo.value = res.rows;
+      uni.showToast({ icon: "success", title: res.msg });
+    } else {
+      uni.showToast({
+        icon: "error",
+        title: "数据列表为空或没有权限",
+        duration: 3000,
+      });
+    }
+  }
 });
-
-// followlist().then((res) => {
-//   userInfo.value = res.rows;
-//   console.log(res);
-// });
-
 </script>
 <style lang="scss" scoped>
 page {

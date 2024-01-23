@@ -1,23 +1,32 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { getPayPlanList } from "@/services/getCustomer";
-import { onReady, onReachBottom } from "@dcloudio/uni-app";
+import { onLoad, onReachBottom } from "@dcloudio/uni-app";
 const listData = ref([]);
 const page = ref(1);
 const total = ref(0);
-onReady(() => {
+onLoad(() => {
   getPayPlanList(page.value).then((res: any) => {
+    console.log(res);
     if (res.code !== 200) {
       uni.showToast({ icon: "none", title: res.msg });
       return;
     }
     if (res.code === 200) {
-      listData.value = res.rows;
-      total.value = res.total;
+      if (res.total !== 0) {
+        listData.value = res.rows;
+        total.value = res.total;
+        uni.showToast({ icon: "success", title: res.msg });
+      } else {
+        uni.showToast({
+          icon: "error",
+          title: "数据列表为空或没有权限",
+          duration: 3000,
+        });
+      }
     }
   });
 });
-
 onReachBottom(() => {
   if (listData.value.length >= total.value) {
     uni.showToast({
@@ -34,24 +43,24 @@ onReachBottom(() => {
 });
 </script>
 <template>
-  <view style="background-color: #f4f4f4;">
-    <view style="height: 1rpx;"></view>
-    <view v-for="item in listData" :key="item">
+  <view style="background-color: #f4f4f4">
+    <view style="height: 1rpx"></view>
+    <view v-for="item in listData" :key="item.id">
       <uni-card :title="`客户ID：${item.highsid}`">
-        <view
-          ><text>回款期数：{{ item.termmoney }}</text></view
-        >
-        <view
-          ><text>回款金额:{{ item.planmoney }}</text></view
-        >
         <view>
-          <text>回款日期:{{ item.moneydate }}</text></view
-        >
+          <text>回款期数：{{ item.termmoney }}</text>
+        </view>
         <view>
-          <text>回款方式:{{ item.waymoney }}</text></view
-        >
+          <text>回款金额:{{ item.planmoney }}</text>
+        </view>
+        <view>
+          <text>回款日期:{{ item.moneydate }}</text>
+        </view>
+        <view>
+          <text>回款方式:{{ item.waymoney }}</text>
+        </view>
       </uni-card>
     </view>
-    <view style="height: 10rpx;"></view>
+    <view style="height: 10rpx"></view>
   </view>
 </template>

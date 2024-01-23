@@ -7,7 +7,6 @@
         :disabled="true"
         v-model="tableForm.cuname" />
     </view>
-
     <view class="border" style="display: flex">
       <view class="label">跟进方式</view>
       <view class="name" style="margin-left: 190rpx">
@@ -20,7 +19,6 @@
         </uni-data-picker>
       </view>
     </view>
-
     <view>
       <view class="label"> 跟进内容</view>
       <uni-easyinput
@@ -29,7 +27,6 @@
         autoHeight
         placeholder="请输入跟进内容"></uni-easyinput>
     </view>
-
     <view class="border" style="display: flex; justify-content: space-between">
       <view class="label">下次跟进时间</view>
       <view style="width: 300rpx; margin-right: 50rpx">
@@ -40,7 +37,6 @@
           :clear-icon="false"
       /></view>
     </view>
-
     <view class="op">
       <button class="confirm" form-type="submit">确认</button>
     </view>
@@ -100,6 +96,21 @@ const listForm = ref({
   followcont: "",
   nextdate: "",
 });
+//获取客户id和名字
+onLoad((e) => {
+  //获取id
+  id.value = e.id;
+  listForm.value.highsid = e.id;
+  listForm.value.id = e.id;
+  //获取数据
+  getQrCodeOne(e.id).then((res) => {
+    console.log(res);
+    tableForm.value = res.data;
+  });
+});
+followlist().then((res) => {
+  console.log(res);
+});
 //获取跟进方式
 function fashion(e) {
   listForm.value.followtype = e.detail.value[0].text;
@@ -115,22 +126,6 @@ function submit(e) {
 function time(e) {
   listForm.value.nextdate = e;
 }
-//获取客户id和名字
-onLoad((e) => {
-  //获取id
-  id.value = e.id;
-  listForm.value.highsid = e.id;
-  listForm.value.id = e.id;
-  //获取数据
-  getQrCodeOne(e.id).then((res) => {
-    console.log(res);
-    tableForm.value = res.data;
-  });
-});
-
-followlist().then((res) => {
-  console.log(res);
-});
 </script>
 <style lang="scss" scoped>
 .list {

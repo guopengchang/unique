@@ -2,13 +2,14 @@
 import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
 import { getMoneyWay, addPayplan } from "@/services/getCustomer";
-function openPop(popup: any) {
-  popup.open();
+interface payment {
+  highsid?: number; //客户id
+  planmoney?: string; //回款金额
+  termmoney?: string; //回款期数
+  moneydate?: string; //回款日期
+  waymoney?: string; //汇款方式
 }
-function closePop(popup: any) {
-  popup.close();
-}
-
+const formData = ref<payment>({});
 const rules = {
   planmoney: {
     rules: [
@@ -35,50 +36,10 @@ const rules = {
     ],
   },
 };
-
 const popupSource = ref(null);
 const sourceValue = ref(null);
 const sourceRange = ref([]);
-
-function confirm(popup: any) {
-  if (sourceValue.value) {
-    formData.value.waymoney = sourceValue.value;
-  }
-  closePop(popup);
-}
-
-function maskClick(e: any) {
-  console.log(e);
-}
-
-function submit(ref: any) {
-  ref.validate((err: any, value: any) => {
-    console.log(err, value);
-    if (err === null) {
-      addPayplan(value)
-        .then(() => {
-          uni.showToast({
-            title: "新增成功",
-            icon: "success",
-          });
-        })
-        .then(() => {
-          uni.navigateBack();
-        });
-    }
-  });
-}
-
 const paymentForm = ref(null);
-interface payment {
-  highsid?: number; //客户id
-  planmoney?: string; //回款金额
-  termmoney?: string; //回款期数
-  moneydate?: string; //回款日期
-  waymoney?: string; //汇款方式
-}
-const formData = ref<payment>({});
-
 onLoad((e) => {
   if (e.id) {
     formData.value.highsid = e.id;
@@ -97,6 +58,34 @@ onLoad((e) => {
     });
   });
 });
+function confirm(popup: any) {
+  if (sourceValue.value) {
+    formData.value.waymoney = sourceValue.value;
+  }
+  closePop(popup);
+}
+function submit(ref: any) {
+  ref.validate((err: any, value: any) => {
+    if (err === null) {
+      addPayplan(value)
+        .then(() => {
+          uni.showToast({
+            title: "新增成功",
+            icon: "success",
+          });
+        })
+        .then(() => {
+          uni.navigateBack();
+        });
+    }
+  });
+}
+function openPop(popup: any) {
+  popup.open();
+}
+function closePop(popup: any) {
+  popup.close();
+}
 </script>
 <template>
   <view>
@@ -160,7 +149,6 @@ onLoad((e) => {
       提交
     </button>
     <div style="height: 20rpx"></div>
-
     <view>
       <uni-popup ref="popupSource" type="bottom">
         <view class="detail">
@@ -174,13 +162,11 @@ onLoad((e) => {
     </view>
   </view>
 </template>
-
 <style lang="scss" scoped>
 :deep(.uni-forms-item) {
   padding-left: 20rpx;
   padding-right: 20rpx;
 }
-
 :deep(.is-disabled) {
   background-color: #ffffff !important;
   color: rgb(51, 51, 51);
@@ -204,7 +190,6 @@ onLoad((e) => {
   border-top-right-radius: 5rpx;
   background-color: #fffefe;
 }
-
 .detail .log {
   display: flex;
   justify-content: space-around;
@@ -212,11 +197,9 @@ onLoad((e) => {
   font-size: 28rpx;
   margin-bottom: 20rpx;
 }
-
 :deep(.uni-date-x) {
   justify-content: flex-end !important;
 }
-
 :deep(.uni-date__x-input) {
   flex-grow: 0;
   flex-shrink: 0;
@@ -230,7 +213,6 @@ onLoad((e) => {
   margin: 30rpx 20rpx;
   color: #007aff;
 }
-
 :deep(.detail .checklist-box) {
   margin: 35rpx 40rpx !important;
 }

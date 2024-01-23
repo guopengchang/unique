@@ -213,3 +213,11 @@ export const getHopperSearch = (phone: any) => {
     url: "system/highseas/list?cuflag=1&receiveflag=1&pageSize=100&pageNum=1",
   });
 };
+//新增线索
+export const addclueflist = (data: any) => {
+  return http({
+    method: "POST",
+    data: data,
+    url: "system/highseas",
+  });
+};

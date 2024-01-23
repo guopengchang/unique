@@ -1,52 +1,84 @@
 <template>
   <view class="clue_list_page">
     <uni-search-bar
-        style="margin: auto 20rpx"
-        radius="100"
-        placeholder="按名字或手机号搜索"
-        clearButton="none"
-        cancelButton="none"
-        @confirm="search"
-      />
-    <scroll-view class="scroll_box" :scroll-y="true" @scrolltolower="scrolltolower">
-          <uni-card v-for="users in userInfo" :is-shadow="false" style="margin:auto 20rpx ">
-            <view
-              ><text
-                >客户名称<text>:{{ users.cuname }}</text></text
-              ></view
-            >
-            <view
-              ><text
-                >所选课程<text>:{{ users.cuprod }}</text></text
-              ></view
-            >
-            <view>
-              <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
-                >年级</text
-              ><text>:{{ users.cugrade }}</text></view
-            >
-            <view>
-              <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
-                >学校</text
-              ><text>:{{ users.cuschool }}</text></view
-            >
+      style="margin: auto 20rpx"
+      radius="100"
+      placeholder="按名字或手机号搜索"
+      clearButton="none"
+      cancelButton="none"
+      @confirm="search" />
+    <scroll-view
+      class="scroll_box"
+      :scroll-y="true"
+      @scrolltolower="scrolltolower">
+      <uni-card
+        v-for="users in userInfo"
+        :is-shadow="false"
+        style="margin: auto 20rpx">
+        <view>
+          <text
+            >客户名称<text>:{{ users.cuname }}</text>
+          </text>
+        </view>
+        <view>
+          <text
+            >所选课程<text>:{{ users.cuprod }}</text>
+          </text>
+        </view>
+        <view>
+          <text
+            style="
+              width: 110rpx;
+              display: inline-block;
+              text-align: justify;
+              text-align-last: justify;
+            "
+            >年级
+          </text>
+          <text>:{{ users.cugrade }}</text>
+        </view>
+        <view>
+          <text
+            style="
+              width: 110rpx;
+              display: inline-block;
+              text-align: justify;
+              text-align-last: justify;
+            "
+            >学校
+          </text>
+          <text>:{{ users.cuschool }}</text>
+        </view>
 
-            <view>
-              <text
-                >在校专业<text>:{{ users.cumajor }}</text></text
-              ></view
-            >
-            <view class="btn">
-              <button class="btn-item" size="mini" @click="() => handleEdit(users.id)">编辑</button>
-              <button class="btn-item" size="mini" @click="handleFollow(users.id)">跟进</button>
-              <button class="btn-item" size="mini" @click="handleClient(users.id)">转客户</button>
-            </view>
-          </uni-card>
+        <view>
+          <text
+            >在校专业<text>:{{ users.cumajor }}</text>
+          </text>
+        </view>
+        <view class="btn">
+          <button
+            class="btn-item"
+            size="mini"
+            @click="() => handleEdit(users.id)">
+            编辑
+          </button>
+          <button class="btn-item" size="mini" @click="handleFollow(users.id)">
+            跟进
+          </button>
+          <button class="btn-item" size="mini" @click="handleClient(users.id)">
+            转客户
+          </button>
+        </view>
+      </uni-card>
     </scroll-view>
   </view>
 </template>
 <script setup lang="ts">
-import { getHopper, getChange, getHopperSearch } from "../../../../src/services/getCustomer";
+import {
+  getHopper,
+  getChange,
+  getHopperSearch,
+} from "../../../../src/services/getCustomer";
 import { ref } from "vue";
 import { onShow } from "@dcloudio/uni-app";
 let inputValueFlag = false;
@@ -56,16 +88,28 @@ const userInfo = ref([]);
 const total = ref();
 //
 const num = ref(1);
-
 onShow(() => {
   //页面初始化 第一次获取数据
   getHopper().then((res: any) => {
     console.log(res);
-    userInfo.value = res.rows;
-    total.value = res.total;
+    if (res.code !== 200) {
+      uni.showToast({ icon: "none", title: res.msg });
+    }
+    if (res.code === 200) {
+      if (res.total !== 0) {
+        userInfo.value = res.rows;
+        total.value = res.total;
+        uni.showToast({ icon: "success", title: res.msg });
+      } else {
+        uni.showToast({
+          icon: "error",
+          title: "数据列表为空或没有权限",
+          duration: 3000,
+        });
+      }
+    }
   });
 });
-
 //点击编辑按钮
 function handleEdit(id: any) {
   uni.navigateTo({
@@ -79,7 +123,7 @@ function handleFollow(id: any) {
   });
 }
 // 点击转客户按钮
- async function handleClient(id: any) {
+async function handleClient(id: any) {
   await getChange({ cuflag: 2, id: id });
   getHopper().then((res: any) => {
     console.log(res);
@@ -108,7 +152,6 @@ function scrolltolower() {
     });
   }
 }
-
 function search(e: any) {
   if (e.value) {
     inputValueFlag = true;
@@ -162,7 +205,8 @@ page {
   width: 33%;
   line-height: 80rpx;
 }
-body, uni-page-body{
-  background-color:#ededed
+body,
+uni-page-body {
+  background-color: #ededed;
 }
 </style>

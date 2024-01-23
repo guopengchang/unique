@@ -1,23 +1,20 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
-import {  postLoginAPI } from '@/services/login'
-import { useMemberStore } from '@/stores'
-import { onLoad } from '@dcloudio/uni-app'
-import logo from '@/static/logo.png'
-
-const form = ref<any>()
-
+import { ref, reactive } from "vue";
+import { postLoginAPI } from "@/services/login";
+import { useMemberStore } from "@/stores";
+import { onLoad } from "@dcloudio/uni-app";
+import logo from "@/static/logo.png";
+const form = ref<any>();
 let formData = reactive({
-  username: '',
-  password: '',
-})
-
+  username: "",
+  password: "",
+});
 let rules = {
   username: {
-    rules:[
+    rules: [
       {
         required: true,
-        errorMessage: '请输账号',
+        errorMessage: "请输账号",
         minLength: 2,
       },
     ],
@@ -26,11 +23,11 @@ let rules = {
     rules: [
       {
         required: true,
-        errorMessage: '请输入密码',
+        errorMessage: "请输入密码",
       },
     ],
   },
-}
+};
 
 //======登录表单逻辑===
 
@@ -64,47 +61,44 @@ const submitForm = () => {
   form.value
     .validate()
     .then((res) => {
-      loginSubmit()
+      loginSubmit();
     })
     .catch((err) => {
-      formData.username = ''
-      formData.password = ''
-    })
-}
-const isLoading=ref(false);
+      formData.username = "";
+      formData.password = "";
+    });
+};
+const isLoading = ref(false);
 // 账号密码登录
 const loginSubmit = async () => {
-  isLoading.value=true;
+  isLoading.value = true;
   uni.showLoading({
-    title: '加载中'
+    title: "加载中",
   });
-
   try {
-    const res = await postLoginAPI(formData)
+    const res = await postLoginAPI(formData);
     uni.hideLoading();
-    isLoading.value=false;
-   if (res.code !== 200) {
-      uni.showToast({ icon: 'fail', title: res.msg,duration:2000 })
-      return
+    isLoading.value = false;
+    if (res.code !== 200) {
+      uni.showToast({ icon: "fail", title: res.msg, duration: 2000 });
+      return;
     }
     if (res.code === 200) {
-      loginSuccess({ token: res.token,nickname:res.nickname })
-      formData.username = ''
-      formData.password = ''
+      loginSuccess({ token: res.token, nickname: res.nickname });
+      formData.username = "";
+      formData.password = "";
     }
   } catch (error) {
     uni.hideLoading();
-    isLoading.value=false;
+    isLoading.value = false;
   }
-
-}
-
+};
 const loginSuccess = (profile: any) => {
   // 保存用户信息
-  const memberStore = useMemberStore()
-  memberStore.setProfile(profile)
+  const memberStore = useMemberStore();
+  memberStore.setProfile(profile);
   // 成功提示
-  uni.showToast({ icon: 'success', title: '登录成功' })
+  uni.showToast({ icon: "success", title: "登录成功" });
   setTimeout(() => {
     // uni.switchTab跳转的必须是TabBar上的路径；
     // uni.navigateTo跳转非TabBar上的路径
@@ -113,7 +107,6 @@ const loginSuccess = (profile: any) => {
   }, 200)
 }
 </script>
-
 <template>
   <view class="viewport">
     <view class="logo">
@@ -124,16 +117,26 @@ const loginSuccess = (profile: any) => {
       <!-- formData、rules 内容详见下方完整示例 -->
       <uni-forms ref="form" :modelValue="formData" :rules="rules">
         <uni-forms-item label="账号" name="username" required>
-          <uni-easyinput type="text" v-model="formData.username" placeholder="请输入账号" />
+          <uni-easyinput
+            type="text"
+            v-model="formData.username"
+            placeholder="请输入账号" />
         </uni-forms-item>
         <uni-forms-item label="密码" name="password" required>
-          <uni-easyinput type="text" v-model="formData.password" placeholder="请输入密码" />
+          <uni-easyinput
+            type="text"
+            v-model="formData.password"
+            placeholder="请输入密码" />
         </uni-forms-item>
-        <button @click="submitForm" class="button" type="primary" :disabled="isLoading">Submit</button>
+        <button
+          @click="submitForm"
+          class="button"
+          type="primary"
+          :disabled="isLoading">
+          Submit
+        </button>
       </uni-forms>
-
       <!-- 小程序端授权登录 -->
-
       <view class="extra">
         <view class="caption">
           <text>其他方式登录</text>
@@ -142,8 +145,7 @@ const loginSuccess = (profile: any) => {
           <button
             class="button phone"
             open-type="getPhoneNumber"
-            @getphonenumber="onGetphonenumber"
-          >
+            @getphonenumber="onGetphonenumber">
             <text class="icon icon-phone"> 手机号快捷登录</text>
           </button>
         </view> -->
@@ -162,14 +164,12 @@ const loginSuccess = (profile: any) => {
 page {
   height: 100%;
 }
-
 .viewport {
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: 20rpx 40rpx;
 }
-
 .logo {
   // flex: 1;
   text-align: center;
@@ -179,13 +179,11 @@ page {
     margin-top: 5vh;
   }
 }
-
 .login {
   display: flex;
   flex-direction: column;
   height: 60vh;
   padding: 40rpx 20rpx 20rpx;
-
   .input {
     width: 100%;
     height: 80rpx;
@@ -195,7 +193,6 @@ page {
     padding-left: 30rpx;
     margin-bottom: 20rpx;
   }
-
   .button {
     display: flex;
     align-items: center;
@@ -210,15 +207,12 @@ page {
       margin-right: 6rpx;
     }
   }
-
   .phone {
     background-color: #28bb9c;
   }
-
   .wechat {
     background-color: #06c05f;
   }
-
   .extra {
     flex: 1;
     padding: 70rpx 70rpx 0;
@@ -237,7 +231,6 @@ page {
         left: 50%;
       }
     }
-
     .options {
       display: flex;
       justify-content: center;
@@ -248,14 +241,12 @@ page {
         background-color: transparent;
       }
     }
-
     .icon {
       font-size: 24rpx;
       color: #444;
       display: flex;
       flex-direction: column;
       align-items: center;
-
       &::before {
         display: flex;
         align-items: center;
@@ -274,7 +265,6 @@ page {
     }
   }
 }
-
 .tips {
   position: absolute;
   bottom: 80rpx;

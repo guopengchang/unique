@@ -14,28 +14,38 @@ const filters = ref("");
 const popupMore = ref(null);
 const client = ref<any>({});
 let filter = ref("");
-
 onLoad(() => {
   getClientList(page.value).then((res: any) => {
-    clientList.value = res.rows;
-    total.value = res.total;
+    console.log(res);
+    if (res.code !== 200) {
+      uni.showToast({ icon: "none", title: res.msg });
+    }
+    if (res.code === 200) {
+      if (res.total !== 0) {
+        clientList.value = res.rows;
+        total.value = res.total;
+        uni.showToast({ icon: "success", title: res.msg });
+      } else {
+        uni.showToast({
+          icon: "error",
+          title: "数据列表为空或没有权限",
+          duration: 3000,
+        });
+      }
+    }
   });
 });
-
 function editClient(id: any) {
   uni.navigateTo({
     url: `/pages/getCustomer/editClient?id=${id}`,
   });
 }
-
 function handleFollow(id: any) {
   uni.navigateTo({ url: "/pages/getCustomer/follow-up/item?id=" + id });
 }
-
 function handlePayment(id: any) {
   uni.navigateTo({ url: `/pages/getCustomer/payment?id=${id}` });
 }
-
 function handleSea(pop: any, id: any) {
   updateClientSea({ id, cuflag: "0", cuowner: "", receiveflag: "0" }).then(
     () => {
@@ -46,7 +56,6 @@ function handleSea(pop: any, id: any) {
   );
   closePop(pop);
 }
-
 function handleCallPhone(tel: any, owner: any) {
   uni.makePhoneCall({
     phoneNumber: tel,
@@ -59,7 +68,6 @@ function handleCallPhone(tel: any, owner: any) {
     },
   });
 }
-
 function ReachBottom() {
   if (clientList.value.length >= total.value) {
     uni.showToast({
@@ -74,7 +82,6 @@ function ReachBottom() {
     });
   }
 }
-
 function handleFilter(e: any) {
   if (!e) {
     filter.value = "";
@@ -93,16 +100,13 @@ function handleFilter(e: any) {
     total.value = res.total;
   });
 }
-
 function setClientID(popup: any, item: any) {
   client.value = item;
   openPop(popup);
 }
-
 function openPop(popup: any) {
   popup.open();
 }
-
 function closePop(popup: any) {
   popup.close();
 }
@@ -114,17 +118,17 @@ function closePop(popup: any) {
       tips="请输入客户名或手机号"
       @input="handleFilter"></search>
     <scroll-view :scroll-y="true" class="client" @scrolltolower="ReachBottom">
-      <view v-for="item in clientList" :key="item">
+      <view v-for="item in clientList" :key="item.id">
         <uni-card class="card" :is-shadow="false" :title="item.id">
-          <view
-            ><text>客户名称:{{ item.cuname }}</text></view
-          >
-          <view
-            ><text>所学课程:{{ item.cuprod }}</text></view
-          >
           <view>
-            <text>招入老师:{{ item.djpeop }}</text></view
-          >
+            <text>客户名称:{{ item.cuname }}</text>
+          </view>
+          <view>
+            <text>所学课程:{{ item.cuprod }}</text>
+          </view>
+          <view>
+            <text>招入老师:{{ item.djpeop }}</text>
+          </view>
           <view class="btn footer">
             <view class="btn-item" @click="() => editClient(item.id)"
               >编辑
@@ -149,31 +153,30 @@ function closePop(popup: any) {
               class="img"
               src="../../../static/management-pic/clue.png"
               mode="scaleToFill" />
-            <view>移入公海</view></view
-          >
-          <view class="btnI" @click="() => handlePayment(client.id)"
-            ><image
+            <view>移入公海</view>
+          </view>
+          <view class="btnI" @click="() => handlePayment(client.id)">
+            <image
               class="img"
               src="../../../static/management-pic/clue.png"
               mode="scaleToFill" />
-            <view>新建回款</view></view
-          >
+            <view>新建回款</view>
+          </view>
           <view
             class="btnI"
-            @click="() => handleCallPhone(client.cutel, client.cuowner)"
-            ><image
+            @click="() => handleCallPhone(client.cutel, client.cuowner)">
+            <image
               class="img"
               src="../../../static/management-pic/clue.png"
               mode="scaleToFill" />
-            <view>拨打电话</view></view
-          >
+            <view>拨打电话</view>
+          </view>
         </view>
       </uni-popup>
       <view style="height: 60rpx"></view>
     </scroll-view>
   </view>
 </template>
-
 <style lang="scss" scoped>
 .img {
   width: 70rpx;
@@ -204,7 +207,6 @@ function closePop(popup: any) {
 .client {
   height: calc(100vh - 100rpx);
 }
-
 .statistics {
   width: 15rpx;
   height: 15rpx;
@@ -215,7 +217,6 @@ function closePop(popup: any) {
 .footer {
   border-top: 0.5rpx solid #e0e0e0;
 }
-
 .btn {
   padding-top: 10rpx;
   display: flex;
@@ -228,11 +229,9 @@ function closePop(popup: any) {
   padding: 0 10rpx;
   color: #007aff;
 }
-
 :deep(.uni-card) {
   overflow: visible;
 }
-
 :deep(.uni-easyinput) {
   padding-left: 30rpx;
   padding-right: 30rpx;
@@ -243,7 +242,6 @@ function closePop(popup: any) {
 :deep(.uni-easyinput__content-input) {
   height: 70rpx !important;
 }
-
 :deep(.uni-easyinput__content) {
   height: 70rpx;
 }
