@@ -6,7 +6,7 @@ onLaunch(() => {
 })
 onShow(() => {
   console.log('App Show')
-  permission()
+  // permission()
 })
 onHide(() => {
   console.log('App Hide')
