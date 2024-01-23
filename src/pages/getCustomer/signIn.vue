@@ -59,7 +59,7 @@ let rules = {
 }
 const createQRCode = (data) => {
   let encodeParam = encodeURI(
-    `cuschool=${data.cuschool}&cugrade=${data.cugrade}&djpeop=${data.djpeop}&cusource=${data.cusource}`,
+    `cuschool=${data.cuschool}&cugrade=${data.cugrade}&djpeop=${data.djpeop}&cusource=签到`,
   )
   formData.cuschool = ''
   formData.cugrade = ''

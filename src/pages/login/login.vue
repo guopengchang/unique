@@ -102,10 +102,10 @@ const loginSuccess = (profile: any) => {
   setTimeout(() => {
     // uni.switchTab跳转的必须是TabBar上的路径；
     // uni.navigateTo跳转非TabBar上的路径
-    // uni.navigateBack()
-    uni.switchTab({ url: "/pages/index/index" });
-  }, 500);
-};
+    uni.navigateBack()
+    // uni.switchTab({ url: '/pages/index/index' })
+  }, 200)
+}
 </script>
 <template>
   <view class="viewport">
@@ -150,7 +150,12 @@ const loginSuccess = (profile: any) => {
           </button>
         </view> -->
       </view>
-      <view class="tips">登录/注册即视为你同意《服务条款》和《隐私协议》</view>
+      <!-- <view class="tips_box">
+        <label class="tips"><radio value="r1"  />
+          登录/注册即视为你同意《服务条款》和《隐私协议》
+        </label>
+			</view> -->
+     
     </view>
   </view>
 </template>
@@ -269,4 +274,9 @@ page {
   color: #999;
   text-align: center;
 }
+
+:deep(.uni-radio-input){
+  width: 16px;
+  height: 16px;
+} 
 </style>

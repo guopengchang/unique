@@ -3,12 +3,26 @@
     <!-- logo文字 -->
     <view>
     <text class="profile_box">个人信息</text> </view>
-    <view>
-      <text class="nickname">昵称：{{ nickname||'未登录' }}</text>
+    <view  v-if="memberStore.profile">
+      <text class="nickname">昵称：{{ nickname }}</text>
+    </view>
+    <view  v-else>
+      <text class="nickname">您尚未登录</text>
     </view>
       <!-- 操作按钮 -->
     <view class="action" v-if="memberStore.profile">
       <view @tap="onLogout" class="button">退出登录</view>
+    </view>
+    <view class="action" v-else>
+     <navigator
+      class="button"
+      url="/pages/login/login"
+      open-type="navigate"
+      hover-class="none"
+     >
+      前往登录
+     </navigator>
+   
     </view>
   </view>
 </template>
@@ -17,8 +31,8 @@
 import { ref } from 'vue'
 import { onShow } from '@dcloudio/uni-app';
 import { useMemberStore } from '@/stores'
-
 const memberStore = useMemberStore()
+
 // 退出登录
 const onLogout = () => {
   // 模态弹窗
@@ -29,12 +43,13 @@ const onLogout = () => {
         // 清理用户信息
         memberStore.clearProfile()
         // 返回上一页
-        uni.navigateBack()
+        // uni.navigateBack()
+        // uni.switchTab({ url: '/pages/index/index' })
       }
     },
   })
 }
-const nickname=ref('');
+const nickname=ref();
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets  } = uni.getSystemInfoSync() ;
 const top = safeAreaInsets?.top ||0;
@@ -42,6 +57,7 @@ const top = safeAreaInsets?.top ||0;
 onShow(()=>{
  let profile:any= useMemberStore().profile||{}
  nickname.value=profile.nickname
+ console.log(nickname.value)
 })
 </script>
 
