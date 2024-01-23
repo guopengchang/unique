@@ -11,6 +11,8 @@ const clientList = ref([]);
 const page = ref(1);
 const total = ref(0);
 const filters = ref("");
+const popupMore = ref(null);
+const client = ref<any>({});
 let filter = ref("");
 
 onLoad(() => {
@@ -25,6 +27,7 @@ function editClient(id: any) {
     url: `/pages/getCustomer/editClient?id=${id}`,
   });
 }
+
 function handleFollow(id: any) {
   uni.navigateTo({ url: "/pages/getCustomer/follow-up/item?id=" + id });
 }
@@ -33,7 +36,7 @@ function handlePayment(id: any) {
   uni.navigateTo({ url: `/pages/getCustomer/payment?id=${id}` });
 }
 
-function handleSea(id: any) {
+function handleSea(pop: any, id: any) {
   updateClientSea({ id, cuflag: "0", cuowner: "", receiveflag: "0" }).then(
     () => {
       getClientList().then((res: any) => {
@@ -41,6 +44,7 @@ function handleSea(id: any) {
       });
     }
   );
+  closePop(pop);
 }
 
 function handleCallPhone(tel: any, owner: any) {
@@ -90,12 +94,11 @@ function handleFilter(e: any) {
   });
 }
 
-const popupMore = ref(null);
-const client = ref<any>({});
 function setClientID(popup: any, item: any) {
   client.value = item;
   openPop(popup);
 }
+
 function openPop(popup: any) {
   popup.open();
 }
@@ -141,7 +144,7 @@ function closePop(popup: any) {
               mode="scaleToFill" />
             <view>写跟进</view>
           </view>
-          <view class="btnI" @click="() => handleSea(client.id)">
+          <view class="btnI" @click="() => handleSea(popupMore, client.id)">
             <image
               class="img"
               src="../../../static/management-pic/clue.png"
