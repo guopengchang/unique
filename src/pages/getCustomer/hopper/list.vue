@@ -1,84 +1,71 @@
 <template>
-  <view class="clue_list_page">
+  <view class="clue_list_page screen">
     <uni-search-bar
       style="margin: auto 20rpx"
       radius="100"
       placeholder="按名字或手机号搜索"
       clearButton="none"
       cancelButton="none"
-      @confirm="search" />
-    <scroll-view
-      class="scroll_box"
-      :scroll-y="true"
-      @scrolltolower="scrolltolower">
-      <uni-card
-        v-for="users in userInfo"
-        :is-shadow="false"
-        style="margin: auto 20rpx">
-        <view>
-          <text
-            >客户名称<text>:{{ users.cuname }}</text>
-          </text>
-        </view>
-        <view>
-          <text
-            >所选课程<text>:{{ users.cuprod }}</text>
-          </text>
-        </view>
-        <view>
-          <text
-            style="
-              width: 110rpx;
-              display: inline-block;
-              text-align: justify;
-              text-align-last: justify;
-            "
-            >年级
-          </text>
-          <text>:{{ users.cugrade }}</text>
-        </view>
-        <view>
-          <text
-            style="
-              width: 110rpx;
-              display: inline-block;
-              text-align: justify;
-              text-align-last: justify;
-            "
-            >学校
-          </text>
-          <text>:{{ users.cuschool }}</text>
-        </view>
+      @confirm="search"
+    />
+    <scroll-view class="scroll_box" :scroll-y="true" @scrolltolower="scrolltolower">
+      <view>
+        <uni-card v-for="users in userInfo" :is-shadow="false">
+          <view>
+            <text
+              >客户名称<text>:{{ users.cuname }}</text>
+            </text>
+          </view>
+          <view>
+            <text
+              >所选课程<text>:{{ users.cuprod }}</text>
+            </text>
+          </view>
+          <view>
+            <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
+              >年级
+            </text>
+            <text>:{{ users.cugrade }}</text>
+          </view>
+          <view>
+            <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
+              >学校
+            </text>
+            <text>:{{ users.cuschool }}</text>
+          </view>
 
-        <view>
-          <text
-            >在校专业<text>:{{ users.cumajor }}</text>
-          </text>
+          <view>
+            <text
+              >在校专业<text>:{{ users.cumajor }}</text>
+            </text>
+          </view>
+          <view class="btn footer">
+            <view class="btn-item" @click="() => editClient(users.id)">编辑 </view>
+            <view class="btn-item" @click="() => setClientID(popupMore, users)"> 更多 </view>
+          </view>
+        </uni-card>
+      </view>
+      <uni-popup ref="popupMore" type="bottom">
+        <view class="popm">
+          <view class="btnI" @click="() => handleFollow(client.id)">
+            <image class="img" src="../../../static/more-pic/follow.png" mode="scaleToFill" />
+            <view>写跟进</view>
+          </view>
+          <view class="btnI" @click="() => handleClient(popupMore, client.id)">
+            <image class="img" src="../../../static/more-pic/user.png" mode="scaleToFill" />
+            <view>转为客户</view>
+          </view>
+          <view class="btnI" @click="() => handleCallPhone(client.cutel, client.cuowner)">
+            <image class="img" src="../../../static/more-pic/phone.png" mode="scaleToFill" />
+            <view>拨打电话</view>
+          </view>
         </view>
-        <view class="btn">
-          <button
-            class="btn-item"
-            size="mini"
-            @click="() => handleEdit(users.id)">
-            编辑
-          </button>
-          <button class="btn-item" size="mini" @click="handleFollow(users.id)">
-            跟进
-          </button>
-          <button class="btn-item" size="mini" @click="handleClient(users.id)">
-            转客户
-          </button>
-        </view>
-      </uni-card>
+      </uni-popup>
     </scroll-view>
   </view>
 </template>
 <script setup lang="ts">
-import {
-  getHopper,
-  getChange,
-  getHopperSearch,
-} from "../../../../src/services/getCustomer";
+import { getHopper, getChange, getHopperSearch, addPhoneRecord } from "../../../../src/services/getCustomer";
 import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
 let inputValueFlag = false;
@@ -88,6 +75,10 @@ const userInfo = ref([]);
 const total = ref();
 //
 const num = ref(1);
+//
+const client = ref<any>({});
+//
+const popupMore = ref(null);
 onLoad(() => {
   //页面初始化 第一次获取数据
   getHopper().then((res: any) => {
@@ -123,10 +114,9 @@ function handleFollow(id: any) {
   });
 }
 // 点击转客户按钮
-async function handleClient(id: any) {
+async function handleClient(pop: any, id: any) {
   await getChange({ cuflag: 2, id: id });
   getHopper().then((res: any) => {
-    console.log(res);
     userInfo.value = res.rows;
     total.value = res.total;
   }).then(()=>{
@@ -134,7 +124,8 @@ async function handleClient(id: any) {
       icon:'success',
       title:'转客户成功'
     })
-  })
+  });
+  closePop(pop);
 }
 // 触底
 function scrolltolower() {
@@ -185,6 +176,36 @@ function search(e: any) {
     });
   }
 }
+
+function editClient(id: any) {
+  uni.navigateTo({
+    url: `/pages/getCustomer/editClient?id=${id}`,
+  });
+}
+
+function setClientID(popup: any, item: any) {
+  console.log(item);
+  client.value = item;
+  openPop(popup);
+}
+function openPop(popup: any) {
+  popup.open();
+}
+function closePop(popup: any) {
+  popup.close();
+}
+function handleCallPhone(tel: any, owner: any) {
+  uni.makePhoneCall({
+    phoneNumber: tel,
+    success: (result) => {
+      console.log(result);
+      addPhoneRecord({ cuowner: owner, calltel: tel });
+    },
+    fail: (error) => {
+      console.log(error);
+    },
+  });
+}
 </script>
 <style lang="scss" scoped>
 page {
@@ -199,19 +220,45 @@ page {
 .scroll_box {
   height: calc(100% - 125rpx);
 }
+.footer {
+  border-top: 0.5rpx solid #e0e0e0;
+}
 .btn {
-  /* display: flex; */
-  margin-top: 20px;
-  height: 80rpx;
+  padding-top: 10rpx;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20rpx;
 }
 .btn-item {
-  background-image: linear-gradient(135deg, #0c70f2, #0c60f2 70%, #0c32f2);
-  color: #fff;
-  width: 33%;
-  line-height: 80rpx;
+  border: 1rpx solid #007aff;
+  border-radius: 3rpx;
+  padding: 0 10rpx;
+  color: #007aff;
 }
-body,
-uni-page-body {
-  background-color: #ededed;
+.img {
+  width: 70rpx;
+  height: 70rpx;
+  margin-bottom: 20rpx;
+}
+.popm {
+  height: 20vh;
+  width: 100%;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+  background-color: #fffefe;
+  display: flex;
+}
+.btnI {
+  width: 33.33%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+}
+.screen {
+  height: 100vh;
+  background-color: #f4f4f4;
 }
 </style>

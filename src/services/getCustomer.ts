@@ -221,3 +221,10 @@ export const addclueflist = (data: any) => {
     url: "system/highseas",
   });
 };
+//获取跟进提醒列表(查询3天未跟进的客户)
+export const remind = () => {
+  return http({
+    method: "POST",
+    url: "system/highseas/reminfollow",
+  });
+};
