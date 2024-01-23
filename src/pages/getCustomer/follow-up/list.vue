@@ -1,6 +1,6 @@
 <template>
   <view class="clue_list_page">
-    <scroll-view class="scroll_box" :scroll-y="true">
+    <!-- <scroll-view class="scroll_box" :scroll-y="true"> -->
       <view v-for="users in userInfo">
         <view>
           <uni-card :is-shadow="false">
@@ -16,30 +16,33 @@
           </uni-card>
         </view>
       </view>
-    </scroll-view>
+    <!-- </scroll-view> -->
   </view>
 </template>
 <script setup lang="ts">
 import { getQrCode } from "../../../../src/services/getCustomer";
 import { ref } from "vue";
+import { onLoad } from "@dcloudio/uni-app";
 const userInfo: any = ref({});
-getQrCode().then((res: any) => {
-  console.log(res);
-  if (res.code !== 200) {
-    uni.showToast({ icon: "none", title: res.msg });
-  }
-  if (res.code === 200) {
-    if (res.data.length !== 0) {
-      userInfo.value = res.rows;
-      uni.showToast({ icon: "success", title: res.msg });
-    } else {
-      uni.showToast({
-        icon: "error",
-        title: "数据列表为空或没有权限",
-        duration: 3000,
-      });
+onLoad(() => {
+  getQrCode().then((res: any) => {
+    console.log(res);
+    if (res.code !== 200) {
+      uni.showToast({ icon: "none", title: res.msg });
     }
-  }
+    if (res.code === 200) {
+      if (res.data.length !== 0) {
+        userInfo.value = res.data;
+        uni.showToast({ icon: "success", title: "查询成功" });
+      } else {
+        uni.showToast({
+          icon: "error",
+          title: "数据列表为空或没有权限",
+          duration: 3000,
+        });
+      }
+    }
+  });
 });
 </script>
 <style lang="scss" scoped>
@@ -51,6 +54,7 @@ page {
   flex-direction: column;
   width: 100%;
   height: 100%;
+  background-color: #f4f4f4;
 }
 .scroll_box {
   height: calc(100% - 125rpx);

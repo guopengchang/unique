@@ -21,6 +21,7 @@
     <button class="confirm" form-type="submit" @click="handleDefine">
       确认
     </button>
+    <button class="cancel" @click="handleConcel">取消</button>
   </view>
 </template>
 <script setup>
@@ -58,7 +59,21 @@ function onchange(e) {
 }
 //点击跳转
 function handleDefine() {
-  getUser(id.value, { cuowner: newUserName.value, id: id.value, cuflag: 1 });
+  getUser(id.value, {
+    cuowner: newUserName.value,
+    id: id.value,
+    cuflag: 1,
+  }).then(() => {
+    uni.showToast({
+      title: "分配成功",
+      icon: "success",
+    });
+    setTimeout(() => {
+      uni.navigateBack();
+    },1500);
+  });
+}
+function handleConcel() {
   uni.navigateBack();
 }
 </script>
@@ -124,6 +139,9 @@ button::after {
   .confirm {
     background-image: linear-gradient(135deg, #0c70f2, #0c60f2 70%, #0c32f2);
     color: #fff;
+  }
+  .concel {
+    background-color: #999;
   }
 }
 </style>

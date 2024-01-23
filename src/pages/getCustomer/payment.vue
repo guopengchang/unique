@@ -67,16 +67,15 @@ function confirm(popup: any) {
 function submit(ref: any) {
   ref.validate((err: any, value: any) => {
     if (err === null) {
-      addPayplan(value)
-        .then(() => {
-          uni.showToast({
-            title: "新增成功",
-            icon: "success",
-          });
-        })
-        .then(() => {
-          uni.navigateBack();
+      addPayplan(value).then(() => {
+        uni.showToast({
+          title: "新增成功",
+          icon: "success",
         });
+        setTimeout(() => {
+          uni.navigateBack();
+        }, 1500);
+      });
     }
   });
 }
@@ -177,7 +176,7 @@ function closePop(popup: any) {
 :deep(.uni-forms-item__label) {
   padding-left: 10rpx;
 }
-:deep(.uni-easyinput) {
+:deep(.uni-easyinput__content-input) {
   text-align: end;
 }
 :deep(.detail .checklist-group) {

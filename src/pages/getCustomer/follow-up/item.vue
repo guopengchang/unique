@@ -119,8 +119,15 @@ function fashion(e) {
 function submit(e) {
   listForm.value.followcont = e.detail.value.followcont;
   console.log(listForm);
-  addfollowlist(listForm.value);
-  uni.navigateTo({ url: "/pages/getCustomer/hopper/list" })();
+  addfollowlist(listForm.value).then(() => {
+    uni.showToast({
+      title: "新增成功",
+      icon: "success",
+    });
+  });
+  setTimeout(()=>{
+    uni.navigateBack()
+  },1500)
 }
 //获取跟进时间
 function time(e) {

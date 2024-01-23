@@ -338,7 +338,10 @@ function confirm(popup: any) {
   background-color: #ffffff !important;
   color: rgb(51, 51, 51);
 }
-:deep(.uni-easyinput) {
+:deep(.uni-easyinput__content-input) {
+  text-align: end;
+}
+:deep(.uni-easyinput__content-input:focus) {
   text-align: end;
 }
 :deep(.is-disabled .uni-easyinput__placeholder-class) {

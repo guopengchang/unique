@@ -108,10 +108,12 @@ function submit(ref: any) {
     if (err === null) {
       addclueflist({ ...value, cuflag: 0, receiveflag: 0 }).then(() => {
         uni.showToast({
-          title: "修改成功",
+          title: "新建成功",
           icon: "success",
         });
-        uni.navigateBack();
+        setTimeout(() => {
+          uni.navigateBack();
+        }, 1500);
       });
     }
   });
@@ -124,6 +126,15 @@ function confirm(popup: any) {
     formData.value.cuprod = prodValue.value;
   }
   closePop(popup);
+}
+const agreement = ref<any>(true);
+function clickbox(e) {
+  // console.log(e.detail.value.length)
+  if (e.detail.value.length === 1) {
+    agreement.value = false;
+  } else {
+    agreement.value = true;
+  }
 }
 </script>
 <template>
@@ -337,7 +348,20 @@ function confirm(popup: any) {
         </view>
       </uni-popup>
     </view>
+    <checkbox-group
+      name="checkbox"
+      style="display: flex; justify-content: center"
+      @change="clickbox">
+      <label>
+        <checkbox class="box" />
+      </label>
+      <view style="margin: 20rpx 0rpx 20rpx 20rpx"> 提交代表您同意 </view>
+      <navigator url="/pages/getCustomer/clue/text" class="text"
+        >用户协议和隐私政策
+      </navigator>
+    </checkbox-group>
     <button
+      :disabled="agreement"
       style="margin-top: 20rpx; width: 60vw; border-radius: 20rpx"
       type="primary"
       @click="submit(clientForm)">
@@ -358,7 +382,7 @@ function confirm(popup: any) {
   background-color: #ffffff !important;
   color: rgb(51, 51, 51);
 }
-:deep(.uni-easyinput) {
+:deep(.uni-easyinput__content-input) {
   text-align: end;
 }
 :deep(.is-disabled .uni-easyinput__placeholder-class) {
@@ -370,7 +394,7 @@ function confirm(popup: any) {
 :deep(.detail .checklist-group) {
   flex-direction: column;
 }
-:deep(.detail .uni-label-pointer) {
+:deep(.detail .checklist-box) {
   margin: 35rpx 40rpx !important;
 }
 .detail {
@@ -387,5 +411,12 @@ function confirm(popup: any) {
   border-bottom: 0.5rpx solid #f3f3f3;
   font-size: 28rpx;
   margin-bottom: 20rpx;
+}
+.text{
+  margin: 20rpx 20rpx 20rpx 0;
+  color: blue;
+}
+.box{
+  margin: 20rpx 0;
 }
 </style>

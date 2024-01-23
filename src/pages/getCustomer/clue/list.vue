@@ -80,7 +80,7 @@ import {
   getReceive,
   batchClue,
 } from "../../../../src/services/getCustomer";
-import { onShow } from "@dcloudio/uni-app";
+import { onLoad } from "@dcloudio/uni-app";
 import { ref } from "vue";
 const userInfo = ref([]);
 const id = ref();
@@ -91,7 +91,7 @@ const receiveflag = {
 };
 const batchsize = ref();
 //获取第一页4条数据
-onShow(() => {
+onLoad(() => {
   getQrCodeReceive(num.value).then((res: any) => {
     console.log(res);
     if (res.code !== 200) {
@@ -126,6 +126,13 @@ function touchGround() {
   } else {
     num.value = num.value + 1;
     getQrCodeReceive(num.value).then((res) => {
+      userInfo.value.forEach((s: any) => {
+        res.rows.forEach((v: any, index: any) => {
+          if (v.id == s.id) {
+            res.rows.splice(index, 1);
+          }
+        });
+      });
       userInfo.value = userInfo.value.concat(res.rows);
     });
   }
@@ -134,10 +141,18 @@ function touchGround() {
 async function handleBatch() {
   await batchClue({ ids: batchsize.value });
   // uni.navigateBack()
-  getQrCodeReceive(num.value).then((res) => {
-    userInfo.value = res.rows;
-    total.value = res.total;
-  });
+  num.value = 1;
+  getQrCodeReceive(num.value)
+    .then((res) => {
+      userInfo.value = res.rows;
+      total.value = res.total;
+    })
+    .then(() => {
+      uni.showToast({
+        icon: "success",
+        title: "领取成功",
+      });
+    });
 }
 //点击领取按钮
 function handleReceive(e) {
@@ -146,10 +161,17 @@ function handleReceive(e) {
   getReceive(id.value, { ...receiveflag, id: id.value, receiveflag: 1 });
   console.log("领取成功");
   num.value = 1;
-  getQrCodeReceive(num.value).then((res: any) => {
-    userInfo.value = res.rows;
-    total.value = res.total;
-  });
+  getQrCodeReceive(num.value)
+    .then((res: any) => {
+      userInfo.value = res.rows;
+      total.value = res.total;
+    })
+    .then(() => {
+      uni.showToast({
+        icon: "success",
+        title: "领取成功",
+      });
+    });
 }
 //点击底部的新建按钮
 function handleNew() {
@@ -167,6 +189,7 @@ page {
   flex-direction: column;
   width: 100%;
   height: 100%;
+  background-color: #f4f4f4;
 }
 .scroll_box {
   /* flex: 1; */

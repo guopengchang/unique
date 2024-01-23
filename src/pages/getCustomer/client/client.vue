@@ -55,6 +55,10 @@ function handleSea(pop: any, id: any) {
     }
   );
   closePop(pop);
+  uni.showToast({
+    icon: "success",
+    title: "移入成功",
+  });
 }
 function handleCallPhone(tel: any, owner: any) {
   uni.makePhoneCall({
@@ -77,6 +81,13 @@ function ReachBottom() {
   } else {
     page.value = page.value + 1;
     getClientList(page.value, filter.value).then((res: any) => {
+      clientList.value.forEach((s: any) => {
+        res.rows.forEach((v: any, index: any) => {
+          if (v.id == s.id) {
+            res.rows.splice(index, 1);
+          }
+        });
+      });
       clientList.value = clientList.value.concat(res.rows);
       total.value = res.total;
     });

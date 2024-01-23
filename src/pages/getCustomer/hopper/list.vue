@@ -80,7 +80,7 @@ import {
   getHopperSearch,
 } from "../../../../src/services/getCustomer";
 import { ref } from "vue";
-import { onShow } from "@dcloudio/uni-app";
+import { onLoad } from "@dcloudio/uni-app";
 let inputValueFlag = false;
 //存放数据
 const userInfo = ref([]);
@@ -88,7 +88,7 @@ const userInfo = ref([]);
 const total = ref();
 //
 const num = ref(1);
-onShow(() => {
+onLoad(() => {
   //页面初始化 第一次获取数据
   getHopper().then((res: any) => {
     console.log(res);
@@ -129,7 +129,12 @@ async function handleClient(id: any) {
     console.log(res);
     userInfo.value = res.rows;
     total.value = res.total;
-  });
+  }).then(()=>{
+    uni.showToast({
+      icon:'success',
+      title:'转客户成功'
+    })
+  })
 }
 // 触底
 function scrolltolower() {

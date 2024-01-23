@@ -66,7 +66,7 @@
 <script setup lang="ts">
 import { getQrCodeUser } from "../../../../src/services/getCustomer";
 import { ref } from "vue";
-import { onShow } from "@dcloudio/uni-app";
+import { onLoad, onShow } from "@dcloudio/uni-app";
 import search from "../../component/search.vue";
 //存放网络层返回的数据
 const userInfo = ref<any>({});
@@ -74,7 +74,7 @@ const total = ref(0);
 const page = ref(1);
 let filter = ref("");
 const filters = ref("");
-onShow(() => {
+onLoad(() => {
   getQrCodeUser(page.value).then((res: any) => {
     console.log(res);
     if (res.code !== 200) {
@@ -93,6 +93,13 @@ onShow(() => {
         });
       }
     }
+  });
+});
+onShow(() => {
+  page.value = 1;
+  getQrCodeUser(page.value).then((res: any) => {
+    userInfo.value = res.rows;
+    total.value = res.total;
   });
 });
 function ReachBottom() {
@@ -135,6 +142,7 @@ function handleDeal(id) {
 <style lang="scss" scoped>
 .screen {
   height: 100vh;
+  background-color: #f4f4f4;
 }
 .client {
   height: calc(100vh - 100rpx);
@@ -162,9 +170,5 @@ function handleDeal(id) {
 }
 :deep(.uni-easyinput__content) {
   height: 70rpx;
-}
-body,
-.uni-page-body {
-  background-color: #ededed;
 }
 </style>

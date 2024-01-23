@@ -5,7 +5,7 @@
       "style": {
         "navigationBarTitleText": "应用",
         "navigationBarTextStyle": "white",
-				"navigationStyle": "custom"
+        "navigationStyle": "custom"
       }
     },
     {
@@ -15,11 +15,11 @@
       }
     },
     {
-			"path": "pages/login/login",
-			"style": {
-				"navigationBarTitleText": "login"
-			}
-		},
+      "path": "pages/login/login",
+      "style": {
+        "navigationBarTitleText": "login"
+      }
+    },
 
     {
       "path": "pages/getCustomer/clue/list",
@@ -30,7 +30,19 @@
     {
       "path": "pages/getCustomer/clue/item",
       "style": {
-        "navigationBarTitleText": "新增线索"
+        "navigationBarTitleText": "新增公海客户"
+      }
+    },
+    {
+      "path": "pages/getCustomer/clue/text",
+      "style": {
+        "navigationBarTitleText": "用户协议"
+      }
+    },
+    {
+      "path": "pages/getCustomer/remind/remind",
+      "style": {
+        "navigationBarTitleText": "跟进提醒"
       }
     },
     {
@@ -120,14 +132,14 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath":"/static/tabbar-pic/application1.png",
-        "selectedIconPath":"/static/tabbar-pic/application2.png",
+        "iconPath": "/static/tabbar-pic/application1.png",
+        "selectedIconPath": "/static/tabbar-pic/application2.png",
         "text": "应用"
       },
       {
         "pagePath": "pages/my/my",
-        "iconPath":"/static/tabbar-pic/my1.png",
-        "selectedIconPath":"/static/tabbar-pic/my2.png",
+        "iconPath": "/static/tabbar-pic/my1.png",
+        "selectedIconPath": "/static/tabbar-pic/my2.png",
         "text": "我的"
       }
     ]
