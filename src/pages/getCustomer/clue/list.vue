@@ -10,19 +10,21 @@
             <view style="margin: auto 0; margin-left: 20rpx">
               <checkbox :value="users.id" />
             </view>
-
             <view style="width: 1000rpx">
-              <uni-card :is-shadow="true" shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)">
-                <view
-                  ><text
-                    >客户名称<text>:{{ users.cuname }}</text></text
-                  ></view
-                >
-                <view
-                  ><text
-                    >所选课程<text>:{{ users.cuprod }}</text></text
-                  ></view
-                >
+              <uni-card
+                :is-shadow="true"
+                shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)">
+                <view>
+                  <text
+                    >客户名称<text>:{{ users.cuname }}</text>
+                  </text>
+                </view>
+                <view>
+                  <text
+                    >所选课程
+                    <text>:{{ users.cuprod }}</text>
+                  </text>
+                </view>
                 <view>
                   <text
                     style="
@@ -30,10 +32,11 @@
                       display: inline-block;
                       text-align: justify;
                       text-align-last: justify;
-                    "
-                    >年级</text
-                  ><text>:{{ users.cugrade }}</text></view
-                >
+                    ">
+                    年级
+                  </text>
+                  <text>:{{ users.cugrade }}</text>
+                </view>
                 <view>
                   <text
                     style="
@@ -43,14 +46,14 @@
                       text-align-last: justify;
                     "
                     >学校</text
-                  ><text>:{{ users.cuschool }}</text></view
-                >
-
+                  ><text>:{{ users.cuschool }}</text>
+                </view>
                 <view>
-                  <text
-                    >在校专业<text>:{{ users.cumajor }}</text></text
-                  ></view
-                >
+                  <text>
+                    在校专业
+                    <text>:{{ users.cumajor }}</text>
+                  </text>
+                </view>
                 <view class="btn">
                   <button
                     class="btn-item"
@@ -77,6 +80,7 @@ import {
   getReceive,
   batchClue,
 } from "../../../../src/services/getCustomer";
+import { onShow } from "@dcloudio/uni-app";
 import { ref } from "vue";
 const userInfo = ref([]);
 const id = ref();
@@ -86,6 +90,28 @@ const receiveflag = {
   receiveflag: 1,
 };
 const batchsize = ref();
+//获取第一页4条数据
+onShow(() => {
+  getQrCodeReceive(num.value).then((res: any) => {
+    console.log(res);
+    if (res.code !== 200) {
+      uni.showToast({ icon: "none", title: res.msg });
+    }
+    if (res.code === 200) {
+      if (res.total !== 0) {
+        userInfo.value = res.rows;
+        total.value = res.total;
+        uni.showToast({ icon: "success", title: res.msg });
+      } else {
+        uni.showToast({
+          icon: "error",
+          title: "数据列表为空或没有权限",
+          duration: 3000,
+        });
+      }
+    }
+  });
+});
 //获取多选之后的id
 function batch(e) {
   batchsize.value = e.detail.value;
@@ -113,12 +139,6 @@ async function handleBatch() {
     total.value = res.total;
   });
 }
-//获取第一页4条数据
-getQrCodeReceive(num.value).then((res: any) => {
-  userInfo.value = res.rows;
-  total.value = res.total;
-});
-
 //点击领取按钮
 function handleReceive(e) {
   id.value = e;

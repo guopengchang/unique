@@ -27,7 +27,6 @@ const formData = ref<client>({});
 const oldValue = ref({});
 const clientForm = ref(null);
 const clientId = ref({});
-
 const range = [
   { value: "男", text: "男" },
   { value: "女", text: "女" },
@@ -35,11 +34,9 @@ const range = [
 const popupSource = ref(null);
 const sourceValue = ref(null);
 const sourceRange = ref([]);
-
 const popupProd = ref(null);
 const prodValue = ref(null);
 const prodRange = ref([]);
-
 const rules = {
   cuname: {
     rules: [
@@ -86,45 +83,6 @@ const rules = {
     ],
   },
 };
-
-function openPop(popup: any) {
-  popup.open();
-}
-function closePop(popup: any) {
-  popup.close();
-}
-
-function submit(ref: any) {
-  ref.validate((err: any, value: any) => {
-    if (JSON.stringify(oldValue.value) === JSON.stringify(value)) {
-      return uni.showToast({
-        title: "数据未更改",
-        icon: "none",
-      });
-    }
-    if (err === null) {
-      gets({ ...clientId.value, ...value }).then(() => {
-        uni.showToast({
-          title: "修改成功",
-          icon: "success",
-        });
-        uni.navigateBack();
-      });
-      oldValue.value = value;
-    }
-  });
-}
-
-function confirm(popup: any) {
-  if (sourceValue.value) {
-    formData.value.cusource = sourceValue.value;
-  }
-  if (prodValue.value) {
-    formData.value.cuprod = prodValue.value;
-  }
-  closePop(popup);
-}
-
 onLoad((e) => {
   getQrCodeOne(e.id).then((res: any) => {
     clientId.value = { id: e.id };
@@ -171,6 +129,41 @@ onLoad((e) => {
     });
   });
 });
+function openPop(popup: any) {
+  popup.open();
+}
+function closePop(popup: any) {
+  popup.close();
+}
+function submit(ref: any) {
+  ref.validate((err: any, value: any) => {
+    if (JSON.stringify(oldValue.value) === JSON.stringify(value)) {
+      return uni.showToast({
+        title: "数据未更改",
+        icon: "none",
+      });
+    }
+    if (err === null) {
+      gets({ ...clientId.value, ...value }).then(() => {
+        uni.showToast({
+          title: "修改成功",
+          icon: "success",
+        });
+        uni.navigateBack();
+      });
+      oldValue.value = value;
+    }
+  });
+}
+function confirm(popup: any) {
+  if (sourceValue.value) {
+    formData.value.cusource = sourceValue.value;
+  }
+  if (prodValue.value) {
+    formData.value.cuprod = prodValue.value;
+  }
+  closePop(popup);
+}
 </script>
 <template>
   <view class="">
@@ -428,7 +421,6 @@ onLoad((e) => {
   border-top-right-radius: 20rpx;
   background-color: #fffefe;
 }
-
 .detail .log {
   display: flex;
   justify-content: space-around;

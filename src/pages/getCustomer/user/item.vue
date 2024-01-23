@@ -29,16 +29,12 @@ import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
 //存放网络层返回的数据
 const userName = ref({});
-
 //存放全部负责人姓名
 const items = ref([]);
-
 //获取选择后的负责人姓名
 const newUserName = ref({});
-
 //存放id
 const id = ref();
-
 onLoad((e) => {
   //获取id
   console.log(e);
@@ -55,7 +51,6 @@ onLoad((e) => {
     });
   });
 });
-
 function onchange(e) {
   //获取负责人的姓名
   newUserName.value = e.detail.value[0].text;
@@ -81,9 +76,7 @@ function handleDefine() {
   border-bottom: 1rpx solid #e3d8d8;
   position: relative;
   padding: 24rpx 20rpx 24rpx 150rpx;
-
   line-height: 36rpx;
-
   .label {
     position: absolute;
     top: 30rpx;
@@ -128,7 +121,6 @@ button::after {
   padding-top: 20rpx;
   padding-bottom: 20rpx;
   background: #fff;
-
   .confirm {
     background-image: linear-gradient(135deg, #0c70f2, #0c60f2 70%, #0c32f2);
     color: #fff;
