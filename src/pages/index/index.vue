@@ -31,6 +31,22 @@
       </view>
     </uni-card>
   </view>
+  <view class="content" :style="{ marginTop: ` ${top}px` }">
+    <uni-card title="成绩测评" class="card_box">
+      <view
+        class="card"
+        v-for="(item, index) in getScoreList"
+        :key="index + item.name">
+        <navigator
+          hover-class="none"
+          class="navigator-item"
+          :url="`${item.path}`">
+          <image class="image" mode="aspectFill" :src="item.icon"></image>
+          <view class="name"> {{ item.name }} </view>
+        </navigator>
+      </view>
+    </uni-card>
+  </view>
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
@@ -100,6 +116,13 @@ const getCustomerList = ref<any[]>([
   },
  
 ]);
+const getScoreList = ref<any[]>([
+  {
+    path: "/pages/score/evaluation",
+    icon: clue,
+    name: "测评分数",
+  },
+])
 onShow(() => {
   uni.hideToast();
 });

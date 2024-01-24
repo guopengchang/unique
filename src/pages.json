@@ -46,6 +46,12 @@
       }
     },
     {
+      "path": "pages/score/evaluation",
+      "style": {
+        "navigationBarTitleText": "测评成绩"
+      }
+    },
+    {
       "path": "pages/getCustomer/payment",
       "style": {
         "navigationBarTitleText": "新建回款"

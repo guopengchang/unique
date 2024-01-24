@@ -144,7 +144,7 @@ function closePop(popup: any) {
 }
 :deep(.uni-easyinput__content-input) {
   text-align: right;
-  direction: rtl;
+  // direction: rtl;
 }
 :deep(.detail .checklist-group) {
   flex-direction: column;

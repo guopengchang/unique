@@ -85,7 +85,7 @@ function sourceChange(e: any) {
 }
 :deep(.uni-easyinput__content-input) {
   text-align: right;
-  direction: rtl;
+  // direction: rtl;
 }
 :deep(.is-disabled .uni-easyinput__placeholder-class) {
   color: #999 !important;
