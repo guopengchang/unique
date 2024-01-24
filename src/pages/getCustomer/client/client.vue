@@ -15,8 +15,7 @@ const popupMore = ref(null);
 const client = ref<any>({});
 let filter = ref("");
 onLoad(() => {
-  getClientList(page.value).then((res: any) => {
-    console.log(res);
+  getClientList().then((res: any) => {
     if (res.code !== 200) {
       uni.showToast({ icon: "none", title: res.msg });
     }
@@ -24,7 +23,6 @@ onLoad(() => {
       if (res.total !== 0) {
         clientList.value = res.rows;
         total.value = res.total;
-        uni.showToast({ icon: "success", title: res.msg });
       } else {
         uni.showToast({
           icon: "error",
@@ -47,18 +45,22 @@ function handlePayment(id: any) {
   uni.navigateTo({ url: `/pages/getCustomer/payment?id=${id}` });
 }
 function handleSea(pop: any, id: any) {
-  updateClientSea({ id, cuflag: "0", cuowner: "", receiveflag: "0" }).then(
-    () => {
+  updateClientSea({ id, cuflag: "0", cuowner: "", receiveflag: "0" })
+    .then(
       getClientList().then((res: any) => {
+        console.log(res)
         clientList.value = res.rows;
+      })
+    )
+    .then(() => {
+      closePop(pop);
+    })
+    .then(() => {
+      uni.showToast({
+        icon: "success",
+        title: "移入成功",
       });
-    }
-  );
-  closePop(pop);
-  uni.showToast({
-    icon: "success",
-    title: "移入成功",
-  });
+    });
 }
 function handleCallPhone(tel: any, owner: any) {
   uni.makePhoneCall({
@@ -80,7 +82,7 @@ function ReachBottom() {
     });
   } else {
     page.value = page.value + 1;
-    getClientList(page.value, filter.value).then((res: any) => {
+    getClientList(filter.value,page.value).then((res: any) => {
       clientList.value.forEach((s: any) => {
         res.rows.forEach((v: any, index: any) => {
           if (v.id == s.id) {
@@ -103,10 +105,9 @@ function handleFilter(e: any) {
       filter.value = `&cuname=${e}`;
     }
   }
-
-  page.value = 1;
+  
   console.log(filter);
-  getClientList(page.value, filter.value).then((res: any) => {
+  getClientList(filter.value).then((res: any) => {
     clientList.value = res.rows;
     total.value = res.total;
   });
@@ -130,7 +131,7 @@ function closePop(popup: any) {
       @input="handleFilter"></search>
     <scroll-view :scroll-y="true" class="client" @scrolltolower="ReachBottom">
       <view v-for="item in clientList" :key="item.id">
-        <uni-card class="card" :is-shadow="false" :title="item.id">
+        <uni-card class="card" :is-shadow="false">
           <view>
             <text>客户名称:{{ item.cuname }}</text>
           </view>

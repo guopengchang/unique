@@ -2,40 +2,9 @@
 import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
 import { getMoneyWay, addPayplan } from "@/services/getCustomer";
-interface payment {
-  highsid?: number; //客户id
-  planmoney?: string; //回款金额
-  termmoney?: string; //回款期数
-  moneydate?: string; //回款日期
-  waymoney?: string; //汇款方式
-}
+import type { payment } from "./type";
+import { paymentRules } from "./rules";
 const formData = ref<payment>({});
-const rules = {
-  planmoney: {
-    rules: [
-      {
-        required: true,
-        errorMessage: "请填写回款金额",
-      },
-    ],
-  },
-  termmoney: {
-    rules: [
-      {
-        required: true,
-        errorMessage: "请填写回款期数",
-      },
-    ],
-  },
-  waymoney: {
-    rules: [
-      {
-        required: true,
-        errorMessage: "请选择回款方式",
-      },
-    ],
-  },
-};
 const popupSource = ref(null);
 const sourceValue = ref(null);
 const sourceRange = ref([]);
@@ -90,7 +59,7 @@ function closePop(popup: any) {
   <view>
     <uni-forms
       err-show-type="toast"
-      :rules="rules"
+      :rules="paymentRules"
       ref="paymentForm"
       :modelValue="formData"
       label-width="200rpx"
@@ -109,8 +78,7 @@ function closePop(popup: any) {
           :inputBorder="false"
           :clearable="false"
           v-model="formData.planmoney"
-          placeholder="请输入回款金额"
-          placeholderStyle="text-align: end" />
+          placeholder="请输入回款金额" />
       </uni-forms-item>
       <uni-forms-item label="回款期数" name="termmoney">
         <uni-easyinput
@@ -118,8 +86,7 @@ function closePop(popup: any) {
           :inputBorder="false"
           :clearable="false"
           v-model="formData.termmoney"
-          placeholder="请输入汇款期数"
-          placeholderStyle="text-align: end" />
+          placeholder="请输入汇款期数" />
       </uni-forms-item>
       <uni-forms-item label="回款日期" name="moneydate">
         <uni-datetime-picker
@@ -137,8 +104,7 @@ function closePop(popup: any) {
           suffixIcon="right"
           :inputBorder="false"
           v-model="formData.waymoney"
-          placeholder="请选择回款方式"
-          placeholderStyle="text-align: end" />
+          placeholder="请选择回款方式" />
       </uni-forms-item>
     </uni-forms>
     <button
@@ -177,7 +143,8 @@ function closePop(popup: any) {
   padding-left: 10rpx;
 }
 :deep(.uni-easyinput__content-input) {
-  text-align: end;
+  text-align: right;
+  direction: rtl;
 }
 :deep(.detail .checklist-group) {
   flex-direction: column;

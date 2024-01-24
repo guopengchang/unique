@@ -1,6 +1,6 @@
 <template>
   <!-- formData、rules 内容详见下方完整示例 -->
-  <uni-forms ref="form" :modelValue="formData" :rules="rules" class="form_box">
+  <uni-forms ref="form" :modelValue="formData" :rules="signInRules" class="form_box">
     <uni-forms-item label="学校" name="cuschool" required>
       <uni-easyinput type="text" v-model="formData.cuschool" placeholder="请输入学校" />
     </uni-forms-item>
@@ -20,7 +20,7 @@
 <script lang="ts" setup>
 import { onReady } from '@dcloudio/uni-app'
 import { ref, onMounted, reactive } from 'vue'
-
+import { signInRules } from './rules';
 //ts-ignore
 import UQRCode from 'uqrcodejs'
 let formData = reactive({
@@ -30,33 +30,7 @@ let formData = reactive({
   cusource: '签到',
 })
 
-let rules = {
-  // 对name字段进行必填验证
-  cuschool: {
-    rules: [
-      {
-        required: true,
-        errorMessage: '请输入学校',
-      },
-    ],
-  },
-  cugrade: {
-    rules: [
-      {
-        required: true,
-        errorMessage: '请输入学校',
-      },
-    ],
-  },
-  djpeop: {
-    rules: [
-      {
-        required: true,
-        errorMessage: '请输入学校',
-      },
-    ],
-  },
-}
+
 const createQRCode = (data) => {
   let encodeParam = encodeURI(
     `cuschool=${data.cuschool}&cugrade=${data.cugrade}&djpeop=${data.djpeop}&cusource=签到`,

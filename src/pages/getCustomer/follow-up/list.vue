@@ -1,7 +1,7 @@
 <template>
   <view class="clue_list_page">
     <!-- <scroll-view class="scroll_box" :scroll-y="true"> -->
-      <view v-for="users in userInfo">
+      <view v-for="users in userInfo" :key="users.id">
         <view>
           <uni-card :is-shadow="false">
             <view>
@@ -33,7 +33,6 @@ onLoad(() => {
     if (res.code === 200) {
       if (res.data.length !== 0) {
         userInfo.value = res.data;
-        uni.showToast({ icon: "success", title: "查询成功" });
       } else {
         uni.showToast({
           icon: "error",

@@ -6,11 +6,13 @@
       placeholder="按名字或手机号搜索"
       clearButton="none"
       cancelButton="none"
-      @confirm="search"
-    />
-    <scroll-view class="scroll_box" :scroll-y="true" @scrolltolower="scrolltolower">
+      @confirm="search" />
+    <scroll-view
+      class="scroll_box"
+      :scroll-y="true"
+      @scrolltolower="scrolltolower">
       <view>
-        <uni-card v-for="users in userInfo" :is-shadow="false">
+        <uni-card v-for="users in userInfo" :is-shadow="false" :key="users.id">
           <view>
             <text
               >客户名称<text>:{{ users.cuname }}</text>
@@ -22,13 +24,25 @@
             </text>
           </view>
           <view>
-            <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
+            <text
+              style="
+                width: 110rpx;
+                display: inline-block;
+                text-align: justify;
+                text-align-last: justify;
+              "
               >年级
             </text>
             <text>:{{ users.cugrade }}</text>
           </view>
           <view>
-            <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
+            <text
+              style="
+                width: 110rpx;
+                display: inline-block;
+                text-align: justify;
+                text-align-last: justify;
+              "
               >学校
             </text>
             <text>:{{ users.cuschool }}</text>
@@ -40,23 +54,38 @@
             </text>
           </view>
           <view class="btn footer">
-            <view class="btn-item" @click="() => editClient(users.id)">编辑 </view>
-            <view class="btn-item" @click="() => setClientID(popupMore, users)"> 更多 </view>
+            <view class="btn-item" @click="() => handleEdit(users.id)"
+              >编辑
+            </view>
+            <view class="btn-item" @click="() => setClientID(popupMore, users)">
+              更多
+            </view>
           </view>
         </uni-card>
       </view>
       <uni-popup ref="popupMore" type="bottom">
         <view class="popm">
           <view class="btnI" @click="() => handleFollow(client.id)">
-            <image class="img" src="../../../static/more-pic/follow.png" mode="scaleToFill" />
+            <image
+              class="img"
+              src="../../../static/more-pic/follow.png"
+              mode="scaleToFill" />
             <view>写跟进</view>
           </view>
           <view class="btnI" @click="() => handleClient(popupMore, client.id)">
-            <image class="img" src="../../../static/more-pic/user.png" mode="scaleToFill" />
+            <image
+              class="img"
+              src="../../../static/more-pic/user.png"
+              mode="scaleToFill" />
             <view>转为客户</view>
           </view>
-          <view class="btnI" @click="() => handleCallPhone(client.cutel, client.cuowner)">
-            <image class="img" src="../../../static/more-pic/phone.png" mode="scaleToFill" />
+          <view
+            class="btnI"
+            @click="() => handleCallPhone(client.cutel, client.cuowner)">
+            <image
+              class="img"
+              src="../../../static/more-pic/phone.png"
+              mode="scaleToFill" />
             <view>拨打电话</view>
           </view>
         </view>
@@ -65,7 +94,12 @@
   </view>
 </template>
 <script setup lang="ts">
-import { getHopper, getChange, getHopperSearch, addPhoneRecord } from "../../../../src/services/getCustomer";
+import {
+  getHopper,
+  getChange,
+  getHopperSearch,
+  addPhoneRecord,
+} from "../../../../src/services/getCustomer";
 import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
 let inputValueFlag = false;
@@ -90,7 +124,6 @@ onLoad(() => {
       if (res.total !== 0) {
         userInfo.value = res.rows;
         total.value = res.total;
-        uni.showToast({ icon: "success", title: res.msg });
       } else {
         uni.showToast({
           icon: "error",
@@ -116,16 +149,20 @@ function handleFollow(id: any) {
 // 点击转客户按钮
 async function handleClient(pop: any, id: any) {
   await getChange({ cuflag: 2, id: id });
-  getHopper().then((res: any) => {
-    userInfo.value = res.rows;
-    total.value = res.total;
-  }).then(()=>{
-    uni.showToast({
-      icon:'success',
-      title:'转客户成功'
+  getHopper()
+    .then((res: any) => {
+      userInfo.value = res.rows;
+      total.value = res.total;
     })
-  });
-  closePop(pop);
+    .then(() => {
+      closePop(pop);
+    })
+    .then(() => {
+      uni.showToast({
+        icon: "success",
+        title: "转客户成功",
+      });
+    });
 }
 // 触底
 function scrolltolower() {
@@ -175,12 +212,6 @@ function search(e: any) {
       userInfo.value = res.rows;
     });
   }
-}
-
-function editClient(id: any) {
-  uni.navigateTo({
-    url: `/pages/getCustomer/editClient?id=${id}`,
-  });
 }
 
 function setClientID(popup: any, item: any) {

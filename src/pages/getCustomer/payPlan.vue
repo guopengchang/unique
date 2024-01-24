@@ -16,7 +16,6 @@ onLoad(() => {
       if (res.total !== 0) {
         listData.value = res.rows;
         total.value = res.total;
-        uni.showToast({ icon: "success", title: res.msg });
       } else {
         uni.showToast({
           icon: "error",
@@ -43,10 +42,10 @@ onReachBottom(() => {
 });
 </script>
 <template>
-  <view style="background-color: #f4f4f4">
+  <view class="screen">
     <view style="height: 1rpx"></view>
     <view v-for="item in listData" :key="item.id">
-      <uni-card :title="`客户ID：${item.highsid}`">
+      <uni-card>
         <view>
           <text>回款期数：{{ item.termmoney }}</text>
         </view>
@@ -64,3 +63,9 @@ onReachBottom(() => {
     <view style="height: 10rpx"></view>
   </view>
 </template>
+<style scoped>
+.screen{
+  background-color: #f4f4f4;
+  height: 100vh;
+}
+</style>

@@ -27,18 +27,3 @@ function handleInput() {
   }, 500);
 }
 </script>
-<style scoped>
-:deep(.uni-easyinput) {
-  padding-left: 30rpx;
-  padding-right: 30rpx;
-  width: auto !important;
-  padding-top: 20rpx;
-  padding-bottom: 10rpx;
-}
-:deep(.uni-easyinput__content-input) {
-  height: 70rpx !important;
-}
-:deep(.uni-easyinput__content) {
-  height: 70rpx;
-}
-</style>

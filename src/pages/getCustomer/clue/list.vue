@@ -101,7 +101,6 @@ onLoad(() => {
       if (res.total !== 0) {
         userInfo.value = res.rows;
         total.value = res.total;
-        uni.showToast({ icon: "success", title: res.msg });
       } else {
         uni.showToast({
           icon: "error",
@@ -160,9 +159,9 @@ function handleReceive(e) {
   console.log(e, id.value);
   getReceive(id.value, { ...receiveflag, id: id.value, receiveflag: 1 });
   console.log("领取成功");
-  num.value = 1;
-  getQrCodeReceive(num.value)
+  getQrCodeReceive()
     .then((res: any) => {
+      console.log(res)
       userInfo.value = res.rows;
       total.value = res.total;
     })
@@ -193,7 +192,7 @@ page {
 }
 .scroll_box {
   /* flex: 1; */
-  height: calc(100% - 125rpx);
+  height: calc(100vh - 125rpx);
 }
 .bottom_btn {
   display: flex;

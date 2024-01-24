@@ -7,9 +7,9 @@
         :disabled="true"
         v-model="tableForm.cuname" />
     </view>
-    <view class="border" style="display: flex">
+    <view class="border" style="display: flex; justify-content: space-between">
       <view class="label">跟进方式</view>
-      <view class="name" style="margin-left: 190rpx">
+      <view class="name" style="margin-right;: 20rpx">
         <uni-data-picker
           :clear-icon="false"
           @change="fashion"
@@ -29,7 +29,7 @@
     </view>
     <view class="border" style="display: flex; justify-content: space-between">
       <view class="label">下次跟进时间</view>
-      <view style="width: 300rpx; margin-right: 50rpx">
+      <view style="width: 300rpx; margin-right: 20rpx; margin-top: 25rpx">
         <uni-datetime-picker
           @change="time"
           class="label"
@@ -125,9 +125,9 @@ function submit(e) {
       icon: "success",
     });
   });
-  setTimeout(()=>{
-    uni.navigateBack()
-  },1500)
+  setTimeout(() => {
+    uni.navigateBack();
+  }, 1500);
 }
 //获取跟进时间
 function time(e) {

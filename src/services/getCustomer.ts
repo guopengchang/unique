@@ -54,7 +54,7 @@ export const addPayplan = (data: any) => {
 };
 
 //获取客户列表
-export const getClientList = (num?: number, filter?: string) => {
+export const getClientList = (filter?: string, num = 1) => {
   const filters = filter ? filter : "";
   return http({
     method: "GET",
@@ -164,7 +164,7 @@ export const getQrCodeUser = (num?: any, filter?: any) => {
   });
 };
 //获取线索数据
-export const getQrCodeReceive = (num?: number) => {
+export const getQrCodeReceive = (num = 1) => {
   console.log(num);
   return http({
     method: "GET",

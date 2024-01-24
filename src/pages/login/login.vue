@@ -4,30 +4,13 @@ import { postLoginAPI } from "@/services/login";
 import { useMemberStore } from "@/stores";
 import { onLoad } from "@dcloudio/uni-app";
 import logo from "@/static/logo.png";
+import {loginRules} from '../getCustomer/rules'
 const form = ref<any>();
 let formData = reactive({
   username: "",
   password: "",
 });
-let rules = {
-  username: {
-    rules: [
-      {
-        required: true,
-        errorMessage: "请输账号",
-        minLength: 2,
-      },
-    ],
-  },
-  password: {
-    rules: [
-      {
-        required: true,
-        errorMessage: "请输入密码",
-      },
-    ],
-  },
-};
+
 
 //======登录表单逻辑===
 
@@ -115,7 +98,7 @@ const loginSuccess = (profile: any) => {
     <view class="login">
       <!-- 表单登录 -->
       <!-- formData、rules 内容详见下方完整示例 -->
-      <uni-forms ref="form" :modelValue="formData" :rules="rules">
+      <uni-forms ref="form" :modelValue="formData" :rules="loginRules">
         <uni-forms-item label="账号" name="username" required>
           <uni-easyinput
             type="text"

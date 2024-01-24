@@ -1,7 +1,7 @@
 <template>
   <view class="clue_list_page">
     <scroll-view class="scroll_box" :scroll-y="true">
-      <view v-for="users in userInfo">
+      <view v-for="users in userInfo" :key="users.id">
         <view>
           <uni-card :is-shadow="false">
             <view style="font-size: 40rpx">
@@ -37,7 +37,6 @@ remind().then((res: any) => {
   if (res.code === 200) {
     if (res.data.length !== 0) {
       userInfo.value = res.data;
-      uni.showToast({ icon: "success", title: res.msg });
     } else {
       uni.showToast({
         icon: "error",

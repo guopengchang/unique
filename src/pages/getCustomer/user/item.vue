@@ -13,10 +13,6 @@
       </view>
     </view>
   </view>
-  <view class="line1">
-    <view class="label1">团队成员</view>
-    <view class="round"></view>
-  </view>
   <view class="op">
     <button class="confirm" form-type="submit" @click="handleDefine">
       确认

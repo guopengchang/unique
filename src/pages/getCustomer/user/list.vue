@@ -8,8 +8,7 @@
       <view v-for="users in userInfo" :key="users.id">
         <uni-card
           :is-shadow="true"
-          shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)"
-          :title="users.id">
+          shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)">
           <view>
             <text
               >客户名称<text>:{{ users.cuname }}</text>
@@ -84,7 +83,6 @@ onLoad(() => {
       if (res.total !== 0) {
         userInfo.value = res.rows;
         total.value = res.total;
-        uni.showToast({ icon: "success", title: res.msg });
       } else {
         uni.showToast({
           icon: "error",
