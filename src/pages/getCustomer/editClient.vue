@@ -7,22 +7,9 @@ import {
   getClient,
   updateClient,
 } from "@/services/getCustomer";
-interface client {
-  cuname?: string; //姓名
-  cusex?: number; //性别
-  cuidcard?: number; //身份证号
-  cutel?: number; //电话
-  wechatid?: number; //微信
-  cuemail?: string; //邮箱
-  cuaddr?: string; //地址
-  curecord?: string; //学历
-  cusource?: string; //数据来源
-  cuprod?: string; //意向产品
-  cuschool?: string; //学校
-  cugrade?: string; //年级
-  cumajor?: string; //专业
-  highscont?: string; //备注
-}
+import type {client} from './type'
+import { rules } from "./rules";
+
 const formData = ref<client>({});
 const oldValue = ref({});
 const clientForm = ref(null);
@@ -37,54 +24,10 @@ const sourceRange = ref([]);
 const popupProd = ref(null);
 const prodValue = ref(null);
 const prodRange = ref([]);
-const rules = {
-  cuname: {
-    rules: [
-      {
-        required: true,
-        errorMessage: "请输入姓名",
-      },
-    ],
-  },
-  cuemail: {
-    rules: [
-      {
-        format: "email",
-        errorMessage: "请输入正确的邮箱地址",
-      },
-    ],
-  },
-  cutel: {
-    rules: [
-      {
-        required: true,
-        errorMessage: "请填写手机号码",
-      },
-      {
-        validateFunction: (_e: any, data: any) => {
-          return /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/.test(
-            data
-          );
-          // if (
-          //   /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/.test(
-          //     data
-          //   )
-          // ) {
-          //   return true;
-          // } else {
-          //   return uni.showToast({
-          //     title: "手机号码不正确",
-          //     icon: "none",
-          //   });
-          // }
-        },
-        errorMessage: "手机号码格式不正确",
-      },
-    ],
-  },
-};
+
 onLoad((e) => {
   getClient(e.id).then((res: any) => {
+    console.log(res)
     clientId.value = { id: e.id };
     const result = {
       cuname: res.data.cuname,
@@ -175,8 +118,7 @@ function confirm(popup: any) {
             :clearable="false"
             v-model="formData.cuname"
             :inputBorder="false"
-            placeholder="请输入姓名"
-            placeholderStyle="text-align: end" />
+            placeholder="请输入姓名" />
         </uni-forms-item>
         <uni-forms-item label="性别" name="cusex">
           <uni-data-checkbox
@@ -189,8 +131,7 @@ function confirm(popup: any) {
             :clearable="false"
             :inputBorder="false"
             v-model="formData.cuidcard"
-            placeholder="请输入身份证号"
-            placeholderStyle="text-align: end" />
+            placeholder="请输入身份证号" />
         </uni-forms-item>
         <uni-forms-item label="手机号码" name="cutel" required>
           <uni-easyinput
@@ -198,8 +139,7 @@ function confirm(popup: any) {
             :inputBorder="false"
             :clearable="false"
             v-model="formData.cutel"
-            placeholder="请输入手机号码"
-            placeholderStyle="text-align: end" />
+            placeholder="请输入手机号码" />
         </uni-forms-item>
         <uni-forms-item label="微信号" name="wechatid">
           <uni-easyinput
@@ -207,8 +147,7 @@ function confirm(popup: any) {
             :inputBorder="false"
             :clearable="false"
             v-model="formData.wechatid"
-            placeholder="请输入微信号码"
-            placeholderStyle="text-align: end" />
+            placeholder="请输入微信号码" />
         </uni-forms-item>
         <uni-forms-item label="邮箱" name="cuemail">
           <uni-easyinput
@@ -216,8 +155,7 @@ function confirm(popup: any) {
             :inputBorder="false"
             :clearable="false"
             v-model="formData.cuemail"
-            placeholder="请输入邮箱"
-            placeholderStyle="text-align: end" />
+            placeholder="请输入邮箱" />
         </uni-forms-item>
         <uni-forms-item label="地址" name="cuaddr">
           <uni-easyinput
@@ -225,8 +163,7 @@ function confirm(popup: any) {
             :inputBorder="false"
             :clearable="false"
             v-model="formData.cuaddr"
-            placeholder="请输入地址"
-            placeholderStyle="text-align: end" />
+            placeholder="请输入地址" />
         </uni-forms-item>
         <uni-forms-item label="学历" name="curecord">
           <uni-easyinput
@@ -234,8 +171,7 @@ function confirm(popup: any) {
             :inputBorder="false"
             :clearable="false"
             v-model="formData.curecord"
-            placeholder="请输入学历"
-            placeholderStyle="text-align: end" />
+            placeholder="请输入学历" />
         </uni-forms-item>
         <uni-forms-item label="数据来源" name="cusource">
           <uni-easyinput
@@ -245,8 +181,7 @@ function confirm(popup: any) {
             suffixIcon="right"
             :inputBorder="false"
             v-model="formData.cusource"
-            placeholder="请选择数据来源"
-            placeholderStyle="text-align: end" />
+            placeholder="请选择数据来源" />
         </uni-forms-item>
         <uni-forms-item label="意向产品" name="cuprod">
           <uni-easyinput
@@ -256,8 +191,7 @@ function confirm(popup: any) {
             suffixIcon="right"
             :inputBorder="false"
             v-model="formData.cuprod"
-            placeholder="请选择意向产品"
-            placeholderStyle="text-align: end" />
+            placeholder="请选择意向产品" />
         </uni-forms-item>
         <uni-forms-item label="学校" name="cuschool">
           <uni-easyinput
@@ -265,8 +199,7 @@ function confirm(popup: any) {
             :inputBorder="false"
             :clearable="false"
             v-model="formData.cuschool"
-            placeholder="请输入学校"
-            placeholderStyle="text-align: end" />
+            placeholder="请输入学校" />
         </uni-forms-item>
         <uni-forms-item label="年级" name="cugrade">
           <uni-easyinput
@@ -274,8 +207,7 @@ function confirm(popup: any) {
             :inputBorder="false"
             :clearable="false"
             v-model="formData.cugrade"
-            placeholder="请输入年级"
-            placeholderStyle="text-align: end" />
+            placeholder="请输入年级" />
         </uni-forms-item>
         <uni-forms-item label="专业" name="cumajor">
           <uni-easyinput
@@ -283,8 +215,44 @@ function confirm(popup: any) {
             :inputBorder="false"
             :clearable="false"
             v-model="formData.cumajor"
-            placeholder="请输入专业"
-            placeholderStyle="text-align: end" />
+            placeholder="请输入专业" />
+        </uni-forms-item>
+        <uni-forms-item label-position="top" label="家庭情况" name="famstate">
+          <uni-easyinput
+            type="textarea"
+            placeholder="请输入家庭情况"
+            :clearable="false"
+            v-model="formData.famstate" />
+        </uni-forms-item>
+        <uni-forms-item label-position="top" label="个人介绍" name="perintr">
+          <uni-easyinput
+            type="textarea"
+            placeholder="请输入个人介绍"
+            :clearable="false"
+            v-model="formData.perintr" />
+        </uni-forms-item>
+        <uni-forms-item label-position="top" label="兴趣爱好" name="cuhobby">
+          <uni-easyinput
+            type="textarea"
+            placeholder="请输入兴趣爱好"
+            :clearable="false"
+            v-model="formData.cuhobby" />
+        </uni-forms-item>
+        <uni-forms-item label="疑难点" name="cudoubt">
+          <uni-easyinput
+            type="text"
+            :inputBorder="false"
+            :clearable="false"
+            v-model="formData.cudoubt"
+            placeholder="请输入疑难点" />
+        </uni-forms-item>
+        <uni-forms-item label="目前状态" name="cunstat">
+          <uni-easyinput
+            type="text"
+            :inputBorder="false"
+            :clearable="false"
+            v-model="formData.cunstat"
+            placeholder="请输入目前状态" />
         </uni-forms-item>
         <uni-forms-item label-position="top" label="备注" name="highscont">
           <uni-easyinput
@@ -339,10 +307,8 @@ function confirm(popup: any) {
   color: rgb(51, 51, 51);
 }
 :deep(.uni-easyinput__content-input) {
-  text-align: end;
-}
-:deep(.uni-easyinput__content-input:focus) {
-  text-align: end;
+  text-align: right;
+  direction: rtl;
 }
 :deep(.is-disabled .uni-easyinput__placeholder-class) {
   color: #999 !important;
