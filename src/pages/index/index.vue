@@ -1,5 +1,5 @@
 <template>
-  <view class="content" :style="{ marginTop: ` ${top}px` }">
+  <view class="content" :style="{ marginTop: ` ${top+30}px` }">
     <uni-card title="获客管理" class="card_box">
       <view
         class="card"

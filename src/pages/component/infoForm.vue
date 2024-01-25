@@ -37,6 +37,8 @@ function sourceChange(e: any) {
 defineExpose({
   clientForm,
 });
+
+
 </script>
 
 <template>
@@ -47,8 +49,9 @@ defineExpose({
       ref="clientForm"
       :modelValue="props.data"
       label-width="200rpx"
-      :border="true">
-      <uni-forms-item label="姓名" name="cuname" required>
+      :border="true"
+      >
+      <uni-forms-item  label="姓名" name="cuname" required>
         <uni-easyinput
           type="text"
           :clearable="false"
@@ -153,20 +156,25 @@ defineExpose({
           v-model="data.cumajor"
           placeholder="请输入专业" />
       </uni-forms-item>
-      <uni-forms-item label-position="top" label="家庭情况" name="famstate">
+      <view class="box">
+        <uni-forms-item label-position="top" label="家庭情况" name="famstate">
         <uni-easyinput
           type="textarea"
           placeholder="请输入家庭情况"
           :clearable="false"
           v-model="data.famstate" />
       </uni-forms-item>
-      <uni-forms-item label-position="top" label="个人介绍" name="perintr">
+      </view>
+      <view class="box">
+        <uni-forms-item label-position="top" label="个人介绍" name="perintr">
         <uni-easyinput
           type="textarea"
           placeholder="请输入个人介绍"
           :clearable="false"
           v-model="data.perintr" />
       </uni-forms-item>
+      </view>
+     <view class="box">
       <uni-forms-item label-position="top" label="兴趣爱好" name="cuhobby">
         <uni-easyinput
           type="textarea"
@@ -174,6 +182,7 @@ defineExpose({
           :clearable="false"
           v-model="data.cuhobby" />
       </uni-forms-item>
+     </view>
       <uni-forms-item label="疑难点" name="cudoubt">
         <uni-easyinput
           type="text"
@@ -190,13 +199,15 @@ defineExpose({
           v-model="data.cunstat"
           placeholder="请输入目前状态" />
       </uni-forms-item>
-      <uni-forms-item label-position="top" label="备注" name="highscont">
+      <view class="box">
+        <uni-forms-item label-position="top" label="备注" name="highscont">
         <uni-easyinput
           type="textarea"
           :clearable="false"
           v-model="data.highscont"
           placeholder="请输入备注" />
       </uni-forms-item>
+      </view>
     </uni-forms>
   </scroll-view>
   <view>
@@ -251,5 +262,11 @@ defineExpose({
 .confirm {
   margin: 30rpx 20rpx;
   color: #007aff;
+}
+:deep(.box .is-direction-left){
+  display: block;
+}
+.box>view{
+  display: block !important;
 }
 </style>

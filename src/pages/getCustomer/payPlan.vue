@@ -42,30 +42,46 @@ onReachBottom(() => {
 });
 </script>
 <template>
-  <view class="screen">
+  <view style="background-color: #f4f4f4;height: 100vh;">
     <view style="height: 1rpx"></view>
     <view v-for="item in listData" :key="item.id">
       <uni-card>
-        <view>
-          <text>回款期数：{{ item.termmoney }}</text>
+        <view class="name">{{ item.cuname }}</view>
+        <view class="flex">
+          <view>回款期数</view>
+          <view>{{ item.termmoney }}</view>
         </view>
-        <view>
-          <text>回款金额:{{ item.planmoney }}</text>
+        <view class="flex">
+          <view>回款金额</view>
+          <view>{{ item.planmoney }}</view>
         </view>
-        <view>
-          <text>回款日期:{{ item.moneydate }}</text>
+        <view class="flex">
+          <view>回款日期</view>
+          <view>{{ item.moneydate }}</view>
         </view>
-        <view>
-          <text>回款方式:{{ item.waymoney }}</text>
+        <view class="flex">
+          <view>回款方式</view>
+          <view>{{ item.waymoney }}</view>
         </view>
       </uni-card>
     </view>
-    <view style="height: 10rpx"></view>
+    <view style="height: 20rpx"></view>
   </view>
 </template>
-<style scoped>
-.screen{
-  background-color: #f4f4f4;
-  height: 100vh;
+<style lang="scss" scoped>
+.flex {
+  display: flex;
+  justify-content: space-between;
+  margin: 10rpx 0;
+  color: #7F7F81;
+  font-size: 28rpx;
+}
+.name {
+  border-bottom: 2px solid #d8d8d8;
+  margin: 20rpx 0;
+  padding-bottom: 20rpx;
+  font-weight: bold;
+  color: #3D3D3D;
+  font-size: 36rpx;
 }
 </style>

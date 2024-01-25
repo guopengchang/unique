@@ -21,6 +21,7 @@ export interface client {
 }
 
 export interface payment {
+  cuname?:string; //用户名
   highsid?: number; //客户id
   planmoney?: string; //回款金额
   termmoney?: string; //回款期数
