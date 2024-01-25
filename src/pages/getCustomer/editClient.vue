@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
-import { getClient, updateClient } from "@/services/getCustomer";
+import {
+  getClient,
+  updateClient,
+  getSource,
+  getProd,
+} from "@/services/getCustomer";
 import type { client } from "./type";
 import { rules } from "./rules";
 import infoForm from "../component/infoForm.vue";
-import { range, resultlize, sourceRange, prodRange } from "./data";
+import { range, resultlize } from "./data";
 const formData = ref<client>({});
 const oldValue = ref({});
 const clientForm = ref(null);
 const clientId = ref({});
+const sourceRange = ref([]);
+const prodRange = ref([]);
 
 onLoad((e) => {
   getClient(e.id).then((res: any) => {
@@ -17,6 +24,22 @@ onLoad((e) => {
     const result = resultlize(res);
     formData.value = result;
     oldValue.value = Object.assign({}, result);
+  });
+  getSource().then((res: any) => {
+    sourceRange.value = res.data.map((item: any) => {
+      return {
+        value: item.dictLabel,
+        text: item.dictValue,
+      };
+    });
+  });
+  getProd().then((res: any) => {
+    prodRange.value = res.data.map((item: any) => {
+      return {
+        value: item.dictLabel,
+        text: item.dictValue,
+      };
+    });
   });
 });
 
@@ -60,19 +83,22 @@ function sourceChange(e: any) {
       :prod-range="prodRange"
       :data="formData"
       @change-source="sourceChange"
-      @change-prod="prodChange"
-    >
+      @change-prod="prodChange">
     </info-form>
     <button
       style="
         margin-top: 20rpx;
         width: 60vw;
         border-radius: 20rpx;
-        background-image: linear-gradient(135deg, #158af7, #158af7 70%, #158af7);
         color: #ffffff;
+        background-image: linear-gradient(
+          135deg,
+          #158af7,
+          #158af7 70%,
+          #158af7
+        );
       "
-      @click="submit(clientForm)"
-    >
+      @click="submit(clientForm)">
       提交
     </button>
     <div style="height: 20rpx"></div>
