@@ -1,12 +1,12 @@
 <template>
-  <view  class="my_page" :style="{ paddingTop:` ${top}+ rpx` }">
+  <view  class="my_page" :style="{ marginTop:` ${top+30}px` }">
+    <view class="info_box">个人信息</view>
     <!-- logo文字 -->
-    <view>
-    <text class="profile_box">个人信息</text> </view>
-    <view  v-if="memberStore.profile">
-      <text class="nickname">昵称：{{ nickname }}</text>
+    <view class="name_box" v-if="memberStore.profile">
+      <text class="nick">昵称：</text>
+      <text class="name">{{ nickname }}</text>
     </view>
-    <view  v-else>
+    <view  style="text-align: center" v-else>
       <text class="nickname">您尚未登录</text>
     </view>
       <!-- 操作按钮 -->
@@ -62,30 +62,51 @@ onShow(()=>{
 </script>
 
 <style lang="scss" scoped>
-.my_page{
-  padding: 0 30rpx;
-}
-view{
-  text-align: center;
-}
-.profile_box{
-  font-size: 22px;
-  text-align: center;
-}
-.nickname{
-  font-size: 26px;
+.info_box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 58rpx;
+  line-height: 58rpx;
+  width: 100%;
+  margin-bottom: 100rpx;
+  background-color: #fff;
+  font-size: 32rpx;
 }
 /* 操作按钮 */
 .action {
-  text-align: center;
-  line-height: 90rpx;
-  margin-top: 140rpx;
-  font-size: 32rpx;
-  color: #333;
+  position: fixed;
+  bottom: 250rpx;
+  left: 50%;
+  transform: translateX(-300rpx);
   .button {
-    background-color: rgb(192, 204, 255);
-    margin-bottom: 20rpx;
-    border-radius: 10rpx;
+    background-color:#158AF7;
+    border-radius: 12rpx;
+    width: 600rpx;
+    height: 82rpx;
+    line-height: 82rpx;
+    text-align: center;
+    font-size: 40rpx;
+    color: white;
+  }
+}
+
+.name_box{
+  padding: 0 36rpx;
+  height: 80rpx;
+  box-shadow: inset ;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 2px 0px 12px 0px rgba(0, 0, 0, 0.1);
+  margin-top: 62rpx;
+  .nick{
+    color: #3D3D3D;
+    font-size: 36rpx;
+  }
+  .name{
+    font-size: 32rpx;
+    color: #9F9F9F;
   }
 }
 </style>
