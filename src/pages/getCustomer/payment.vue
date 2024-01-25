@@ -35,7 +35,7 @@ function confirm(popup: any) {
 function submit(ref: any) {
   ref.validate((err: any, value: any) => {
     if (err === null) {
-      addPayplan(value).then(() => {
+      addPayplan({...value,highsid:formData.value.highsid}).then(() => {
         uni.showToast({
           title: "新增成功",
           icon: "success",
