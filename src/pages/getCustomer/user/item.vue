@@ -29,7 +29,7 @@ const userName = ref({});
 //存放全部负责人姓名
 const items = ref([]);
 //获取选择后的负责人电话
-const newUserNamePhone = ref({});
+const newUserNamePhone = ref();
 //存放id
 const id = ref();
 onLoad((e) => {
@@ -56,6 +56,13 @@ function onchange(e) {
 }
 //点击跳转
 function handleDefine() {
+  console.log(newUserNamePhone.value)
+  if(!newUserNamePhone.value){
+    return uni.showToast({
+      title: "请选择负责人",
+      icon: "none",
+    });
+  }
   getUser(id.value, {
     cuowner: newUserNamePhone.value,
     id: id.value,

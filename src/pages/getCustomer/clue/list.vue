@@ -113,8 +113,13 @@ function touchGround() {
 }
 //批量领取
 async function handleBatch() {
+  if(!batchsize.value){
+    return uni.showToast({
+      title: "请勾选",
+      icon: "none",
+    });
+  }
   await batchClue({ ids: batchsize.value });
-  // uni.navigateBack()
   num.value = 1;
   getQrCodeReceive(num.value)
     .then((res) => {
