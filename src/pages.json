@@ -48,7 +48,13 @@
     {
       "path": "pages/score/evaluation",
       "style": {
-        "navigationBarTitleText": "测评成绩"
+        "navigationBarTitleText": "成绩查询"
+      }
+    },
+    {
+      "path": "pages/score/createEvaluation",
+      "style": {
+        "navigationBarTitleText": "新建测评"
       }
     },
     {

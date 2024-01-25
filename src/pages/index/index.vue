@@ -120,7 +120,12 @@ const getScoreList = ref<any[]>([
   {
     path: "/pages/score/evaluation",
     icon: clue,
-    name: "测评分数",
+    name: "查询分数",
+  },
+  {
+    path: "/pages/score/createEvaluation",
+    icon: clue,
+    name: "新建测评",
   },
 ])
 onShow(() => {

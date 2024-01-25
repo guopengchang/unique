@@ -106,3 +106,38 @@ export let loginRules = {
     ],
   },
 };
+
+export let evalRules = {
+  evalclass: {
+    rules: [
+      {
+        required: true,
+        errorMessage: "请输入测评班级",
+      },
+    ],
+  },
+  evalstage: {
+    rules: [
+      {
+        required: true,
+        errorMessage: "请输入测评阶段",
+      },
+    ],
+  },
+  evalteach: {
+    rules: [
+      {
+        required: true,
+        errorMessage: "请输入测评老师",
+      },
+    ],
+  },
+  evaldate: {
+    rules: [
+      {
+        required: true,
+        errorMessage: "请选择测评日期",
+      },
+    ],
+  },
+};

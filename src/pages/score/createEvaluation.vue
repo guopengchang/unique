@@ -3,25 +3,35 @@
   <uni-forms
     ref="form"
     :modelValue="formData"
-    :rules="signInRules"
+    :rules="evalRules"
+    err-show-type="toast"
+    label-width="150rpx"
     class="form_box">
-    <uni-forms-item label="学校" name="cuschool" required>
+    <uni-forms-item label="测评班级" name="evalclass" required>
       <uni-easyinput
         type="text"
-        v-model="formData.cuschool"
-        placeholder="请输入学校" />
+        v-model="formData.evalclass"
+        placeholder="请输入测评班级" />
     </uni-forms-item>
-    <uni-forms-item label="年级" name="cugrade" required>
+    <uni-forms-item label="测评阶段" name="evalstage" required>
       <uni-easyinput
         type="text"
-        v-model="formData.cugrade"
-        placeholder="请输入年级" />
+        v-model="formData.evalstage"
+        placeholder="请输入测评阶段" />
     </uni-forms-item>
-    <uni-forms-item label="申请人" name="djpeop" required>
+    <uni-forms-item label="测评老师" name="evalteach" required>
       <uni-easyinput
         type="text"
-        v-model="formData.djpeop"
-        placeholder="请输入申请人" />
+        v-model="formData.evalteach"
+        placeholder="请输入测评老师" />
+    </uni-forms-item>
+    <uni-forms-item label="测评时间" name="evaldate" required>
+      <uni-datetime-picker
+        :clearIcon="false"
+        :border="false"
+        type="date"
+        v-model="formData.evaldate">
+      </uni-datetime-picker>
     </uni-forms-item>
     <button @click="submit" type="primary">确认生成二维码</button>
   </uni-forms>
@@ -35,29 +45,39 @@
 
 <script lang="ts" setup>
 import { onReady } from "@dcloudio/uni-app";
-import { ref, onMounted, reactive } from "vue";
-import { signInRules } from "./rules";
+import { ref, onMounted, reactive, computed } from "vue";
+import { evalRules } from "../getCustomer/rules";
+import { addEval } from "../../services/score";
 //ts-ignore
 import UQRCode from "uqrcodejs";
 let formData = reactive({
-  cuschool: "",
-  cugrade: "",
-  djpeop: "",
-  cusource: "签到",
+  evalclass: "",
+  evalstage: "",
+  evalteach: "",
+  evaldate: "",
+});
+
+let rid = computed(() => {
+  const str = btoa(formData.evaldate);
+  const math = Math.random().toString();
+  return str + math;
 });
 
 const createQRCode = (data) => {
+  console.log(rid.value);
   let encodeParam = encodeURI(
-    `cuschool=${data.cuschool}&cugrade=${data.cugrade}&djpeop=${data.djpeop}&cusource=签到`
+    `rid=${rid.value}`
   );
-  formData.cuschool = "";
-  formData.cugrade = "";
-  formData.djpeop = "";
+  formData.evalclass = "";
+  formData.evalstage = "";
+  formData.evalteach = "";
+  formData.evaldate = "";
 
   // 获取uQRCode实例
   var qr = new UQRCode();
   // 设置二维码内容
-  qr.data = `http://stu.ueksx.com/finance/wxsign?${encodeParam}`;
+  qr.data = `http://stu.ueksx.com/finance/evaluate?${encodeParam}`;
+  console.log(qr.data);
   // 设置二维码大小，必须与canvas设置的宽高一致
   qr.size = 280;
   // 调用制作二维码方法
@@ -75,6 +95,7 @@ const submit = () => {
   form.value
     .validate()
     .then((res) => {
+      addEval({ ...res, rid: rid.value });
       createQRCode(res);
     })
     .catch((err) => {});
