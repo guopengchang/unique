@@ -78,13 +78,13 @@
     {
       "path": "pages/getCustomer/client/client",
       "style": {
-        "navigationBarTitleText": "client"
+        "navigationBarTitleText": "客户"
       }
     },
     {
       "path": "pages/getCustomer/signIn",
       "style": {
-        "navigationBarTitleText": "signIn"
+        "navigationBarTitleText": "签到"
       }
     },
     {

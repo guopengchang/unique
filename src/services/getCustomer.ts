@@ -58,7 +58,7 @@ export const getClientList = (filter?: string, num = 1) => {
   const filters = filter ? filter : "";
   return http({
     method: "GET",
-    url: "system/highseas/list?cuflag=2&pageSize=20&pageNum=" + num + filters,
+    url: "system/highseas/list?cuflag=2&pageSize=4&pageNum=" + num + filters,
   });
 };
 

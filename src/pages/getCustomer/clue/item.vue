@@ -29,14 +29,16 @@ function submit(ref: any) {
     }
   });
 }
-
+const color = ref("a");
 const agreement = ref<any>(true);
 function clickbox(e) {
   // console.log(e.detail.value.length)
   if (e.detail.value.length === 1) {
     agreement.value = false;
+    color.value = "b";
   } else {
     agreement.value = true;
+    color.value = "a";
   }
 }
 </script>
@@ -50,25 +52,26 @@ function clickbox(e) {
       :prod-range="prodRange"
       :data="formData"
       @change-source="sourceChange"
-      @change-prod="prodChange">
+      @change-prod="prodChange"
+    >
     </info-form>
-    <checkbox-group
-      name="checkbox"
-      style="display: flex; justify-content: center"
-      @change="clickbox">
+    <checkbox-group name="checkbox" style="display: flex; justify-content: center" @change="clickbox">
       <label>
-        <checkbox class="box" />
+        <checkbox color="blue" class="box"  />
       </label>
       <view style="margin: 20rpx 0rpx 20rpx 20rpx"> 提交代表您同意 </view>
-      <navigator url="/pages/getCustomer/clue/text" class="text"
-        >用户协议和隐私政策
-      </navigator>
+      <navigator url="/pages/getCustomer/clue/text" class="text">用户协议和隐私政策 </navigator>
     </checkbox-group>
     <button
       :disabled="agreement"
+      :style="
+        color === 'a'
+          ? ' color: rgba(225, 225, 225, 0.6); background-color: #4b9ff8;'
+          : 'color: #ffffff; background-color: #007aff;'
+      "
       style="margin-top: 20rpx; width: 60vw; border-radius: 20rpx"
-      type="primary"
-      @click="submit(clientForm)">
+      @click="submit(clientForm)"
+    >
       提交
     </button>
     <div style="height: 20rpx"></div>

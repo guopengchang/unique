@@ -9,30 +9,33 @@
     </view>
     <view class="border" style="display: flex; justify-content: space-between">
       <view class="label">跟进方式</view>
-      <view class="name" style="margin-right;: 20rpx">
+      <view class="name" style="margin-right: 20rpx;width: 300rpx;">
         <uni-data-picker
           :clear-icon="false"
           @change="fashion"
-          style="width: 380rpx"
+          style="margin-right: 11rpx;"
           placeholder="请选择跟进方式"
           :localdata="items">
         </uni-data-picker>
       </view>
     </view>
-    <view>
+    <view style="border-bottom: 1rpx solid #e3d8d8;">
       <view class="label"> 跟进内容</view>
+     <view  style="width:90%;margin-left: 20rpx;margin-bottom: 10rpx;">
       <uni-easyinput
         name="followcont"
         type="textarea"
         autoHeight
         placeholder="请输入跟进内容"></uni-easyinput>
+     </view>
     </view>
     <view class="border" style="display: flex; justify-content: space-between">
-      <view class="label">下次跟进时间</view>
-      <view style="width: 300rpx; margin-right: 20rpx; margin-top: 25rpx">
+      <view class="label" style="margin-top: 30rpx;">下次跟进时间</view>
+      <view style="width: 300rpx;margin-bottom: 20rpx; margin-right: 20rpx; margin-top: 25rpx">
         <uni-datetime-picker
           @change="time"
           class="label"
+         :border="false"
           type="date"
           :clear-icon="false"
       /></view>
@@ -139,15 +142,15 @@ function time(e) {
   border-bottom: 1px solid #e3d8d8;
 }
 .name {
-  margin-top: 30rpx;
-  margin-bottom: 30rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
 }
 .border {
   border-bottom: 1rpx solid #e3d8d8;
 }
 .label {
-  margin-top: 40rpx;
-  margin-bottom: 30rpx;
+  margin-top: 30rpx;
+  margin-bottom: 20rpx;
   margin-left: 20rpx;
 }
 .uni-forms-item[data-v-3515f8e1] {
@@ -168,13 +171,15 @@ function time(e) {
   padding-top: 20rpx;
   padding-bottom: 20rpx;
   background: #fff;
+  margin-top: 80rpx;
 
   .confirm {
     background-image: linear-gradient(135deg, #0c70f2, #0c60f2 70%, #0c32f2);
     color: #fff;
-    width: 22.1875rem;
-    height: 2.5rem;
-    border-radius: 1.25rem;
+    width: 80%;
+    height: 80rpx;
+    line-height: 80rpx;
+    border-radius: 40rpx;
   }
   .remove {
     border: 1px solid #ccc;

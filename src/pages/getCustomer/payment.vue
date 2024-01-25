@@ -12,13 +12,12 @@ const paymentForm = ref(null);
 onLoad((e) => {
   if (e.id) {
     formData.value.highsid = e.id;
+    formData.value.cuname = e.name;
   }
-  formData.value.moneydate = new Date()
-    .toLocaleDateString()
-    .split("/")
-    .join("-");
+  formData.value.moneydate = new Date().toLocaleDateString().split("/").join("-");
 
   getMoneyWay().then((res: any) => {
+    console.log(res)
     sourceRange.value = res.data.map((item: any) => {
       return {
         value: item.dictLabel,
@@ -63,22 +62,36 @@ function closePop(popup: any) {
       ref="paymentForm"
       :modelValue="formData"
       label-width="200rpx"
-      :border="true">
-      <uni-forms-item label="客户ID" name="highsid">
+      :border="true"
+    >
+      <uni-forms-item label="客户名字" name="cuname">
+          <uni-easyinput
+            type="text"
+            :disabled="true"
+            v-model="formData.cuname"
+            :inputBorder="false"
+            :clearable="false"
+          />
+       </uni-forms-item>
+
+      <!-- <uni-forms-item label="客户ID" name="highsid">
         <uni-easyinput
           type="text"
           :disabled="true"
           v-model="formData.highsid"
           :inputBorder="false"
-          :clearable="false" />
-      </uni-forms-item>
+          :clearable="false"
+        />
+    
+      </uni-forms-item> -->
       <uni-forms-item label="回款金额" name="planmoney">
         <uni-easyinput
           type="text"
           :inputBorder="false"
           :clearable="false"
           v-model="formData.planmoney"
-          placeholder="请输入回款金额" />
+          placeholder="请输入回款金额"
+        />
       </uni-forms-item>
       <uni-forms-item label="回款期数" name="termmoney">
         <uni-easyinput
@@ -86,14 +99,11 @@ function closePop(popup: any) {
           :inputBorder="false"
           :clearable="false"
           v-model="formData.termmoney"
-          placeholder="请输入汇款期数" />
+          placeholder="请输入汇款期数"
+        />
       </uni-forms-item>
       <uni-forms-item label="回款日期" name="moneydate">
-        <uni-datetime-picker
-          :clearIcon="false"
-          :border="false"
-          type="date"
-          v-model="formData.moneydate">
+        <uni-datetime-picker :clearIcon="false" :border="false" type="date" v-model="formData.moneydate">
         </uni-datetime-picker>
       </uni-forms-item>
       <uni-forms-item label="回款方式" name="waymoney">
@@ -104,13 +114,21 @@ function closePop(popup: any) {
           suffixIcon="right"
           :inputBorder="false"
           v-model="formData.waymoney"
-          placeholder="请选择回款方式" />
+          placeholder="请选择回款方式"
+        />
       </uni-forms-item>
     </uni-forms>
     <button
-      style="margin-top: 20rpx; width: 60vw; border-radius: 20rpx"
-      type="primary"
-      @click="submit(paymentForm)">
+      style="
+        margin-top: 20rpx;
+        width: 60vw;
+        border-radius: 20rpx;
+        background-image: linear-gradient(135deg, #158af7, #158af7 70%, #158af7);
+        color: #ffffff;
+        font-size: 36rpx;
+      "
+      @click="submit(paymentForm)"
+    >
       提交
     </button>
     <div style="height: 20rpx"></div>
@@ -182,4 +200,5 @@ function closePop(popup: any) {
 :deep(.detail .checklist-box) {
   margin: 35rpx 40rpx !important;
 }
+
 </style>

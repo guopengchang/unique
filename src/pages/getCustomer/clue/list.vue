@@ -1,70 +1,48 @@
 <template>
   <view class="clue_list_page">
-    <scroll-view
-      class="scroll_box"
-      :scroll-y="true"
-      @scrolltolower="touchGround">
+    <scroll-view class="scroll_box" :scroll-y="true" @scrolltolower="touchGround">
       <checkbox-group @change="batch">
         <view v-for="users in userInfo" :key="users.cuname">
-          <label style="display: flex">
-            <view style="margin: auto 0; margin-left: 20rpx">
-              <checkbox :value="users.id" />
+            <view>
+              <uni-card :is-shadow="true" shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)">
+               <view style="display: flex;justify-content: space-between;">
+                <view>
+                <view class="flex" style="color: #3D3D3D; font-size: 28rpx">
+                  <view>客户名称</view>
+                  <view>:{{ users.cuname }}</view>
+                </view>
+                <view class="flex">
+                  <view>所选课程</view>
+                  <view>:{{ users.cuprod }}</view>
+                </view>
+                <view class="flex">
+                  <view style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
+                    >年级</view
+                  >
+                  <view>:{{ users.cugrade }}</view>
+                </view>
+                <view class="flex">
+                  <view style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
+                    >学校</view
+                  >
+                  <view>:{{ users.cuschool }}</view>
+                </view>
+                <view class="flex">
+                  <view>在校专业</view>
+                  <view>:{{ users.cumajor }}</view>
+                </view>
+               </view>
+               <label style="display: flex">
+               <view style="margin: auto 0; margin-left: 20rpx">
+              <checkbox color="blue" :value="users.id" />
             </view>
-            <view style="width: 1000rpx">
-              <uni-card
-                :is-shadow="true"
-                shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)">
-                <view>
-                  <text
-                    >客户名称<text>:{{ users.cuname }}</text>
-                  </text>
-                </view>
-                <view>
-                  <text
-                    >所选课程
-                    <text>:{{ users.cuprod }}</text>
-                  </text>
-                </view>
-                <view>
-                  <text
-                    style="
-                      width: 110rpx;
-                      display: inline-block;
-                      text-align: justify;
-                      text-align-last: justify;
-                    ">
-                    年级
-                  </text>
-                  <text>:{{ users.cugrade }}</text>
-                </view>
-                <view>
-                  <text
-                    style="
-                      width: 110rpx;
-                      display: inline-block;
-                      text-align: justify;
-                      text-align-last: justify;
-                    "
-                    >学校</text
-                  ><text>:{{ users.cuschool }}</text>
-                </view>
-                <view>
-                  <text>
-                    在校专业
-                    <text>:{{ users.cumajor }}</text>
-                  </text>
-                </view>
+          </label>
+               </view>
                 <view class="btn">
-                  <button
-                    class="btn-item"
-                    size="mini"
-                    @click="() => handleReceive(users.id)">
-                    领取用户
-                  </button>
+                  <button class="btn-item" size="mini" @click="() => handleReceive(users.id)">领取用户</button>
                 </view>
               </uni-card>
             </view>
-          </label>
         </view>
       </checkbox-group>
     </scroll-view>
@@ -75,11 +53,7 @@
   </view>
 </template>
 <script setup lang="ts">
-import {
-  getQrCodeReceive,
-  getReceive,
-  batchClue,
-} from "../../../../src/services/getCustomer";
+import { getQrCodeReceive, getReceive, batchClue } from "../../../../src/services/getCustomer";
 import { onLoad } from "@dcloudio/uni-app";
 import { ref } from "vue";
 const userInfo = ref([]);
@@ -101,6 +75,7 @@ onLoad(() => {
       if (res.total !== 0) {
         userInfo.value = res.rows;
         total.value = res.total;
+        uni.showToast({ icon: "success", title: res.msg });
       } else {
         uni.showToast({
           icon: "error",
@@ -159,9 +134,9 @@ function handleReceive(e) {
   console.log(e, id.value);
   getReceive(id.value, { ...receiveflag, id: id.value, receiveflag: 1 });
   console.log("领取成功");
-  getQrCodeReceive()
+  num.value = 1;
+  getQrCodeReceive(num.value)
     .then((res: any) => {
-      console.log(res)
       userInfo.value = res.rows;
       total.value = res.total;
     })
@@ -204,16 +179,27 @@ page {
   line-height: 120rpx;
   height: 120rpx;
   background-color: #fff;
+  font-size: 28rpx;
 }
 .btn {
   display: flex;
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   height: 80rpx;
 }
 .btn-item {
-  background-image: linear-gradient(135deg, #0c70f2, #0c60f2 70%, #0c32f2);
-  color: #fff;
-  width: 100%;
+  border: 1rpx solid #158AF7;
+  border-radius: 40rpx;
+  background-color: #fff;
+  color: #158AF7;
+  width: 80%;
   line-height: 80rpx;
+  font-size: 24rpx;
+}
+.flex {
+  display: flex;
+  margin: 10rpx 0;
+  color: #9F9F9F;
+  font-size: 28rpx;
 }
 </style>
