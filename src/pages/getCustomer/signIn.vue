@@ -1,15 +1,10 @@
 <template>
   <!-- formData、rules 内容详见下方完整示例 -->
-<<<<<<< HEAD
   <uni-forms
     ref="form"
     :modelValue="formData"
     :rules="signInRules"
     class="form_box">
-=======
- <view style="margin: 50rpx;">
-  <uni-forms ref="form" :modelValue="formData" :rules="signInRules" class="form_box">
->>>>>>> b58a1419fd5767090b278fada007af1cf5aa4c0b
     <uni-forms-item label="学校" name="cuschool" required>
       <uni-easyinput
         type="text"
@@ -53,13 +48,9 @@ let formData = reactive({
 });
 
 const createQRCode = (data) => {
-<<<<<<< HEAD
   let encodeParam = encodeURI(
     `cuschool=${data.cuschool}&cugrade=${data.cugrade}&djpeop=${data.djpeop}&cusource=签到`
   );
-=======
-  let encodeParam = encodeURI(`cuschool=${data.cuschool}&cugrade=${data.cugrade}&djpeop=${data.djpeop}&cusource=签到`);
->>>>>>> b58a1419fd5767090b278fada007af1cf5aa4c0b
   formData.cuschool = "";
   formData.cugrade = "";
   formData.djpeop = "";
@@ -69,11 +60,7 @@ const createQRCode = (data) => {
   // 设置二维码内容
   qr.data = `http://stu.ueksx.com/finance/wxsign?${encodeParam}`;
   // 设置二维码大小，必须与canvas设置的宽高一致
-<<<<<<< HEAD
   qr.size = 280;
-=======
-  qr.size = 350;
->>>>>>> b58a1419fd5767090b278fada007af1cf5aa4c0b
   // 调用制作二维码方法
   qr.make();
   // 获取canvas上下文
