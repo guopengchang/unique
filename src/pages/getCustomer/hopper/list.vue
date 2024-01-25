@@ -1,5 +1,5 @@
 <template>
-  <view class="clue_list_page screen">
+ <view class="clue_list_page screen">
     <uni-search-bar
       style="margin: auto 20rpx"
       radius="100"
@@ -9,42 +9,57 @@
       @confirm="search"
     />
     <scroll-view class="scroll_box" :scroll-y="true" @scrolltolower="scrolltolower">
-      <view>
-        <uni-card v-for="users in userInfo" :is-shadow="false">
-          <view>
+      <uni-card v-for="users in userInfo" :is-shadow="false">
+        <view>
+          <view class="card-box">
+            <view style="margin-bottom: 20rpx">
+              <text style="font-size: 36rpx; font-weight: bold;color: #3D3D3D;">{{ users.cuname }}</text>
+              <text style="margin-left: 20rpx; font-size: 20rpx; color: #B0B0B4">{{ users.cuschool }}</text></view
+            >
+            <view class="btn-edit" @click="() => handleEdit(users.id)">编辑 </view>
+          </view>
+          <view style="margin-top: 10rpx;color: #7F7F81;font-size: 24rpx;">
             <text
-              >客户名称<text>:{{ users.cuname }}</text>
+              >联系方式<text>:{{ users.cutel }}</text>
             </text>
           </view>
-          <view>
-            <text
-              >所选课程<text>:{{ users.cuprod }}</text>
-            </text>
+          <view style="display: flex; justify-content: space-between">
+            <view>
+              <view style="color: #7F7F81;font-size: 24rpx;">
+                <text
+                  style="
+                    margin: 10rpx 0;
+                    width: 110rpx;
+                    display: inline-block;
+                    text-align: justify;
+                    text-align-last: justify;
+                  "
+                  >专业
+                </text>
+                <text>:{{ users.cumajor }}</text>
+              </view>
+              <view style="color: #7F7F81;font-size: 24rpx;">
+                <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
+                  >对接人
+                </text>
+                <text>:{{ users.cuowner }}</text>
+              </view>
+            </view>
+            <view
+              style="margin-right: -50rpx"
+              class="btnI"
+              @click="() => handleCallPhone(client.cutel, client.cuowner)"
+            >
+              <image class="img" src="../../../static/more-pic/phone.png" mode="scaleToFill" />
+            </view>
           </view>
-          <view>
-            <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
-              >年级
-            </text>
-            <text>:{{ users.cugrade }}</text>
-          </view>
-          <view>
-            <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
-              >学校
-            </text>
-            <text>:{{ users.cuschool }}</text>
-          </view>
+        </view>
 
-          <view>
-            <text
-              >在校专业<text>:{{ users.cumajor }}</text>
-            </text>
-          </view>
-          <view class="btn footer">
-            <view class="btn-item" @click="() => editClient(users.id)">编辑 </view>
-            <view class="btn-item" @click="() => setClientID(popupMore, users)"> 更多 </view>
-          </view>
-        </uni-card>
-      </view>
+        <view class="btn">
+          <view style="margin-left: auto" class="btn-more" @click="() => setClientID(popupMore, users)"> 更多 </view>
+        </view>
+      </uni-card>
+      <view style="height: 30rpx;"></view>
       <uni-popup ref="popupMore" type="bottom">
         <view class="popm">
           <view class="btnI" @click="() => handleFollow(client.id)">
@@ -65,7 +80,12 @@
   </view>
 </template>
 <script setup lang="ts">
-import { getHopper, getChange, getHopperSearch, addPhoneRecord } from "../../../../src/services/getCustomer";
+import {
+  getHopper,
+  getChange,
+  getHopperSearch,
+  addPhoneRecord,
+} from "../../../../src/services/getCustomer";
 import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
 let inputValueFlag = false;
@@ -90,7 +110,6 @@ onLoad(() => {
       if (res.total !== 0) {
         userInfo.value = res.rows;
         total.value = res.total;
-        uni.showToast({ icon: "success", title: res.msg });
       } else {
         uni.showToast({
           icon: "error",
@@ -116,16 +135,20 @@ function handleFollow(id: any) {
 // 点击转客户按钮
 async function handleClient(pop: any, id: any) {
   await getChange({ cuflag: 2, id: id });
-  getHopper().then((res: any) => {
-    userInfo.value = res.rows;
-    total.value = res.total;
-  }).then(()=>{
-    uni.showToast({
-      icon:'success',
-      title:'转客户成功'
+  getHopper()
+    .then((res: any) => {
+      userInfo.value = res.rows;
+      total.value = res.total;
     })
-  });
-  closePop(pop);
+    .then(() => {
+      closePop(pop);
+    })
+    .then(() => {
+      uni.showToast({
+        icon: "success",
+        title: "转客户成功",
+      });
+    });
 }
 // 触底
 function scrolltolower() {
@@ -177,12 +200,6 @@ function search(e: any) {
   }
 }
 
-function editClient(id: any) {
-  uni.navigateTo({
-    url: `/pages/getCustomer/editClient?id=${id}`,
-  });
-}
-
 function setClientID(popup: any, item: any) {
   console.log(item);
   client.value = item;
@@ -220,20 +237,24 @@ page {
 .scroll_box {
   height: calc(100% - 125rpx);
 }
-.footer {
-  border-top: 0.5rpx solid #e0e0e0;
-}
+
 .btn {
   padding-top: 10rpx;
   display: flex;
   justify-content: space-between;
   margin-top: 20rpx;
 }
-.btn-item {
-  border: 1rpx solid #007aff;
-  border-radius: 3rpx;
+.btn-more {
+  border: 1rpx solid #158AF7;
+  width: 100rpx;
+  text-align: center;
+  border-radius: 30rpx;
   padding: 0 10rpx;
-  color: #007aff;
+  color: #158AF7;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 20rpx;
+
 }
 .img {
   width: 70rpx;
@@ -260,5 +281,23 @@ page {
 .screen {
   height: 100vh;
   background-color: #f4f4f4;
+}
+.card-box {
+  border-bottom: 1rpx solid #d8d8d8;
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.btn-edit {
+  margin-bottom: 20rpx;
+  border: 1rpx solid #e4e4e4;
+  width: 100rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  border-radius: 30rpx;
+  padding: 0 10rpx;
+  color: #9F9F9F;
+  font-size: 20rpx;
 }
 </style>

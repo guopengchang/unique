@@ -1,26 +1,27 @@
 <template>
-  <view class="clue_list_page">
-    <scroll-view class="scroll_box" :scroll-y="true">
+  <view style="background-color: #f9f9f9; height: 100vh">
+    <scroll-view :scroll-y="true">
       <view v-for="users in userInfo">
-        <view>
-          <uni-card :is-shadow="false">
-            <view style="font-size: 40rpx">
-              <text style="width: 240rpx; display: inline-block; text-align: justify; text-align-last: justify"
-                >客户名称</text
-              ><text>:{{ users.cuname }} </text>
+        <uni-card class="card-box" :is-shadow="true" shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)">
+          <view>
+            <view class="mini-box"></view>
+            <view style="display: flex; justify-content: space-between">
+              <view style="margin-left: 20rpx">
+                <view style="margin: 10rpx; color: #3D3D3D;font-size:28rpx;">
+                  <text>客户名称</text><text>: &nbsp;{{ users.cuname }} </text>
+                </view>
+                <view style="margin: 10rpx; color: #9f9f9f;font-size:28rpx;">
+                  <text>跟进方式</text><text>: &nbsp;{{ users.cutel }} </text>
+                </view>
+                <view style="margin: 10rpx; color: #9f9f9f;font-size:28rpx;">
+                  <text>跟进内容</text>
+                  <text>:{{ users.inseDate }} </text>
+                </view>
+              </view>
+              <view class="right-item">待处理</view>
             </view>
-            <view style="font-size: 40rpx; margin: 20rpx 0">
-              <text style="width: 240rpx; display: inline-block; text-align: justify; text-align-last: justify"
-                >跟进电话</text
-              ><text>:{{ users.cutel }} </text>
-            </view>
-            <view style="font-size: 40rpx">
-              <text style="width: 240rpx; display: inline-block; text-align: justify; text-align-last: justify"
-                >最近跟进日期</text
-              ><text>:{{ users.inseDate }} </text>
-            </view>
-          </uni-card>
-        </view>
+          </view>
+        </uni-card>
       </view>
     </scroll-view>
   </view>
@@ -37,7 +38,6 @@ remind().then((res: any) => {
   if (res.code === 200) {
     if (res.data.length !== 0) {
       userInfo.value = res.data;
-      uni.showToast({ icon: "success", title: res.msg });
     } else {
       uni.showToast({
         icon: "error",
@@ -49,27 +49,24 @@ remind().then((res: any) => {
 });
 </script>
 <style lang="scss" scoped>
-page {
-  height: 100%;
-}
-.clue_list_page {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-}
-.scroll_box {
-  height: calc(100% - 125rpx);
-}
-.btn {
-  /* display: flex; */
-  margin-top: 20px;
+.mini-box {
+  background-color: #158af7;
   height: 80rpx;
+  width: 25rpx;
+  position: absolute;
+  top: 25%;
+  left: 0rpx;
 }
-.btn-item {
-  background-image: linear-gradient(135deg, #0c70f2, #0c60f2 70%, #0c32f2);
-  color: #fff;
-  width: 33%;
-  line-height: 80rpx;
+.right-item {
+  margin: auto 0;
+  border: 2rpx solid #158AF7;
+  width: 130rpx;
+  height: 50rpx;
+  text-align: center;
+  line-height: 50rpx;
+  border-radius: 10rpx;
+  color: #158AF7;
+  margin-right: -20rpx;
+  font-size: 28rpx;
 }
 </style>

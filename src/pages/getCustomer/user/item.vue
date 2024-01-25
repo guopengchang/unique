@@ -4,18 +4,15 @@
       <view class="label">负责人</view>
       <view style="margin-left: 190rpx">
         <uni-data-picker
+
           @change="onchange"
-          style="width: 400rpx"
+          style="width: 400rpx;font-size: 28rpx;"
           :clear-icon="false"
           placeholder="点击选择"
           :localdata="items">
         </uni-data-picker>
       </view>
     </view>
-  </view>
-  <view class="line1">
-    <view class="label1">团队成员</view>
-    <view class="round"></view>
   </view>
   <view class="op">
     <button class="confirm" form-type="submit" @click="handleDefine">
@@ -99,6 +96,7 @@ function handleConcel() {
     padding: 0 20rpx;
     width: 150rpx;
     color: #999;
+    font-size: 28rpx;
   }
   input {
     color: #333;
@@ -137,11 +135,15 @@ button::after {
   padding-bottom: 20rpx;
   background: #fff;
   .confirm {
+    width: 80%;
     background-image: linear-gradient(135deg, #0c70f2, #0c60f2 70%, #0c32f2);
     color: #fff;
+    font-size: 32rpx;
   }
-  .concel {
-    background-color: #999;
+  .cancel {
+    width: 80%;
+    font-size: 32rpx;
+ 
   }
 }
 </style>

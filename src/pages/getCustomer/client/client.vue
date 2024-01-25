@@ -15,8 +15,7 @@ const popupMore = ref(null);
 const client = ref<any>({});
 let filter = ref("");
 onLoad(() => {
-  getClientList(page.value).then((res: any) => {
-    console.log(res);
+  getClientList().then((res: any) => {
     if (res.code !== 200) {
       uni.showToast({ icon: "none", title: res.msg });
     }
@@ -24,7 +23,6 @@ onLoad(() => {
       if (res.total !== 0) {
         clientList.value = res.rows;
         total.value = res.total;
-        uni.showToast({ icon: "success", title: res.msg });
       } else {
         uni.showToast({
           icon: "error",
@@ -43,22 +41,26 @@ function editClient(id: any) {
 function handleFollow(id: any) {
   uni.navigateTo({ url: "/pages/getCustomer/follow-up/item?id=" + id });
 }
-function handlePayment(id: any) {
-  uni.navigateTo({ url: `/pages/getCustomer/payment?id=${id}` });
+function handlePayment(id: any,name:any) {
+  uni.navigateTo({ url: `/pages/getCustomer/payment?id=${id}&name=${name}` });
 }
 function handleSea(pop: any, id: any) {
-  updateClientSea({ id, cuflag: "0", cuowner: "", receiveflag: "0" }).then(
-    () => {
+  updateClientSea({ id, cuflag: "0", cuowner: "", receiveflag: "0" })
+    .then(
       getClientList().then((res: any) => {
+        console.log(res)
         clientList.value = res.rows;
+      })
+    )
+    .then(() => {
+      closePop(pop);
+    })
+    .then(() => {
+      uni.showToast({
+        icon: "success",
+        title: "移入成功",
       });
-    }
-  );
-  closePop(pop);
-  uni.showToast({
-    icon: "success",
-    title: "移入成功",
-  });
+    });
 }
 function handleCallPhone(tel: any, owner: any) {
   uni.makePhoneCall({
@@ -80,7 +82,7 @@ function ReachBottom() {
     });
   } else {
     page.value = page.value + 1;
-    getClientList(page.value, filter.value).then((res: any) => {
+    getClientList(filter.value,page.value).then((res: any) => {
       clientList.value.forEach((s: any) => {
         res.rows.forEach((v: any, index: any) => {
           if (v.id == s.id) {
@@ -103,10 +105,9 @@ function handleFilter(e: any) {
       filter.value = `&cuname=${e}`;
     }
   }
-
-  page.value = 1;
+  
   console.log(filter);
-  getClientList(page.value, filter.value).then((res: any) => {
+  getClientList(filter.value).then((res: any) => {
     clientList.value = res.rows;
     total.value = res.total;
   });
@@ -128,63 +129,78 @@ function closePop(popup: any) {
       :filters="filters"
       tips="请输入客户名或手机号"
       @input="handleFilter"></search>
-    <scroll-view :scroll-y="true" class="client" @scrolltolower="ReachBottom">
-      <view v-for="item in clientList" :key="item.id">
-        <uni-card class="card" :is-shadow="false" :title="item.id">
-          <view>
-            <text>客户名称:{{ item.cuname }}</text>
+    <scroll-view class="client" :scroll-y="true" @scrolltolower="ReachBottom">
+      <uni-card v-for="users in clientList" :is-shadow="false" >
+        <view>
+          <view class="card-box">
+            <view style="margin-bottom: 20rpx">
+              <text style="font-size: 36rpx; font-weight: bold;color: #3D3D3D;;">{{ users.cuname }}</text>
+              <text style="margin-left: 20rpx; font-size: 20rpx; color: #B0B0B4">{{ users.cuschool }}</text></view
+            >
+            <view class="btn-edit" @click="() => editClient(users.id)">编辑 </view>
           </view>
-          <view>
-            <text>所学课程:{{ item.cuprod }}</text>
+          <view style="margin-top: 10rpx;color: #7F7F81;font-size: 24rpx;">
+            <text
+              >联系方式<text>:{{ users.cutel }}</text>
+            </text>
           </view>
-          <view>
-            <text>招入老师:{{ item.djpeop }}</text>
-          </view>
-          <view class="btn footer">
-            <view class="btn-item" @click="() => editClient(item.id)"
-              >编辑
+          <view style="display: flex; justify-content: space-between">
+            <view>
+              <view style="color: #7F7F81;font-size: 24rpx;">
+                <text
+                  style="
+                    margin: 10rpx 0;
+                    width: 110rpx;
+                    display: inline-block;
+                    text-align: justify;
+                    text-align-last: justify;
+                  "
+                  >专业
+                </text>
+                <text>:{{ users.cumajor }}</text>
+              </view>
+              <view style="color: #7F7F81;font-size: 24rpx;">
+                <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
+                  >对接人
+                </text>
+                <text>:{{ users.cuowner }}</text>
+              </view>
             </view>
-            <view class="btn-item" @click="() => setClientID(popupMore, item)">
-              更多
+            <view
+              style="margin-right: -20rpx"
+              class="btnI"
+              @click="() => handleCallPhone(client.cutel, client.cuowner)"
+            >
+              <image class="img" src="../../../static/more-pic/phone.png" mode="scaleToFill" />
             </view>
           </view>
-        </uni-card>
-      </view>
+        </view>
+
+        <view class="btn">
+          <view style="margin-left: auto" class="btn-more" @click="() => setClientID(popupMore, users)"> 更多 </view>
+        </view>
+      </uni-card>
+      <view style="height: 30rpx;"></view>
       <uni-popup ref="popupMore" type="bottom">
         <view class="popm">
           <view class="btnI" @click="() => handleFollow(client.id)">
-            <image
-              class="img"
-              src="../../../static/management-pic/clue.png"
-              mode="scaleToFill" />
+            <image class="img" src="../../../static/more-pic/follow.png" mode="scaleToFill" />
             <view>写跟进</view>
           </view>
           <view class="btnI" @click="() => handleSea(popupMore, client.id)">
-            <image
-              class="img"
-              src="../../../static/management-pic/clue.png"
-              mode="scaleToFill" />
+            <image class="img" src="../../../static/more-pic/user.png" mode="scaleToFill" />
             <view>移入公海</view>
           </view>
-          <view class="btnI" @click="() => handlePayment(client.id)">
-            <image
-              class="img"
-              src="../../../static/management-pic/clue.png"
-              mode="scaleToFill" />
+          <view class="btnI" @click="() => handlePayment(client.id,client.cuname)">
+            <image class="img" src="../../../static/more-pic/user.png" mode="scaleToFill" />
             <view>新建回款</view>
           </view>
-          <view
-            class="btnI"
-            @click="() => handleCallPhone(client.cutel, client.cuowner)">
-            <image
-              class="img"
-              src="../../../static/management-pic/clue.png"
-              mode="scaleToFill" />
+          <view class="btnI" @click="() => handleCallPhone(client.cutel, client.cuowner)">
+            <image class="img" src="../../../static/more-pic/phone.png" mode="scaleToFill" />
             <view>拨打电话</view>
           </view>
         </view>
       </uni-popup>
-      <view style="height: 60rpx"></view>
     </scroll-view>
   </view>
 </template>
@@ -218,27 +234,22 @@ function closePop(popup: any) {
 .client {
   height: calc(100vh - 100rpx);
 }
-.statistics {
-  width: 15rpx;
-  height: 15rpx;
-}
-.title {
-  border-bottom: 0.5rpx solid #000;
-}
-.footer {
-  border-top: 0.5rpx solid #e0e0e0;
-}
 .btn {
   padding-top: 10rpx;
   display: flex;
   justify-content: space-between;
   margin-top: 20rpx;
 }
-.btn-item {
-  border: 1rpx solid #007aff;
-  border-radius: 3rpx;
+.btn-more {
+  border: 1rpx solid #158AF7;
+  width: 100rpx;
+  text-align: center;
+  border-radius: 30rpx;
   padding: 0 10rpx;
-  color: #007aff;
+  color: #158AF7;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 20rpx;
 }
 :deep(.uni-card) {
   overflow: visible;
@@ -255,5 +266,24 @@ function closePop(popup: any) {
 }
 :deep(.uni-easyinput__content) {
   height: 70rpx;
+}
+
+.card-box {
+  border-bottom: 1rpx solid #d8d8d8;
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.btn-edit {
+  margin-bottom: 20rpx;
+  border: 1rpx solid #e4e4e4;
+  width: 100rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  border-radius: 30rpx;
+  padding: 0 10rpx;
+  color: #9F9F9F;
+  font-size: 20rpx;
 }
 </style>

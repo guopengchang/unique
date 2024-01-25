@@ -46,6 +46,12 @@
       }
     },
     {
+      "path": "pages/score/evaluation",
+      "style": {
+        "navigationBarTitleText": "测评成绩"
+      }
+    },
+    {
       "path": "pages/getCustomer/payment",
       "style": {
         "navigationBarTitleText": "新建回款"
@@ -72,13 +78,13 @@
     {
       "path": "pages/getCustomer/client/client",
       "style": {
-        "navigationBarTitleText": "client"
+        "navigationBarTitleText": "客户"
       }
     },
     {
       "path": "pages/getCustomer/signIn",
       "style": {
-        "navigationBarTitleText": "signIn"
+        "navigationBarTitleText": "签到"
       }
     },
     {

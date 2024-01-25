@@ -1,22 +1,35 @@
 <template>
-  <view class="clue_list_page">
-    <!-- <scroll-view class="scroll_box" :scroll-y="true"> -->
+  <view style="background-color: #f9f9f9; height: 100vh">
+    <scroll-view :scroll-y="true">
       <view v-for="users in userInfo">
-        <view>
-          <uni-card :is-shadow="false">
-            <view>
-              <text>客户名称:{{ users.cuowner }}</text>
+        <uni-card class="card-box" :is-shadow="true" shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)">
+          <view>
+            <view class="mini-box"></view>
+            <view style="display: flex; justify-content: space-between">
+              <view style="margin-left: 20rpx">
+                <view style="margin: 10rpx; color: #3D3D3D;font-size: 28rpx;">
+                  <text>客户名称</text><text>: &nbsp;{{ users.cuowner }} </text>
+                </view>
+                <view style="margin: 10rpx; color: #9F9F9F;font-size: 28rpx;">
+                  <text>跟进方式</text><text>: &nbsp;{{ users.followtype }} </text>
+                </view>
+                <view style="margin: 10rpx; color: #9f9f9f; width: 560rpx;font-size: 28rpx;">
+                  <text>跟进内容:</text>
+                  <uni-easyinput
+                  style="margin-top: 10rpx;"
+                    :styles="color"
+                    type="textarea"
+                    autoHeight
+                    v-model="users.followcont"
+                    disabled
+                  ></uni-easyinput>
+                </view>
+              </view>
             </view>
-            <view>
-              <text>跟进方式:{{ users.followtype }}</text>
-            </view>
-            <view>
-              <text>跟进内容:{{ users.followcont }}</text>
-            </view>
-          </uni-card>
-        </view>
+          </view>
+        </uni-card>
       </view>
-    <!-- </scroll-view> -->
+    </scroll-view>
   </view>
 </template>
 <script setup lang="ts">
@@ -24,6 +37,7 @@ import { getQrCode } from "../../../../src/services/getCustomer";
 import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
 const userInfo: any = ref({});
+const color: any = { disableColor: "#FFFFFF" };
 onLoad(() => {
   getQrCode().then((res: any) => {
     console.log(res);
@@ -33,7 +47,6 @@ onLoad(() => {
     if (res.code === 200) {
       if (res.data.length !== 0) {
         userInfo.value = res.data;
-        uni.showToast({ icon: "success", title: "查询成功" });
       } else {
         uni.showToast({
           icon: "error",
@@ -46,28 +59,18 @@ onLoad(() => {
 });
 </script>
 <style lang="scss" scoped>
-page {
-  height: 100%;
-}
-.clue_list_page {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  background-color: #f4f4f4;
-}
-.scroll_box {
-  height: calc(100% - 125rpx);
-}
-.btn {
-  /* display: flex; */
-  margin-top: 20px;
+.mini-box {
+  background-color: #158af7;
   height: 80rpx;
+  width: 25rpx;
+  position: absolute;
+  top: 20%;
+  left: 0rpx;
 }
-.btn-item {
-  background-image: linear-gradient(135deg, #0c70f2, #0c60f2 70%, #0c32f2);
-  color: #fff;
-  width: 33%;
-  line-height: 80rpx;
+.card-box {
+  position: relative;
+  border-radius: 40rpx;
+  margin: 0;
+  border-radius: 40rpx;
 }
 </style>

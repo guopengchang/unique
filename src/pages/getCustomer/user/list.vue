@@ -1,61 +1,38 @@
 <template>
   <view class="screen">
-    <search
-      :filters="filters"
-      tips="请输入客户名或手机号"
-      @input="handleFilter"></search>
+    <search :filters="filters" tips="请输入客户名或手机号" @input="handleFilter"></search>
     <scroll-view scroll-y class="client" @scrolltolower="ReachBottom">
       <view v-for="users in userInfo" :key="users.id">
-        <uni-card
-          :is-shadow="true"
-          shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)"
-          :title="users.id">
-          <view>
+        <uni-card :is-shadow="true" shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)">
+          <view style="color: #3d3d3d">
             <text
-              >客户名称<text>:{{ users.cuname }}</text>
+              >客户名称<text>:&nbsp;&nbsp;{{ users.cuname }}</text>
             </text>
           </view>
-          <view>
+          <view class="content" >
             <text
-              >所选课程<text>:{{ users.cuprod }}</text>
+              >所选课程<text>:&nbsp;&nbsp;{{ users.cuprod }}</text>
             </text>
           </view>
-          <view>
-            <text
-              style="
-                width: 110rpx;
-                display: inline-block;
-                text-align: justify;
-                text-align-last: justify;
-              "
+          <view class="content">
+            <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
               >年级
             </text>
-            <text>:{{ users.cugrade }}</text>
+            <text>:&nbsp;&nbsp;{{ users.cugrade }}</text>
           </view>
-          <view>
-            <text
-              style="
-                width: 110rpx;
-                display: inline-block;
-                text-align: justify;
-                text-align-last: justify;
-              "
+          <view class="content">
+            <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
               >学校
             </text>
-            <text>:{{ users.cuschool }}</text>
+            <text>:&nbsp;&nbsp;{{ users.cuschool }}</text>
           </view>
-          <view>
+          <view class="content">
             <text
-              >在校专业<text>:{{ users.cumajor }}</text>
+              >在校专业<text>:&nbsp;&nbsp;{{ users.cumajor }}</text>
             </text>
           </view>
           <view class="btn">
-            <button
-              class="btn-item"
-              size="mini"
-              @click="() => handleDeal(users.id)">
-              分配用户
-            </button>
+            <button class="btn-item" size="mini" @click="() => handleDeal(users.id)">分配用户</button>
           </view>
         </uni-card>
       </view>
@@ -152,11 +129,13 @@ function handleDeal(id) {
   margin-top: 20rpx;
 }
 .btn-item {
-  background-image: linear-gradient(135deg, #0c70f2, #0c60f2 70%, #0c32f2);
+  background-image: linear-gradient(135deg, #158AF7, #158AF7 70%, #158AF7);
   color: #fff;
-  width: 100%;
+  width: 80%;
   height: 80rpx;
   line-height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
 }
 :deep(.uni-easyinput) {
   padding-left: 30rpx;
@@ -170,5 +149,9 @@ function handleDeal(id) {
 }
 :deep(.uni-easyinput__content) {
   height: 70rpx;
+}
+.content {
+  color: #9f9f9f;
+  font-size: 28rpx;
 }
 </style>
