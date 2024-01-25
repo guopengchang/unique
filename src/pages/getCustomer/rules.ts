@@ -57,6 +57,14 @@ export const paymentRules = {
       },
     ],
   },
+  moneydate: {
+    rules: [
+      {
+        required: true,
+        errorMessage: "请选择回款日期",
+      },
+    ],
+  },
 };
 
 export let signInRules = {

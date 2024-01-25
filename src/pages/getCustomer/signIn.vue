@@ -1,5 +1,6 @@
 <template>
   <!-- formData、rules 内容详见下方完整示例 -->
+  <view style="margin: 50rpx;">
   <uni-forms
     ref="form"
     :modelValue="formData"
@@ -23,7 +24,7 @@
         v-model="formData.djpeop"
         placeholder="请输入申请人" />
     </uni-forms-item>
-    <button class="btn" @click="submit" type="primary">确认生成二维码</button>
+    <button class="btn" @click="submit">确认生成二维码</button>
   </uni-forms>
   <div class="signIn">
     <canvas

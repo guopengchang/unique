@@ -14,7 +14,7 @@ onLoad((e) => {
     formData.value.highsid = e.id;
     formData.value.cuname = e.name;
   }
-  formData.value.moneydate = new Date().toLocaleDateString().split("/").join("-");
+  
 
   getMoneyWay().then((res: any) => {
     console.log(res)

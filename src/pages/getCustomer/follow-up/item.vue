@@ -1,12 +1,5 @@
 <template>
-  <form @submit="submit">
-    <view class="line" style="display: flex; justify-content: space-between">
-      <view class="labeluser">跟进客户</view>
-      <input
-        style="text-align: end; margin-top: 40rpx; margin-right: 30rpx"
-        :disabled="true"
-        v-model="tableForm.cuname" />
-    </view>
+  <form @submit="submit" >
     <view class="border" style="display: flex; justify-content: space-between">
       <view class="label">跟进方式</view>
       <view class="name" style="margin-right: 20rpx;width: 300rpx;">
@@ -24,6 +17,7 @@
      <view  style="width:90%;margin-left: 20rpx;margin-bottom: 10rpx;">
       <uni-easyinput
         name="followcont"
+        v-model="listForm.followcont"
         type="textarea"
         autoHeight
         placeholder="请输入跟进内容"></uni-easyinput>
@@ -53,6 +47,7 @@ import {
   followlist,
 } from "../../../../src/services/getCustomer";
 import { onLoad } from "@dcloudio/uni-app";
+
 const tableForm = ref({});
 // 跟进方式
 const items = ref([
@@ -119,9 +114,25 @@ function fashion(e) {
   listForm.value.followtype = e.detail.value[0].text;
 }
 //获取跟进内容
-function submit(e) {
-  listForm.value.followcont = e.detail.value.followcont;
-  console.log(listForm);
+function submit() {
+  if(!listForm.value.followtype){
+    return uni.showToast({
+      title: "请填写跟进方式",
+      icon: "none",
+    });
+  }
+  if(!listForm.value.followcont){
+    return uni.showToast({
+      title: "请填写跟进内容",
+      icon: "none",
+    });
+  }
+  if(!listForm.value.nextdate){
+    return uni.showToast({
+      title: "请填写跟进日期",
+      icon: "none",
+    });
+  }
   addfollowlist(listForm.value).then(() => {
     uni.showToast({
       title: "新增成功",
