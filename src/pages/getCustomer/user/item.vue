@@ -4,7 +4,6 @@
       <view class="label">负责人</view>
       <view style="margin-left: 190rpx">
         <uni-data-picker
-
           @change="onchange"
           style="width: 400rpx;font-size: 28rpx;"
           :clear-icon="false"
@@ -29,8 +28,8 @@ import { onLoad } from "@dcloudio/uni-app";
 const userName = ref({});
 //存放全部负责人姓名
 const items = ref([]);
-//获取选择后的负责人姓名
-const newUserName = ref({});
+//获取选择后的负责人电话
+const newUserNamePhone = ref({});
 //存放id
 const id = ref();
 onLoad((e) => {
@@ -43,21 +42,22 @@ onLoad((e) => {
     userName.value = res.data;
     userName.value.map((item) => {
       items.value.push({
-        text: item.userName,
-        value: item.userId,
+        text: item.nickName,
+        value: item.userName,
       });
     });
   });
 });
 function onchange(e) {
+  console.log(e)
   //获取负责人的姓名
-  newUserName.value = e.detail.value[0].text;
-  console.log(newUserName.value);
+  newUserNamePhone.value = e.detail.value[0].value;
+  console.log(newUserNamePhone.value);
 }
 //点击跳转
 function handleDefine() {
   getUser(id.value, {
-    cuowner: newUserName.value,
+    cuowner: newUserNamePhone.value,
     id: id.value,
     cuflag: 1,
   }).then(() => {
