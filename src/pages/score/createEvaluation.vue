@@ -12,6 +12,7 @@
       <uni-forms-item label="测评班级" name="evalclass" required>
         <uni-easyinput
           :styles="clas"
+          
           :disabled="disabled"
           type="text"
           v-model="formData.evalclass"

@@ -3,52 +3,52 @@
     <scroll-view class="scroll_box" :scroll-y="true" @scrolltolower="touchGround">
       <checkbox-group @change="batch">
         <view v-for="users in userInfo" :key="users.cuname">
-            <view>
-              <uni-card :is-shadow="true" shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)">
-               <view style="display: flex;justify-content: space-between;">
+          <view>
+            <uni-card :is-shadow="true" shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)">
+              <view style="display: flex; justify-content: space-between">
                 <view>
-                <view class="flex" style="color: #3D3D3D; font-size: 28rpx">
-                  <view>客户名称</view>
-                  <view>:{{ users.cuname }}</view>
+                  <view class="flex" style="color: #3d3d3d; font-size: 28rpx">
+                    <view>客户名称</view>
+                    <view>:{{ users.cuname }}</view>
+                  </view>
+                  <view class="flex">
+                    <view>所选课程</view>
+                    <view>:{{ users.cuprod }}</view>
+                  </view>
+                  <view class="flex">
+                    <view style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
+                      >年级</view
+                    >
+                    <view>:{{ users.cugrade }}</view>
+                  </view>
+                  <view class="flex">
+                    <view style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
+                      >学校</view
+                    >
+                    <view>:{{ users.cuschool }}</view>
+                  </view>
+                  <view class="flex">
+                    <view>在校专业</view>
+                    <view>:{{ users.cumajor }}</view>
+                  </view>
                 </view>
-                <view class="flex">
-                  <view>所选课程</view>
-                  <view>:{{ users.cuprod }}</view>
-                </view>
-                <view class="flex">
-                  <view style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
-                    >年级</view
-                  >
-                  <view>:{{ users.cugrade }}</view>
-                </view>
-                <view class="flex">
-                  <view style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
-                    >学校</view
-                  >
-                  <view>:{{ users.cuschool }}</view>
-                </view>
-                <view class="flex">
-                  <view>在校专业</view>
-                  <view>:{{ users.cumajor }}</view>
-                </view>
-               </view>
-               <label style="display: flex">
-               <view style="margin: auto 0; margin-left: 20rpx">
-              <checkbox color="blue" :value="users.id" />
-            </view>
-          </label>
-               </view>
-                <view class="btn">
-                  <button class="btn-item" size="mini" @click="() => handleReceive(users.id)">领取用户</button>
-                </view>
-              </uni-card>
-            </view>
+                <label style="display: flex">
+                  <view style="margin: auto 0; margin-left: 20rpx">
+                    <checkbox color="blue" :value="users.id" />
+                  </view>
+                </label>
+              </view>
+              <view class="btn">
+                <button class="btn-item" size="mini" @click="() => handleReceive(users.id)">领取用户</button>
+              </view>
+            </uni-card>
+          </view>
         </view>
       </checkbox-group>
     </scroll-view>
     <view class="bottom_btn">
       <view @click="handleNew">新建</view>
-      <view @click="handleBatch()">批量领取</view>
+      <view @click="handleBatch">批量领取</view>
     </view>
   </view>
 </template>
@@ -90,6 +90,9 @@ onLoad(() => {
 function batch(e) {
   batchsize.value = e.detail.value;
 }
+function change(e) {
+  console.log(e);
+}
 //判断触底
 function touchGround() {
   if (userInfo.value.length >= total.value) {
@@ -113,7 +116,7 @@ function touchGround() {
 }
 //批量领取
 async function handleBatch() {
-  if(!batchsize.value){
+  if (!batchsize.value || !batchsize.value.length) {
     return uni.showToast({
       title: "请勾选",
       icon: "none",
@@ -193,10 +196,10 @@ page {
   height: 80rpx;
 }
 .btn-item {
-  border: 1rpx solid #158AF7;
+  border: 1rpx solid #158af7;
   border-radius: 40rpx;
   background-color: #fff;
-  color: #158AF7;
+  color: #158af7;
   width: 80%;
   line-height: 80rpx;
   font-size: 24rpx;
@@ -204,7 +207,7 @@ page {
 .flex {
   display: flex;
   margin: 10rpx 0;
-  color: #9F9F9F;
+  color: #9f9f9f;
   font-size: 28rpx;
 }
 </style>

@@ -33,7 +33,7 @@ function InquireScore(rid: any, id: any) {
 }
 </script>
 <template>
-  <view style="background-color: #f4f4f4">
+ <scroll-view style="background-color: #f4f4f4;height:100vh">
     <view style="height: 1rpx"></view>
     <view v-for="item in listData" :key="item.id">
       <uni-card>
@@ -66,7 +66,7 @@ function InquireScore(rid: any, id: any) {
       </uni-card>
     </view>
     <view style="height: 20rpx"></view>
-  </view>
+  </scroll-view>
 </template>
 <style lang="scss" scoped>
 .flex {
