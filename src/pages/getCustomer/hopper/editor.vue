@@ -78,22 +78,19 @@ function sourceChange(e: any) {
       :prod-range="prodRange"
       :data="formData"
       @change-source="sourceChange"
-      @change-prod="prodChange">
+      @change-prod="prodChange"
+    >
     </info-form>
     <button
       style="
         margin-top: 20rpx;
         width: 60vw;
         border-radius: 20rpx;
-        background-image: linear-gradient(
-          135deg,
-          #158af7,
-          #158af7 70%,
-          #158af7
-        );
+        background-image: linear-gradient(135deg, #158af7, #158af7 70%, #158af7);
         color: #ffffff;
       "
-      @click="submit(clientForm)">
+      @click="submit(clientForm)"
+    >
       提交
     </button>
     <div style="height: 20rpx"></div>

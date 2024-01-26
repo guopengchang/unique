@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
-import {
-  getClient,
-  updateClient,
-  getSource,
-  getProd,
-} from "@/services/getCustomer";
+import { getClient, updateClient, getSource, getProd } from "@/services/getCustomer";
 import type { client } from "./type";
 import { rules } from "./rules";
 import infoForm from "../component/infoForm.vue";
@@ -83,7 +78,8 @@ function sourceChange(e: any) {
       :prod-range="prodRange"
       :data="formData"
       @change-source="sourceChange"
-      @change-prod="prodChange">
+      @change-prod="prodChange"
+    >
     </info-form>
     <button
       style="
@@ -91,14 +87,10 @@ function sourceChange(e: any) {
         width: 60vw;
         border-radius: 20rpx;
         color: #ffffff;
-        background-image: linear-gradient(
-          135deg,
-          #158af7,
-          #158af7 70%,
-          #158af7
-        );
+        background-image: linear-gradient(135deg, #158af7, #158af7 70%, #158af7);
       "
-      @click="submit(clientForm)">
+      @click="submit(clientForm)"
+    >
       提交
     </button>
     <div style="height: 20rpx"></div>
