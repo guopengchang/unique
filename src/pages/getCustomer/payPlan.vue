@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { getPayPlanList } from "@/services/getCustomer";
-import { onLoad, onReachBottom } from "@dcloudio/uni-app";
+import { onLoad} from "@dcloudio/uni-app";
 const listData = ref([]);
 const page = ref(1);
 const total = ref(0);
@@ -26,7 +26,7 @@ onLoad(() => {
     }
   });
 });
-onReachBottom(() => {
+function onReachBottom(){
   if (listData.value.length >= total.value) {
     uni.showToast({
       title: "没有更多数据",
@@ -39,10 +39,10 @@ onReachBottom(() => {
       total.value = res.total;
     });
   }
-});
+}
 </script>
 <template>
-  <scroll-view style="background-color: #f4f4f4;height: 100vh;">
+  <scroll-view @scrolltolower="onReachBottom" scroll-y style="background-color: #f4f4f4;height: 100vh;">
     <view style="height: 1rpx"></view>
     <view v-for="item in listData" :key="item.id">
       <uni-card>
