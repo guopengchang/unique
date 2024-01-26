@@ -65,9 +65,7 @@ let formData = reactive({
 });
 
 let rid = computed(() => {
-  const str = btoa(formData.evaldate);
-  const math = Math.random().toString();
-  return str + math;
+  return formData.evaldate+Math.random().toString()
 });
 
 const createQRCode = (data:any) => {

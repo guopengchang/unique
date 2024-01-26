@@ -18,7 +18,7 @@ export const addEval = (data: any) => {
 export const getEvalList = () => {
   return http({
     method: "GET",
-    url: "/system/eval/list",
+    url: "/system/eval/list?pageSize=40",
   });
 };
 
