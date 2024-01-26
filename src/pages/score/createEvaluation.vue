@@ -10,13 +10,31 @@
       class="form_box"
     >
       <uni-forms-item label="测评班级" name="evalclass" required>
-        <uni-easyinput type="text" v-model="formData.evalclass" placeholder="请输入测评班级" />
+        <uni-easyinput
+          :styles="clas"
+          :disabled="disabled"
+          type="text"
+          v-model="formData.evalclass"
+          placeholder="请输入测评班级"
+        />
       </uni-forms-item>
       <uni-forms-item label="测评阶段" name="evalstage" required>
-        <uni-easyinput type="text" v-model="formData.evalstage" placeholder="请输入测评阶段" />
+        <uni-easyinput
+          :styles="clas"
+          :disabled="disabled"
+          type="text"
+          v-model="formData.evalstage"
+          placeholder="请输入测评阶段"
+        />
       </uni-forms-item>
       <uni-forms-item label="测评老师" name="evalteach" required>
-        <uni-easyinput type="text" v-model="formData.evalteach" placeholder="请输入测评老师" />
+        <uni-easyinput
+          :styles="clas"
+          :disabled="disabled"
+          type="text"
+          v-model="formData.evalteach"
+          placeholder="请输入测评老师"
+        />
       </uni-forms-item>
       <uni-forms-item label="测评时间" name="evaldate" required>
         <uni-datetime-picker :clearIcon="false" :border="false" type="date" v-model="formData.evaldate">
@@ -37,6 +55,8 @@ import { evalRules } from "../getCustomer/rules";
 import { addEval } from "../../services/score";
 //ts-ignore
 import UQRCode from "uqrcodejs";
+const disabled = ref(false);
+const clas: any = { disableColor: "#FFFFFF",};
 let formData = reactive({
   evalclass: "",
   evalstage: "",
@@ -50,8 +70,8 @@ let rid = computed(() => {
   return str + math;
 });
 
-const createQRCode = (data) => {
-  let encodeParam = encodeURI(`rid=${rid.value}`);
+const createQRCode = (data:any) => {
+  let encodeParam = encodeURI(`rid=${data}`);
 
   // 获取uQRCode实例
   var qr = new UQRCode();
@@ -72,7 +92,8 @@ const createQRCode = (data) => {
 const form = ref<any>();
 const cla = ref(false);
 
-const submit = async () => {
+const submit = () => {
+  disabled.value = true;
   uni.showLoading({
     title: "加载中",
   });
@@ -81,7 +102,7 @@ const submit = async () => {
     .then((res) => {
       console.log(rid.value);
       addEval({ ...res, rid: rid.value });
-      createQRCode(res);
+      createQRCode(rid.value);
       cla.value = true;
       uni.hideLoading();
     })

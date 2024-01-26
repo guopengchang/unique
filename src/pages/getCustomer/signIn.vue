@@ -74,10 +74,14 @@ const createQRCode = (data) => {
 const form = ref<any>();
 
 const submit = () => {
+  uni.showLoading({
+    title: "加载中",
+  });
   form.value
     .validate()
     .then((res) => {
       createQRCode(res);
+      uni.hideLoading();
     })
     .catch((err) => {});
 };
