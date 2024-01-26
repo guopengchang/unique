@@ -63,6 +63,10 @@ onReachBottom(() => {
           <view>回款方式</view>
           <view>{{ item.waymoney }}</view>
         </view>
+        <view class="flex">
+          <view>对接人</view>
+          <view>{{ item.cuowner }}</view>
+        </view>
       </uni-card>
     </view>
     <view style="height: 20rpx"></view>
