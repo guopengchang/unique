@@ -12,8 +12,7 @@
       <uni-forms-item label="测评班级" name="evalclass" required>
         <uni-easyinput
           :styles="clas"
-          
-          :disabled="disabled"
+
           type="text"
           v-model="formData.evalclass"
           placeholder="请输入测评班级"
@@ -22,7 +21,6 @@
       <uni-forms-item label="测评阶段" name="evalstage" required>
         <uni-easyinput
           :styles="clas"
-          :disabled="disabled"
           type="text"
           v-model="formData.evalstage"
           placeholder="请输入测评阶段"
@@ -31,7 +29,6 @@
       <uni-forms-item label="测评老师" name="evalteach" required>
         <uni-easyinput
           :styles="clas"
-          :disabled="disabled"
           type="text"
           v-model="formData.evalteach"
           placeholder="请输入测评老师"
@@ -56,7 +53,6 @@ import { evalRules } from "../getCustomer/rules";
 import { addEval } from "../../services/score";
 //ts-ignore
 import UQRCode from "uqrcodejs";
-const disabled = ref(false);
 const clas: any = { disableColor: "#FFFFFF",};
 let formData = reactive({
   evalclass: "",
@@ -92,7 +88,6 @@ const form = ref<any>();
 const cla = ref(false);
 
 const submit = () => {
-  disabled.value = true;
   uni.showLoading({
     title: "加载中",
   });
@@ -135,6 +130,7 @@ const submit = () => {
   height: 100vh;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.2);
+  z-index:333;
 }
 .canva {
   width: 280px;
