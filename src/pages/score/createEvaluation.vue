@@ -25,8 +25,8 @@
       <button class="btn" @click="submit">确认生成二维码</button>
     </uni-forms>
   </view>
-  <div class="signIn">
-    <canvas id="qrcode" canvas-id="qrcode" style="width: 280px; height: 280px"></canvas>
+  <div class="signIn" :class="{ mask: cla }">
+    <canvas class="canva" id="qrcode" canvas-id="qrcode" style="width: 280px; height: 280px"></canvas>
   </div>
 </template>
 
@@ -51,12 +51,7 @@ let rid = computed(() => {
 });
 
 const createQRCode = (data) => {
-  console.log(rid.value);
   let encodeParam = encodeURI(`rid=${rid.value}`);
-  formData.evalclass = "";
-  formData.evalstage = "";
-  formData.evalteach = "";
-  formData.evaldate = "";
 
   // 获取uQRCode实例
   var qr = new UQRCode();
@@ -75,13 +70,20 @@ const createQRCode = (data) => {
   qr.drawCanvas();
 };
 const form = ref<any>();
+const cla = ref(false);
 
-const submit = () => {
+const submit = async () => {
+  uni.showLoading({
+    title: "加载中",
+  });
   form.value
     .validate()
     .then((res) => {
+      console.log(rid.value);
       addEval({ ...res, rid: rid.value });
       createQRCode(res);
+      cla.value = true;
+      uni.hideLoading();
     })
     .catch((err) => {});
 };
@@ -96,9 +98,7 @@ const submit = () => {
   padding-left: 50rpx;
   padding-right: 50rpx;
 }
-.signIn {
-  margin-top: 50rpx;
-}
+
 .btn {
   margin-top: 40rpx;
   width: 60vw;
@@ -106,5 +106,19 @@ const submit = () => {
   background-image: linear-gradient(135deg, #158af7, #158af7 70%, #158af7);
   color: #ffffff;
   font-size: 36rpx;
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.canva {
+  width: 280px;
+  height: 280px;
+  margin-top: 250px !important;
 }
 </style>
