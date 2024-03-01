@@ -102,7 +102,6 @@ const popupMore = ref(null);
 onLoad(() => {
   //页面初始化 第一次获取数据
   getHopper().then((res: any) => {
-    console.log(res);
     if (res.code !== 200) {
       uni.showToast({ icon: "none", title: res.msg });
     }
@@ -164,10 +163,8 @@ function scrolltolower() {
     });
   } else {
     num.value = num.value + 1;
-    console.log(num.value);
     getHopper(num.value).then((res: any) => {
       userInfo.value = userInfo.value.concat(res.rows);
-      console.log(res.rows);
     });
   }
 }
@@ -176,7 +173,6 @@ function search(e: any) {
     inputValueFlag = true;
   } else {
     getHopper().then((res: any) => {
-      console.log(res);
       userInfo.value = res.rows;
       total.value = res.total;
     });
@@ -188,7 +184,6 @@ function search(e: any) {
     getHopperSearch({
       cutel: e.value,
     }).then((res: any) => {
-      console.log(res, 11111);
       userInfo.value = res.rows;
     });
   } else {
@@ -201,7 +196,6 @@ function search(e: any) {
 }
 
 function setClientID(popup: any, item: any) {
-  console.log(item);
   client.value = item;
   openPop(popup);
 }
@@ -215,11 +209,9 @@ function handleCallPhone(tel: any, owner: any) {
   uni.makePhoneCall({
     phoneNumber: tel,
     success: (result) => {
-      console.log(result);
       addPhoneRecord({ cuowner: owner, calltel: tel });
     },
     fail: (error) => {
-      console.log(error);
     },
   });
 }

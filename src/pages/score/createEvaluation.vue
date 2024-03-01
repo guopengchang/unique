@@ -72,7 +72,6 @@ const createQRCode = (data:any) => {
   var qr = new UQRCode();
   // 设置二维码内容
   qr.data = `http://stu.ueksx.com/finance/evaluate?${encodeParam}`;
-  console.log(qr.data);
   // 设置二维码大小，必须与canvas设置的宽高一致
   qr.size = 280;
   // 调用制作二维码方法
@@ -94,7 +93,6 @@ const submit = () => {
   form.value
     .validate()
     .then((res) => {
-      console.log(rid.value);
       addEval({ ...res, rid: rid.value });
       createQRCode(rid.value);
       cla.value = true;

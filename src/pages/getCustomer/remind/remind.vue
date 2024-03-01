@@ -31,7 +31,6 @@ import { remind } from "../../../../src/services/getCustomer";
 import { ref } from "vue";
 const userInfo: any = ref({});
 remind().then((res: any) => {
-  console.log(res);
   if (res.code !== 200) {
     uni.showToast({ icon: "none", title: res.msg });
   }

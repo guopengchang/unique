@@ -17,7 +17,6 @@ onLoad((e) => {
   
 
   getMoneyWay().then((res: any) => {
-    console.log(res)
     sourceRange.value = res.data.map((item: any) => {
       return {
         value: item.dictLabel,

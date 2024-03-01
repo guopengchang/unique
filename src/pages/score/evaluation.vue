@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { getEvalList, getScore, saveScore } from "../../services/score";
+import { getEvalList, getScore, saveScore } from "@/services/score";
 import { onLoad } from "@dcloudio/uni-app";
 const listData = ref();
 const info = ref({});
@@ -10,6 +10,7 @@ onLoad(() => {
   });
 });
 function InquireScore(rid: any, id: any) {
+  console.log('查询了-----------')
   getScore(rid).then(async (res: any) => {
     if (!res.data) {
       return uni.showToast({
@@ -17,6 +18,7 @@ function InquireScore(rid: any, id: any) {
         icon: "none",
       });
     }
+    //查完后保存平均分
     info.value = { id: id, evalcalcu: res.data };
     await saveScore(info.value);
     getEvalList()
@@ -31,17 +33,25 @@ function InquireScore(rid: any, id: any) {
       });
   });
 }
+
+let evalDetail = (rid)=>{
+  uni.navigateTo({ 
+    url:`/pages/score/evaluationDetail?rid=${rid}`
+ })
+}
 </script>
 <template>
  <scroll-view scroll-y style="background-color: #f4f4f4;height:100vh">
     <view style="height: 1rpx"></view>
     <view v-for="item in listData" :key="item.id">
-      <uni-card>
+      <uni-card @tap="evalDetail(item.rid)">
         <view class="name">
           <view class="query"
-            >测评分数<view
-              class="btn"
-              @click="() => InquireScore(item.rid, item.id)">
+            >
+            <view>测评分数</view>
+            <view
+              class="find_btn"
+              @tap.stop="() => InquireScore(item.rid, item.id)">
               查询
             </view>
           </view>
@@ -92,10 +102,10 @@ function InquireScore(rid: any, id: any) {
   align-items: center;
 }
 
-.query .btn {
+.query .find_btn {
   margin-left: 15rpx;
-  height: 40rpx;
-  width: 70rpx;
+  height: 60rpx;
+  width: 100rpx;
   font-size: 20rpx;
   border: 1rpx solid #158af7;
   display: flex;

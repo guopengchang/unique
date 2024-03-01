@@ -21,7 +21,7 @@
   </view>
 </template>
 <script setup>
-import { getlist, getUser } from "../../../../src/services/getCustomer";
+import { getlist, getUser } from "@/services/getCustomer";
 import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
 //存放网络层返回的数据
@@ -31,14 +31,14 @@ const items = ref([]);
 //获取选择后的负责人电话
 const newUserNamePhone = ref();
 //存放id
-const id = ref();
+const userId = ref();
 onLoad((e) => {
+  let userIdArr = e.id.split(',')
+  console.log(userIdArr)
   //获取id
-  console.log(e);
-  id.value = e.id;
+  userId.value = userIdArr;
   //获取数据
   getlist().then((res) => {
-    console.log(res);
     userName.value = res.data;
     userName.value.map((item) => {
       items.value.push({
@@ -49,23 +49,21 @@ onLoad((e) => {
   });
 });
 function onchange(e) {
-  console.log(e)
   //获取负责人的姓名
   newUserNamePhone.value = e.detail.value[0].value;
-  console.log(newUserNamePhone.value);
 }
-//点击跳转
+//点击确认分配
 function handleDefine() {
-  console.log(newUserNamePhone.value)
+  //手机号就是否则人
   if(!newUserNamePhone.value){
     return uni.showToast({
       title: "请选择负责人",
       icon: "none",
     });
   }
-  getUser(id.value, {
+  getUser( {
     cuowner: newUserNamePhone.value,
-    id: id.value,
+    ids: userId.value,
     cuflag: 1,
   }).then(() => {
     uni.showToast({

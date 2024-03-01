@@ -1,4 +1,9 @@
 ```shell
+点击事件
+@tap
+```
+
+```shell
 query传参
 uni.navigateTo({ url:
  `/pagesOrder/create/create?skuId=${ev._id}&count=${ev.buy_num`
@@ -36,7 +41,6 @@ defineExpose({
 
 ```shell
 可以展开 uni-app 生命周期，分为三部分：
-
 应用生命周期：与 小程序 应用的生命周期一致（onLaunch、onShow、onHide 等）
 页面生命周期：与 小程序 页面的生命周期一致（onLoad、onUnload、onShow 等）
 组件生命周期：与 Vue.js 组件的生命周期一致（mounted、created 等）

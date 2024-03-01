@@ -16,8 +16,8 @@ export const postMemberAddressAPI = (data: AddressParams) => {
 //获取跟进数据
 export const getQrCode = () => {
   return http({
-    method: "GET",
-    url: "/system/follow/selnewfollow",
+    method: "POST",
+    url: "system/highseas/fowowhig",
   });
 };
 
@@ -113,14 +113,17 @@ export const getlist = () => {
     url: "system/highseas/getxs",
   });
 };
-//跟进内容
-// /system/follow/list
-export const followlist = () => {
+
+//获取跟进内容
+export const getFlowContent = (id) => {
   return http({
     method: "GET",
-    url: "system/follow/list",
+    url: "system/follow/list?highsid="+id,
   });
 };
+
+// flowContent
+
 
 //点击线索领取
 export const getReceive = (id: any, data: any) => {
@@ -131,12 +134,11 @@ export const getReceive = (id: any, data: any) => {
   });
 };
 //点击分配客户
-export const getUser = (id: any, data: any) => {
-  console.log(data);
+export const getUser = ( data: any) => {
   return http({
-    method: "PUT",
+    method: "POST",
     data: data,
-    url: "system/highseas",
+    url: "/system/highseas/batchdistr",
   });
 };
 //漏斗中转客户
@@ -165,7 +167,6 @@ export const getQrCodeUser = (num?: any, filter?: any) => {
 };
 //获取线索数据
 export const getQrCodeReceive = (num = 1) => {
-  console.log(num);
   return http({
     method: "GET",
     url:

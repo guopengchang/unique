@@ -67,7 +67,6 @@ const batchsize = ref();
 //获取第一页4条数据
 onLoad(() => {
   getQrCodeReceive(num.value).then((res: any) => {
-    console.log(res);
     if (res.code !== 200) {
       uni.showToast({ icon: "none", title: res.msg });
     }
@@ -139,9 +138,7 @@ async function handleBatch() {
 //点击领取按钮
 function handleReceive(e) {
   id.value = e;
-  console.log(e, id.value);
   getReceive(id.value, { ...receiveflag, id: id.value, receiveflag: 1 });
-  console.log("领取成功");
   num.value = 1;
   getQrCodeReceive(num.value)
     .then((res: any) => {

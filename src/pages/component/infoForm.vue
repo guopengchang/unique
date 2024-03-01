@@ -51,7 +51,15 @@ defineExpose({
       label-width="200rpx"
       :border="true"
       >
-      <uni-forms-item  label="姓名" name="cuname" required>
+      <uni-forms-item  label="录入人" name="djpeop" required>
+        <uni-easyinput
+          type="text"
+          :clearable="false"
+          v-model="props.data.djpeop"
+          :inputBorder="false"
+          placeholder="请输入姓名" />
+      </uni-forms-item>
+      <uni-forms-item  label="客户姓名" name="cuname" required>
         <uni-easyinput
           type="text"
           :clearable="false"

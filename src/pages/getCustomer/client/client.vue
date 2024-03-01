@@ -48,7 +48,6 @@ function handleSea(pop: any, id: any) {
   updateClientSea({ id, cuflag: "0", cuowner: "", receiveflag: "0" })
     .then(
       getClientList().then((res: any) => {
-        console.log(res)
         clientList.value = res.rows;
       })
     )
@@ -66,7 +65,6 @@ function handleCallPhone(tel: any, owner: any) {
   uni.makePhoneCall({
     phoneNumber: tel,
     success: (result) => {
-      console.log(result);
       addPhoneRecord({ cuowner: owner, calltel: tel });
     },
     fail: (error) => {
@@ -106,7 +104,6 @@ function handleFilter(e: any) {
     }
   }
   
-  console.log(filter);
   getClientList(filter.value).then((res: any) => {
     clientList.value = res.rows;
     total.value = res.total;

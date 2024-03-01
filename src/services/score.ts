@@ -6,7 +6,6 @@ import { http } from "@/utils/http";
  * 添加测评
  */
 export const addEval = (data: any) => {
-  console.log(data)
   return http({
     method: "POST",
     url: "/system/eval",
@@ -22,6 +21,7 @@ export const getEvalList = () => {
   });
 };
 
+//得分
 export const getScore = (rid: any) => {
   return http({
     method: "POST",
@@ -29,6 +29,7 @@ export const getScore = (rid: any) => {
   });
 };
 
+//保存测评结果
 export const saveScore = (data: any) => {
   return http({
     method: "PUT",
@@ -36,3 +37,11 @@ export const saveScore = (data: any) => {
     url: "/system/eval",
   });
 };
+
+//获取测评详情
+export const getEvaluationDetail=(rid:string)=>{
+  return http({
+    method: "GET",
+    url: "system/evaldetails/list?rid=" + rid
+  })
+}

@@ -20,7 +20,6 @@
         "navigationBarTitleText": "login"
       }
     },
-
     {
       "path": "pages/getCustomer/clue/list",
       "style": {
@@ -43,6 +42,12 @@
       "path": "pages/getCustomer/remind/remind",
       "style": {
         "navigationBarTitleText": "跟进提醒"
+      }
+    },
+    {
+      "path": "pages/score/evaluationDetail",
+      "style": {
+        "navigationBarTitleText": "成绩详情"
       }
     },
     {

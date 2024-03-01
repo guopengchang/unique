@@ -45,7 +45,7 @@ import {
   getQrCodeOne,
   addfollowlist,
   followlist,
-} from "../../../../src/services/getCustomer";
+} from "@/services/getCustomer";
 import { onLoad } from "@dcloudio/uni-app";
 
 const tableForm = ref({});
@@ -102,13 +102,10 @@ onLoad((e) => {
   listForm.value.id = e.id;
   //获取数据
   getQrCodeOne(e.id).then((res) => {
-    console.log(res);
     tableForm.value = res.data;
   });
 });
-followlist().then((res) => {
-  console.log(res);
-});
+
 //获取跟进方式
 function fashion(e) {
   listForm.value.followtype = e.detail.value[0].text;

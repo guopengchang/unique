@@ -2,42 +2,68 @@
   <view style="background-color: #f9f9f9; height: 100vh">
     <scroll-view :scroll-y="true">
       <view v-for="users in userInfo">
-        <uni-card class="card-box" :is-shadow="true" shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)">
-          <view>
-            <view class="mini-box"></view>
-            <view style="display: flex; justify-content: space-between">
-              <view style="margin-left: 20rpx">
-                <view style="margin: 10rpx; color: #3D3D3D;font-size: 28rpx;">
-                  <text>客户名称</text><text>: &nbsp;{{ users.cuowner }} </text>
-                </view>
-                <view style="margin: 10rpx; color: #9F9F9F;font-size: 28rpx;">
-                  <text>跟进方式</text><text>: &nbsp;{{ users.followtype }} </text>
-                </view>
-                <view style="margin: 10rpx; color: #9f9f9f; width: 560rpx;font-size: 28rpx;">
-                  <text>跟进内容:</text>
-                  <uni-easyinput
-                  style="margin-top: 10rpx;"
-                    :styles="color"
-                    type="textarea"
-                    autoHeight
-                    v-model="users.followcont"
-                    disabled
-                  ></uni-easyinput>
-                </view>
+        <uni-card :is-shadow="true" shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)">
+          <view class="card-box">
+            <view style="margin-bottom: 20rpx">
+              <text style="font-size: 36rpx; font-weight: bold;color: #3D3D3D;;">{{ users.cuname }}</text>
+              <text style="margin-left: 20rpx; font-size: 20rpx; color: #B0B0B4">{{ users.cuschool }}</text></view
+            >
+            <view class="btn-edit" @click="() =>flowContent(users.id)">跟进内容</view>
+          </view>
+          <view style="margin-top: 10rpx;color: #7F7F81;font-size: 24rpx;">
+            <text
+              >联系方式<text>:{{ users.cutel }}</text>
+            </text>
+          </view>
+          <view style="display: flex; justify-content: space-between">
+            <view>
+              <view style="color: #7F7F81;font-size: 24rpx;">
+                <text
+                  style="
+                    margin: 10rpx 0;
+                    width: 110rpx;
+                    display: inline-block;
+                    text-align: justify;
+                    text-align-last: justify;
+                  "
+                  >专业
+                </text>
+                <text>:{{ users.cumajor }}</text>
               </view>
+              <view style="color: #7F7F81;font-size: 24rpx;">
+                <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
+                  >对接人
+                </text>
+                <text>:{{ users.cuowner }}</text>
+              </view>
+            </view>
+            <view
+              style="margin-right: -20rpx"
+              class="btnI"
+              @click="() =>{}"
+            >
             </view>
           </view>
         </uni-card>
       </view>
     </scroll-view>
+    <DrawerComponent :followHistory="followHistory" ref="drawerCom"/>
   </view>
 </template>
 <script setup lang="ts">
-import { getQrCode } from "../../../../src/services/getCustomer";
+import DrawerComponent from './component/DrawerComponent.vue'
+import {  getQrCode,getFlowContent } from "@/services/getCustomer";
 import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
-const userInfo: any = ref({});
-const color: any = { disableColor: "#FFFFFF" };
+
+let drawerCom = ref()
+
+const userInfo: any = ref([]);
+
+//跟进内容历史
+const followHistory= ref()
+
+
 onLoad(() => {
   getQrCode().then((res: any) => {
     console.log(res);
@@ -57,6 +83,29 @@ onLoad(() => {
     }
   });
 });
+
+let flowContent=(id:string)=>{
+  getFlowContent(id).then(res=>{
+    if (res.code !== 200) {
+      uni.showToast({ icon: "none", title: res.msg });
+      return;
+    }
+      if (res.rows.length !== 0) {
+        followHistory.value= res.rows;
+        console.log(followHistory.value,res.rows)
+        drawerCom.value.showDrawer()
+      } else {
+        uni.showToast({
+          icon: "error",
+          title: "数据列表为空或没有权限",
+          duration: 3000,
+        });
+      }
+  }).catch(err=>{
+    console.log(err,'94')
+  })
+}
+
 </script>
 <style lang="scss" scoped>
 .mini-box {
@@ -67,10 +116,23 @@ onLoad(() => {
   top: 20%;
   left: 0rpx;
 }
+
 .card-box {
-  position: relative;
-  border-radius: 40rpx;
-  margin: 0;
-  border-radius: 40rpx;
+  border-bottom: .5px solid #d8d8d8;
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.btn-edit {
+  margin-bottom: 20rpx;
+  border: 1rpx solid #e4e4e4;
+  width: 100rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  border-radius: 30rpx;
+  padding: 0 10rpx;
+  color: #9F9F9F;
+  font-size: 20rpx;
 }
 </style>

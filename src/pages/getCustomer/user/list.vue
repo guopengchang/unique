@@ -1,9 +1,15 @@
 <template>
   <view class="screen">
-    <search :filters="filters" tips="请输入客户名或手机号" @input="handleFilter"></search>
+    <search :filters="filters" tips="请输入学校或年级" @input="handleFilter"></search>
     <scroll-view scroll-y class="client" @scrolltolower="ReachBottom">
+      <checkbox-group @change="assigningJob">
       <view v-for="users in userInfo" :key="users.id">
-        <uni-card :is-shadow="true" shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)">
+        <uni-card class="card_user" :is-shadow="true" shadow="5px 5px 5px 5px rgba(1, 1, 1, 0.08)">
+            <label>
+              <view style="margin: auto 0; margin-left: 20rpx">
+                <checkbox color="blue" :value="users.id" />
+              </view>
+             </label>
           <view style="color: #3d3d3d">
             <text
               >客户名称<text>:&nbsp;&nbsp;{{ users.cuname }}</text>
@@ -31,17 +37,24 @@
               >在校专业<text>:&nbsp;&nbsp;{{ users.cumajor }}</text>
             </text>
           </view>
+          <view class="content">
+            <text style="width: 110rpx; display: inline-block; text-align: justify; text-align-last: justify"
+              >录入人
+            </text>
+            <text>:&nbsp;&nbsp;{{ users.djpeop }}</text>
+          </view>
           <view class="btn">
-            <button class="btn-item" size="mini" @click="() => handleDeal(users.id)">分配用户</button>
+            <button class="btn-item" size="mini" @click="handleDeal">分配用户</button>
           </view>
         </uni-card>
       </view>
+    </checkbox-group>
       <div style="height: 20rpx"></div>
     </scroll-view>
   </view>
 </template>
 <script setup lang="ts">
-import { getQrCodeUser } from "../../../../src/services/getCustomer";
+import { getQrCodeUser } from "@/services/getCustomer";
 import { ref } from "vue";
 import { onLoad, onShow } from "@dcloudio/uni-app";
 import search from "../../component/search.vue";
@@ -53,7 +66,6 @@ let filter = ref("");
 const filters = ref("");
 onLoad(() => {
   getQrCodeUser(page.value).then((res: any) => {
-    console.log(res);
     if (res.code !== 200) {
       uni.showToast({ icon: "none", title: res.msg });
     }
@@ -79,6 +91,13 @@ onShow(() => {
     total.value = res.total;
   });
 });
+
+//选中的分配用户的id
+let userIdArr = [];
+function assigningJob(e) {
+  userIdArr=e.detail.value;
+}
+
 function ReachBottom() {
   if (userInfo.value.length >= total.value) {
     uni.showToast({
@@ -97,11 +116,13 @@ function handleFilter(e: any) {
   if (!e) {
     filter.value = "";
   } else {
-    if (/^[\d]+$/.test(e)) {
-      filter.value = `&cutel=${e}`;
-    } else {
-      filter.value = `&cuname=${e}`;
-    }
+    // if (/^[\d]+$/.test(e)) {
+    //   filter.value = `&cutel=${e}`;
+    // } else {
+    //   filter.value = `&cuname=${e}`;
+    // }
+    // 年级和学校 都用 学校字段
+    filter.value=`&cuschool=${e}`
   }
   page.value = 1;
   getQrCodeUser(page.value, filter.value).then((res: any) => {
@@ -110,9 +131,15 @@ function handleFilter(e: any) {
   });
 }
 // 点击跳转
-function handleDeal(id) {
+function handleDeal() {
+  if(!userIdArr.length){
+    uni.showToast({
+      title: "请选择用户",
+     icon: "fail",
+    })
+  }
   uni.navigateTo({
-    url: `/pages/getCustomer/user/item?id=${id}`,
+    url: `/pages/getCustomer/user/item?id=${userIdArr}`,
   });
 }
 </script>
@@ -120,6 +147,16 @@ function handleDeal(id) {
 .screen {
   height: 100vh;
   background-color: #f4f4f4;
+}
+
+.card_user{
+  position: relative;
+}
+// class="uni-label-pointer"
+:deep(.uni-label-pointer){
+  position: absolute;
+  top:1rem;
+  right: 1rem;
 }
 .client {
   height: calc(100vh - 100rpx);

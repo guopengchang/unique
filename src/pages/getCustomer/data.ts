@@ -6,6 +6,9 @@ export const range = [
 
 export function resultlize(res: any) {
   return {
+    //录入人姓名
+    djpeop:res.data.djpeop,
+    //客户姓名
     cuname: res.data.cuname,
     cusex: res.data.cusex,
     cuidcard: res.data.cuidcard,

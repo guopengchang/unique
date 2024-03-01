@@ -116,7 +116,7 @@ const loginSuccess = (profile: any) => {
           class="button"
           type="primary"
           :disabled="isLoading">
-          Submit
+          登录
         </button>
       </uni-forms>
       <!-- 小程序端授权登录 -->
